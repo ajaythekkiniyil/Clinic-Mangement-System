@@ -1,0 +1,18 @@
+<div class="container">
+    <div class='row'>
+        <div class="col-12 col-md-6">
+            <img class="col-12 mt-5" src="images/undraw_medical_care_movn.svg" alt="" />
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="loginForm mt-4">
+                <form action="/admin/verify" method="POST" class="text-center border border-light p-5" >
+                    <p class="h4 mb-4">Admin Login</p>
+                    <p class="text-danger">{{loggedErr}}</p>
+                    <input type="text" class="form-control mb-4" name='username' placeholder="Username" />
+                    <input type="password" class="form-control mb-4" name='password' placeholder="Password" />
+                    <button type='submit' class="btn btn-success btn-block my-4" >Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
