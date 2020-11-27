@@ -55,49 +55,39 @@
                     <b>Welcome {{adminName}} !</b>
                 </h4>
                 <div class="col-12 mt-5">
-                    <h5>Dashboard</h5>
-                </div>
-                <div class="row">
-                    <div class="col-12 col-md-4">
-                        <div class="card">
-                            <div class="col-12">
-                                <img class="card-img-top col-12" src="/images/undraw_doctor_kw5l.svg"
-                                    style="height: 100px;" alt="Card image cap" />
-                            </div>
-                            <div class="card-body">
-                                <h5 class="card-title">Doctors</h5>
-                                <h3 class="card-text">3</h3>
-                            </div>
-                        </div>
+                    <div class="col-12 mt-5">
+                        <h4>
+                            <b>List of doctors</b>
+                        </h4>
+                        <a href="/admin/adddoctors"><i class="fa fa-edit text-danger" >Add Doctors</i></a>
                     </div>
-                    <div class="col-12 col-md-4">
-                        <div class="card">
-                            <div class="col-12">
-                                <img class="card-img-top col-12" src="/images/undraw_profile_pic_ic5t.svg"
-                                    style="height: 100px;" alt="Card image cap" />
-                            </div>
-                            <div class="card-body">
-                                <h5 class="card-title">Patients</h5>
-                                <h3 class="card-text">1</h3>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-4">
-                        <div class="card">
-                            <div class="col-12">
-                                <img class="card-img-top col-12" src="/images/undraw_calendar_dutt.svg"
-                                    style="height: 100px;" alt="Card image cap" />
-                            </div>
-                            <div class="card-body">
-                                <h5 class="card-title">Appoinments</h5>
-                                <h3 class="card-text">8</h3>
-                            </div>
-                        </div>
+
+
+                    <div class='table-responsive'>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Doctors</th>
+                                    <th scope="col">Specialised</th>
+                                    <th scope="col">Speciality</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>Mark</td>
+                                    <td>Otto</td>
+                                    <td>@mdo</td>
+                                    <td><a href="/admin/edit"><i class='fa fa-edit' style='font-size:24px'></i></a> <a href="/admin/delete"><i class='fa fa-trash' style='font-size:24px'></i></a></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
+            {{!-- admin pane right section  --}}
         </div>
-        {{!-- admin pane right section  --}}
     </div>
-</div>
 </div>
