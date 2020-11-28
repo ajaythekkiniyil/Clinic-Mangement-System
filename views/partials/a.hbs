@@ -1,0 +1,102 @@
+<div className="container">
+    {{!-- admin panel nav section --}}
+    <nav class="navbar navbar-light bg-light">
+        <h1 class="text-primary"><b>DENTACARE</b></h1>
+        <div class="dropdown">
+            <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                Profile
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                <img src="/images/undraw_profile_pic_ic5t.svg" class="" alt="" style="height: 50px;" />
+                <p class="dropdown-item">{{adminName}}</p>
+                <a href="/admin/logout" class="dropdown-item">Logout</a>
+            </div>
+        </div>
+    </nav>
+    {{!-- admin panel nav section  --}}
+
+
+    <div class="container" id="asb">
+        <div class="row jumbotron">
+
+            {{!-- admin pane left section  --}}
+            <div class="col-4 ">
+                <div class="d-flex justify-content-center">
+                    <div class="">
+                        <img src="/images/undraw_profile_pic_ic5t.svg" class="rounded-circle col-12 mt-2" width="100"
+                            height="100" />
+                        <div>
+                            <h4 class="text-center ">{{adminName}}</h4>
+                            {{!-- <h6 class="text-center">Abc@gamil.com</h6> --}}
+                        </div>
+                    </div>
+                </div>
+                <div class="row bg-info">
+                    <a href="/admin/dashboard" class="col-12 text-white mt-1">
+                        <h6><i class="fa fa-home ">Dashboard</i></h6>
+                    </a>
+                    <a href="/admin/doctors" class="col-12  text-white">
+                        <h6><i class="fa fa-user-md ">Doctors</i></h6>
+                    </a>
+                    <a href="/admin/patients" class="col-12  text-white">
+                        <h6><i class="fa fa-wheelchair ">Patients</i></h6>
+                    </a>
+                    <a href="/admin/appointments" class="col-12  text-white">
+                        <h6><i class="fa fa-calendar">Appoinments</i></h6>
+                    </a>
+                </div>
+            </div>
+            {{!-- admin pane left section  --}}
+
+            {{!-- admin pane right section  --}}
+            <div class="col-8">
+                <h4>
+                    <b>Welcome {{adminName}} !</b>
+                </h4>
+                <div class="col-12 mt-5">
+                    <h5>Dashboard</h5>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-4">
+                        <div class="card">
+                            <div class="col-12">
+                                <img class="card-img-top col-12" src="/images/undraw_doctor_kw5l.svg"
+                                    style="height: 100px;" alt="Card image cap" />
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Doctors</h5>
+                                <h3 class="card-text">3</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <div class="card">
+                            <div class="col-12">
+                                <img class="card-img-top col-12" src="/images/undraw_profile_pic_ic5t.svg"
+                                    style="height: 100px;" alt="Card image cap" />
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Patients</h5>
+                                <h3 class="card-text">1</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <div class="card">
+                            <div class="col-12">
+                                <img class="card-img-top col-12" src="/images/undraw_calendar_dutt.svg"
+                                    style="height: 100px;" alt="Card image cap" />
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Appoinments</h5>
+                                <h3 class="card-text">8</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{!-- admin pane right section  --}}
+    </div>
+</div>

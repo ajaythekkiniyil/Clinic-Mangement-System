@@ -3,13 +3,11 @@
     <nav class="navbar navbar-light bg-light">
         <h1 class="text-primary"><b>DENTACARE</b></h1>
         <div class="dropdown">
-            <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown"
+            <button class="btn btn-info dropdown-toggle button1" type="button" id="dropdownMenu2" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
-                Profile
+                {{adminName}}
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                <img src="/images/undraw_profile_pic_ic5t.svg" class="" alt="" style="height: 50px;" />
-                <p class="dropdown-item">{{adminName}}</p>
                 <a href="/admin/logout" class="dropdown-item">Logout</a>
             </div>
         </div>
@@ -24,45 +22,50 @@
             <div class="col-4 ">
                 <div class="d-flex justify-content-center">
                     <div class="">
-                        <img src="/images/undraw_profile_pic_ic5t.svg" class="rounded-circle col-12 mt-2" width="100"
-                            height="100" />
+                        <img src="/images/doctor.png" class="rounded-circle col-12 mt-2" width="100" height="100" />
                         <div>
                             <h4 class="text-center ">{{adminName}}</h4>
                             {{!-- <h6 class="text-center">Abc@gamil.com</h6> --}}
                         </div>
                     </div>
                 </div>
-                <div class="row bg-info">
-                    <a href="/admin/dashboard" class="col-12 text-white mt-1">
+
+                    {{!-- <a href="/admin/dashboard" class="tablinks col-12 text-white mt-1">
                         <h6><i class="fa fa-home ">Dashboard</i></h6>
                     </a>
-                    <a href="/admin/doctors" class="col-12  text-white">
+                    <a href="/admin/doctors" class="tablinks col-12  text-white">
                         <h6><i class="fa fa-user-md ">Doctors</i></h6>
                     </a>
-                    <a href="/admin/patients" class="col-12  text-white">
+                    <a href="/admin/patients" class="tablinks col-12  text-white">
                         <h6><i class="fa fa-wheelchair ">Patients</i></h6>
                     </a>
-                    <a href="/admin/appointments" class="col-12  text-white">
+                    <a href="/admin/appointments" class="tablinks col-12  text-white">
                         <h6><i class="fa fa-calendar">Appoinments</i></h6>
-                    </a>
-                </div>
+                    </a> --}}
+                    <div class="tab">
+                        <button class="tablinks" onclick="openCity(event, 'London')" id="defaultOpen"><i class="fa fa-home ">Dashboard</i></button>
+                        <button class="tablinks" onclick="openCity(event, 'Paris')"><i class="fa fa-user-md ">Doctors</i></button>
+                        <button class="tablinks" onclick="openCity(event, 'Tokyo')"><i class="fa fa-wheelchair ">Patients</i></button>
+                        <button class="tablinks" onclick="openCity(event, 'Tokyo')"><i class="fa fa-calendar">Appoinments</i></button>
+                    </div>
+
+                
             </div>
             {{!-- admin pane left section  --}}
 
             {{!-- admin pane right section  --}}
             <div class="col-8">
-                <h4>
-                    <b>Welcome {{adminName}} !</b>
-                </h4>
-                <div class="col-12 mt-5">
-                    <h5>Dashboard</h5>
-                </div>
-                <div class="row">
+
+                <div class="row tabcontent" id="London">
+                    <h4>
+                        <b>Welcome {{adminName}} !</b>
+                        <h5>Dashboard</h5>
+                    </h4>
                     <div class="col-12 col-md-4">
                         <div class="card">
                             <div class="col-12">
-                                <img class="card-img-top col-12" src="/images/undraw_doctor_kw5l.svg"
-                                    style="height: 100px;" alt="Card image cap" />
+                                <img class="card-img-top col-12" src="/images/doctors.jpg" style="height: 100px;"
+                                    alt="Card image cap" />
                             </div>
                             <div class="card-body">
                                 <h5 class="card-title">Doctors</h5>
@@ -73,8 +76,8 @@
                     <div class="col-12 col-md-4">
                         <div class="card">
                             <div class="col-12">
-                                <img class="card-img-top col-12" src="/images/undraw_profile_pic_ic5t.svg"
-                                    style="height: 100px;" alt="Card image cap" />
+                                <img class="card-img-top col-12" src="/images/patients.jpg" style="height: 100px;"
+                                    alt="Card image cap" />
                             </div>
                             <div class="card-body">
                                 <h5 class="card-title">Patients</h5>
@@ -85,8 +88,8 @@
                     <div class="col-12 col-md-4">
                         <div class="card">
                             <div class="col-12">
-                                <img class="card-img-top col-12" src="/images/undraw_calendar_dutt.svg"
-                                    style="height: 100px;" alt="Card image cap" />
+                                <img class="card-img-top col-12" src="/images/appointment.jpg" style="height: 100px;"
+                                    alt="Card image cap" />
                             </div>
                             <div class="card-body">
                                 <h5 class="card-title">Appoinments</h5>
@@ -95,9 +98,136 @@
                         </div>
                     </div>
                 </div>
+
+                <div id="Paris" class="tabcontent">
+                    <h3>Paris</h3>
+                    <p>Paris is the capital of France.</p>
+                </div>
+
+                <div id="Tokyo" class="tabcontent">
+                    <h3>Tokyo</h3>
+                    <p>Tokyo is the capital of Japan.</p>
+                </div>
+                {{!-- <h4>
+                    <b>Welcome {{adminName}} !</b>
+                </h4>
+                <div class="col-12 mt-5">
+                    <h5>Dashboard</h5>
+                </div>
+                <div class="row tabcontent" id="London" >
+                    <div class="col-12 col-md-4">
+                        <div class="card">
+                            <div class="col-12">
+                                <img class="card-img-top col-12" src="/images/doctors.jpg" style="height: 100px;"
+                                    alt="Card image cap" />
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Doctors</h5>
+                                <h3 class="card-text">3</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <div class="card">
+                            <div class="col-12">
+                                <img class="card-img-top col-12" src="/images/patients.jpg" style="height: 100px;"
+                                    alt="Card image cap" />
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Patients</h5>
+                                <h3 class="card-text">1</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <div class="card">
+                            <div class="col-12">
+                                <img class="card-img-top col-12" src="/images/appointment.jpg" style="height: 100px;"
+                                    alt="Card image cap" />
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Appoinments</h5>
+                                <h3 class="card-text">8</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div> --}}
             </div>
         </div>
         {{!-- admin pane right section  --}}
     </div>
 </div>
-</div>
+
+
+<style>
+    .button1:focus {
+        outline: none;
+        box-shadow: none;
+        border: none;
+    }
+
+    .button1:hover {
+        box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+    }
+
+
+    * {
+        box-sizing: border-box
+    }
+
+    body {
+        font-family: "Lato", sans-serif;
+    }
+
+    /* Style the tab */
+    .tab {
+        float: left;
+        border: 1px solid #ccc;
+        background-color: #f1f1f1;
+        width: 30%;
+        height: 300px;
+    }
+
+    /* Style the buttons inside the tab */
+    .tab button {
+        display: block;
+        background-color: inherit;
+        color: black;
+        padding: 22px 16px;
+        width: 100%;
+        border: none;
+        outline: none;
+        text-align: left;
+        cursor: pointer;
+        transition: 0.3s;
+        font-size: 17px;
+    }
+
+    /* Change background color of buttons on hover */
+    .tab button:hover {
+        background-color: #ddd;
+    }
+
+    /* Create an active/current "tab button" class */
+    .tab button.active {
+        background-color: #ccc;
+    }
+</style>
+<script>
+    function openCity(evt, cityName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(cityName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+
+    // Get the element with id="defaultOpen" and click on it
+    document.getElementById("defaultOpen").click();
+</script>
