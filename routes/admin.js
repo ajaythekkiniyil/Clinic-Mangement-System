@@ -29,9 +29,14 @@ router.get("/adminPanel", (req, res) => {
     res.render("admin/adminPanel", { adminName ,doctorsCount,allDoctors});
   })
 
-
-  
 });
+
+router.get('/delete/:id',(req,res)=>{
+  adminHelper.deleteDoctor(req.params.id).then(()=>{
+    res.send(true);
+  })
+});
+
 // admin logout
 router.get("/logout", (req, res) => {
   req.session.destroy();

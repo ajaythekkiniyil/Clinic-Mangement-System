@@ -1,9 +1,11 @@
 var dbo = require("../config/connection");
 var bcrypt = require("bcrypt");
 const { response } = require("express");
+const { ObjectId } = require("mongodb");
 var collectionNames = {
   adminDefaultCredentials: "admin",
   doctors: "doctors",
+  trashDoctors:'trash-doctors',
 };
 
 module.exports = {
@@ -88,4 +90,18 @@ module.exports = {
       reslove({count,allDoctors});
     });
   },
+  deleteDoctor:(doctorId)=>{
+    console.log(doctorId);
+    return new Promise(async(resolve,reject)=>{
+      var trashDoctors=await dbo.get().collection(collectionNames.doctors).find({_id:ObjectId(doctorId)}).toArray();
+     await dbo.get().collection(collectionNames.trashDoctors).insertOne(trashDoctors[0]);
+     await dbo.get().collection(collectionNames.doctors).deleteOne({_id:ObjectId(doctorId)},(err,obj)=>{
+       if(err)console.log(err);
+       else {
+         console.log('deleted');
+         resolve()
+       }
+     });
+    })
+  }
 };

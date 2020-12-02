@@ -14,7 +14,7 @@
                 <li class="nav-item avatar dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-55" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
-                        <img src="/images/doctor.png" style="height: 50px;" class="rounded-circle z-depth-0"
+                        <img src="/images/admin.jpg" style="height: 50px;" class="rounded-circle z-depth-0"
                             alt="avatar image">
                     </a>
                     <div class="dropdown-menu dropdown-menu-lg-right dropdown-secondary"
@@ -36,7 +36,7 @@
             <div class="col-4 ">
                 <div class="d-flex justify-content-center">
                     <div class="">
-                        <img src="/images/doctor.png" class="rounded-circle col-12 mt-2" />
+                        <img src="/images/admin.jpg" class="rounded-circle col-12 mt-2" />
                         <div>
                             <h4 class="text-center ">{{adminName}}</h4>
                         </div>
@@ -134,13 +134,13 @@
                                 </thead>
                                 <tbody>
                                     {{#each allDoctors}}
-                                    <tr>
+                                    <tr id="{{this._id}}">
                                         <th scope="row">{{this.name}}</th>
                                         <td>{{this.specialised}}</td>
                                         <td>{{this.field}}</td>
                                         {{!-- <td>IN</td> --}}
-                                        <td><a href="/admin/edit" id="{{this._id}}"><i class='fa fa-edit' style='font-size:24px'></i></a>
-                                            <a href="/admin/delete" id="{{this._id}}"><i class='fa fa-trash'style='font-size:24px'></i></a>
+                                        <td><a href="/admin/edit" ><i class='fa fa-edit' style='font-size:24px'></i></a>
+                                            <a href="#" onclick="deleteDoctor('{{this._id}}')"><i class='fa fa-trash'style='font-size:24px'></i></a>
                                         </td>
                                     </tr>
                                     {{/each}}
@@ -236,9 +236,7 @@
 
 
 <style>
-    .adminmain {
-        font-family: 'Raleway', sans-serif;
-    }
+    
 
     .dropdown-item:hover {
         color: blue;
@@ -287,6 +285,26 @@
 
 
 <script>
+
+    function deleteDoctor(id){
+
+        var r=confirm("Doy you want to delete");
+        if(r){
+            document.getElementById(id).style.display='none';
+        $.ajax({
+            url:'/admin/delete/'+id,
+            method:'get',
+            success:(resp)=>{
+            }
+        })
+        }
+        
+    }
+
+
+
+    {{!-- /admin/delete/{{this._id}} --}}
+
     function openTabs(evt, cityName) {
         var i, tabcontent, tablinks;
         tabcontent = document.getElementsByClassName("tabcontent");

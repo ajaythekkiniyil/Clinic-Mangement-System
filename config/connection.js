@@ -15,7 +15,7 @@ var state={
     dbo:null
 }
 module.exports.connect=()=>{
-    MongoClient.connect(url,(err,db)=>{
+    MongoClient.connect(url,{ useUnifiedTopology: true },(err,db)=>{
         if(err)throw err;
         state.dbo=db.db(dbName);
         console.log('connected to database');
