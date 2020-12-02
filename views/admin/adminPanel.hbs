@@ -35,9 +35,10 @@
             {{!-- admin pane left section  --}}
             <div class="col-4 ">
                 <div class="d-flex justify-content-center">
-                    <div class="">
-                        <img src="/images/admin.jpg" class="rounded-circle col-12 mt-2" />
-                        <div>
+                    <div class="row">
+                        <div class="col-12">
+                            <img src="/images/admin.jpg" class="rounded-circle col-12 mt-2" />
+                            {{!-- <i class="fa fa-camera upload-button"></i> --}}
                             <h4 class="text-center ">{{adminName}}</h4>
                         </div>
                     </div>
@@ -139,7 +140,7 @@
                                         <td>{{this.specialised}}</td>
                                         <td>{{this.field}}</td>
                                         {{!-- <td>IN</td> --}}
-                                        <td><a href="/admin/edit" ><i class='fa fa-edit' style='font-size:24px'></i></a>
+                                        <td><a href="/admin/edit/{{this._id}}" ><i class='fa fa-edit' style='font-size:24px'></i></a>
                                             <a href="#" onclick="deleteDoctor('{{this._id}}')"><i class='fa fa-trash'style='font-size:24px'></i></a>
                                         </td>
                                     </tr>
@@ -290,13 +291,14 @@
 
         var r=confirm("Doy you want to delete");
         if(r){
+
             document.getElementById(id).style.display='none';
-        $.ajax({
+
+            $.ajax({
             url:'/admin/delete/'+id,
             method:'get',
-            success:(resp)=>{
-            }
-        })
+            })
+
         }
         
     }

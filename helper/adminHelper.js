@@ -9,6 +9,7 @@ var collectionNames = {
 };
 
 module.exports = {
+
   verifyAdminLogin: function (adminCredentials) {
     return new Promise((resolve, reject) => {
       // fetching admin credentials from database
@@ -83,6 +84,7 @@ module.exports = {
         });
     });
   },
+  
   getAllDoctors: function () {
     return new Promise(async (reslove, reject) => {
       let count = await dbo.get().collection(collectionNames.doctors).find().count();
@@ -90,6 +92,7 @@ module.exports = {
       reslove({count,allDoctors});
     });
   },
+
   deleteDoctor:(doctorId)=>{
     console.log(doctorId);
     return new Promise(async(resolve,reject)=>{
@@ -103,5 +106,9 @@ module.exports = {
        }
      });
     })
+  },
+
+  editDoctor:(doctorId)=>{
+    
   }
 };

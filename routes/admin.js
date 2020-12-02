@@ -31,10 +31,17 @@ router.get("/adminPanel", (req, res) => {
 
 });
 
+// delete doctor
 router.get('/delete/:id',(req,res)=>{
   adminHelper.deleteDoctor(req.params.id).then(()=>{
     res.send(true);
   })
+});
+
+// edit doctor
+router.get('/edit/:id',(req,res)=>{
+  res.render('admin/editDoctor')
+  // adminHelper.editDoctor(req.params.id)
 });
 
 // admin logout
