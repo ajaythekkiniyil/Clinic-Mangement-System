@@ -19,7 +19,12 @@ app.set('view engine', 'hbs');
 app.engine('hbs', hbs({ layoutsDir: __dirname + '/views/layout', defaultLayout: 'layout', extname: 'hbs', partialsDir: __dirname + '/views/partials' }))
 
 app.use(fileUpload());
-app.use(session({ secret: 'key', cookie: { maxAge: 300000 } }));
+app.use(session({
+   secret: 'secret-key',
+    cookie: { maxAge: 300000 } ,
+    resave: true,
+    saveUninitialized: true
+  }));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

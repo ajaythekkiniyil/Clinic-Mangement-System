@@ -5,7 +5,7 @@ const { ObjectId } = require("mongodb");
 var collectionNames = {
   adminDefaultCredentials: "admin",
   doctors: "doctors",
-  trashDoctors:'trash-doctors',
+  trashDoctors: 'trash-doctors',
 };
 
 module.exports = {
@@ -84,31 +84,67 @@ module.exports = {
         });
     });
   },
-  
+
   getAllDoctors: function () {
     return new Promise(async (reslove, reject) => {
       let count = await dbo.get().collection(collectionNames.doctors).find().count();
       let allDoctors = await dbo.get().collection(collectionNames.doctors).find().toArray();
-      reslove({count,allDoctors});
+      reslove({ count, allDoctors });
     });
   },
 
-  deleteDoctor:(doctorId)=>{
-    console.log(doctorId);
-    return new Promise(async(resolve,reject)=>{
-      var trashDoctors=await dbo.get().collection(collectionNames.doctors).find({_id:ObjectId(doctorId)}).toArray();
-     await dbo.get().collection(collectionNames.trashDoctors).insertOne(trashDoctors[0]);
-     await dbo.get().collection(collectionNames.doctors).deleteOne({_id:ObjectId(doctorId)},(err,obj)=>{
-       if(err)console.log(err);
-       else {
-         console.log('deleted');
-         resolve()
-       }
-     });
+  deleteDoctor: (doctorId) => {
+    return new Promise(async (resolve, reject) => {
+      var trashDoctors = await dbo.get().collection(collectionNames.doctors).find({ _id: ObjectId(doctorId) }).toArray();
+      await dbo.get().collection(collectionNames.trashDoctors).insertOne(trashDoctors[0]);
+      await dbo.get().collection(collectionNames.doctors).deleteOne({ _id: ObjectId(doctorId) }, (err, obj) => {
+        if (err) console.log(err);
+        else {
+          console.log('deleted');
+          resolve()
+        }
+      });
     })
   },
 
-  editDoctor:(doctorId)=>{
+  getOneDoctorDetails: (doctorId) => {
+    return new Promise((resolve, reject) => {
+      dbo.get().collection(collectionNames.doctors).findOne({ _id: ObjectId(doctorId) }, (err, match) => {
+        resolve(match);
+      })
+    })
+  },
+
+  checkAdminPassword: (password) => {
+    console.log(password);
+    var adminPassword = password;
+    return new Promise((resolve, reject) => {
+      dbo
+        .get().collection(collectionNames.adminDefaultCredentials).find().toArray().then((credentials) => {
+          bcrypt.compare(adminPassword, credentials[0].password, (err, match) => {
+            if (match) {
+              console.log("password match");
+              resolve(true)
+            }
+            else
+              console.log('not match');
+            resolve(false)
+          })
+        })
+    })
+  },
+
+  updateDoctor: (doctorDetails,callback) => {
     
+    dbo.get().collection(collectionNames.doctors).updateOne({_id: ObjectId(doctorDetails.doctorId)},{ $set: {
+      name: doctorDetails.name,
+      specialised: doctorDetails.specialised,
+      field: doctorDetails.field,
+    }},(err,resp)=>{
+      console.log('updated');
+    }
+  
+    )
+    callback()
   }
 };
