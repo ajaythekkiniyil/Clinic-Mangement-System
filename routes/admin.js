@@ -21,13 +21,18 @@ router.get("/", function (req, res, next) {
 });
 
 // Admin panel page
-router.get("/adminPanel", (req, res) => {
-  adminHelper.getAllDoctors().then((resp) => {
-    let doctorsCount = resp.count;
-    let allDoctors = resp.allDoctors;
-    let adminName = req.session.adminName;
-    res.render("admin/adminPanel", { adminName, doctorsCount, allDoctors });
-  })
+router.get("/adminPanel", async (req, res) => {
+  // fetch all details of patients and doctor from databse
+  let allPatientsDetails = await adminHelper.getAllPatients();
+  let allDoctorDetails = await adminHelper.getAllDoctors();
+
+  let patientscount = allPatientsDetails.patientscount;
+  let allPatients = allPatientsDetails.allPatients;
+  let doctorsCount = allDoctorDetails.count;
+  let allDoctors = allDoctorDetails.allDoctors;
+
+  let adminName = req.session.adminName;
+  res.render("admin/adminPanel", { adminName, doctorsCount, allDoctors,patientscount, allPatients});
 
 });
 
@@ -87,11 +92,12 @@ router.post("/addDoctorData", (req, res) => {
 
 // edit doctor
 router.get('/edit/:id', (req, res) => {
+
   if (req.session.alert) {
     let alert = req.session.alert;
     var doctorId = req.params.id;
     adminHelper.getOneDoctorDetails(req.params.id).then((doctor) => {
-      res.render('admin/editDoctorForm', { doctor, doctorId,alert });
+      res.render('admin/editDoctorForm', { doctor, doctorId, alert });
     })
   } else {
     var doctorId = req.params.id;
@@ -103,18 +109,16 @@ router.get('/edit/:id', (req, res) => {
 });
 
 router.post('/edit/:id', (req, res) => {
-  console.log(req.body);
-  console.log(req.files);
+
   adminHelper.checkAdminPassword(req.body.password).then((resp) => {
     if (resp) {
-      adminHelper.updateDoctor(req.body,function(){
-        if(req.files){
+      adminHelper.updateDoctor(req.body, function () {
+        if (req.files) {
           let doctorId = req.body.doctorId;
           let image = req.files.image;
           image.mv("public/images/doctors/" + doctorId + ".jpg");
         }
-        res.redirect('/admin')
-
+        res.redirect('/admin');
       })
     }
     else {
@@ -124,6 +128,32 @@ router.post('/edit/:id', (req, res) => {
   })
 })
 
+// patients add
+router.get('/addpatientsForm', (req, res) => {
+  if (req.session.alert) {
+    let alert = req.session.alert;
+    res.render("admin/addPatientsForm", { alert });
+  } else {
+    res.render("admin/addPatientsForm");
+  }
+})
+
+router.post('/addpatients', (req, res) => {
+  adminHelper.checkAdminPassword(req.body.password).then((resp) => {
+    if (resp) {
+      adminHelper.addPatientData(req.body).then((patientId) => {
+
+        let image = req.files.image;
+        image.mv("public/images/patients/" + patientId + ".jpg");
+        res.redirect('/admin');
+      })
+    }
+    else {
+      req.session.alert = "Enter Correct Password";
+      res.redirect("/admin/addpatientsForm");
+    }
+  })
+})
 
 
 

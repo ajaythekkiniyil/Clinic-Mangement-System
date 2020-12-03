@@ -5,6 +5,7 @@ const { ObjectId } = require("mongodb");
 var collectionNames = {
   adminDefaultCredentials: "admin",
   doctors: "doctors",
+  patients:'patients',
   trashDoctors: 'trash-doctors',
 };
 
@@ -85,12 +86,11 @@ module.exports = {
     });
   },
 
-  getAllDoctors: function () {
-    return new Promise(async (reslove, reject) => {
+  getAllDoctors:async function () {
       let count = await dbo.get().collection(collectionNames.doctors).find().count();
       let allDoctors = await dbo.get().collection(collectionNames.doctors).find().toArray();
-      reslove({ count, allDoctors });
-    });
+      return({ count, allDoctors });
+    
   },
 
   deleteDoctor: (doctorId) => {
@@ -116,7 +116,6 @@ module.exports = {
   },
 
   checkAdminPassword: (password) => {
-    console.log(password);
     var adminPassword = password;
     return new Promise((resolve, reject) => {
       dbo
@@ -134,17 +133,51 @@ module.exports = {
     })
   },
 
-  updateDoctor: (doctorDetails,callback) => {
-    
-    dbo.get().collection(collectionNames.doctors).updateOne({_id: ObjectId(doctorDetails.doctorId)},{ $set: {
-      name: doctorDetails.name,
-      specialised: doctorDetails.specialised,
-      field: doctorDetails.field,
-    }},(err,resp)=>{
+  updateDoctor: (doctorDetails, callback) => {
+
+    dbo.get().collection(collectionNames.doctors).updateOne({ _id: ObjectId(doctorDetails.doctorId) }, {
+      $set: {
+        name: doctorDetails.name,
+        specialised: doctorDetails.specialised,
+        field: doctorDetails.field,
+      }
+    }, (err, resp) => {
       console.log('updated');
     }
-  
+
     )
     callback()
-  }
+  },
+
+  getAllPatients:async()=>{
+      let patientscount = await dbo.get().collection(collectionNames.patients).find().count();
+      let allPatients = await dbo.get().collection(collectionNames.patients).find().toArray();
+      return({ patientscount, allPatients });
+    
+  },
+
+  addPatientData: (patientDetails) => {
+    let Details = {
+      name: patientDetails.name,
+      age: patientDetails.age,
+      mobile: patientDetails.mobile,
+    };
+    return new Promise((resolve,reject)=>{
+      dbo
+      .get()
+      .collection(collectionNames.patients)
+      .insertOne(Details, (err, resp) => {
+        if (err) throw err;
+        else {
+          console.log("New patient added to database");
+          let patientId = resp.ops[0]._id;
+          resolve( patientId );
+        }
+      });
+    })
+    
+
+  },
+
+
 };

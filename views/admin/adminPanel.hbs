@@ -89,7 +89,7 @@
                                 </div>
                                 <div class="card-body">
                                     <h5 class="card-title">Patients</h5>
-                                    <h3 class="card-text">1</h3>
+                                    <h3 class="card-text">{{patientscount}}</h3>
                                 </div>
                             </div>
                         </div>
@@ -162,7 +162,7 @@
                             <h4>
                                 <b>List of patients</b>
                             </h4>
-                            <a href="/admin/addpatients"><i class="fa fa-edit text-danger" style="">Add Patients</i></a>
+                            <a href="/admin/addpatientsForm"><i class="fa fa-edit text-danger" style="">Add Patients</i></a>
                         </div>
 
                         <div class="row table-responsive">
@@ -172,21 +172,21 @@
                                         <th scope="col">Name</th>
                                         <th scope="col">Age</th>
                                         <th scope="col">Mobile</th>
-                                        <th scope="col">Status</th>
                                         <th scope="col">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    {{#each allPatients}}
                                     <tr>
-                                        <th scope="row">1</th>
-                                        <td>Mark</td>
-                                        <td>Otto</td>
-                                        <td>@mdo</td>
+                                        <th scope="row">{{this.name}}</th>
+                                        <td>{{this.age}}</td>
+                                        <td>{{this.mobile}}</td>
                                         <td>
                                             <a href=""><i class='fa fa-edit' style='font-size:24px'></i></a> <a
                                                 href=""><i class='fa fa-trash' style='font-size:24px'></i></a>
                                         </td>
                                     </tr>
+                                    {{/each}}
 
                                 </tbody>
                             </table>
