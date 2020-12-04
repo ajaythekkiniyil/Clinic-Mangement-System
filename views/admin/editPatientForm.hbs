@@ -29,20 +29,20 @@
     <div class="bg">
         <div class="row ">
             <div class="form-style-10">
-                <h1>Edit Doctor</h1>
+                <h1>Edit Patient</h1>
                 <form action="" method="post" enctype="multipart/form-data">
                     <p class="text-danger">{{alert}}</p>
-                    <div class="section"><span>1</span>Doctor details</div>
+                    <div class="section"><span>1</span>Patient details</div>
                     <div class="inner-wrap">
-                        <input type="hidden" value="{{doctorId}}"  name="doctorId">
-                        <label>Name<input type="text" name="name" value="{{doctor.name}}" required/></label>
-                        <label>Specialised<input type="text" name="specialised" value="{{doctor.specialised}}" required/></label>
-                        <label>Field <input type="text" name="field" value="{{doctor.field}}" required/></label>
+                        <input type="hidden" value="{{patientId}}"  name="patientId">
+                        <label>Name<input type="text" name="name" value="{{patient.name}}" required/></label>
+                        <label>Age<input type="number" name="age" value="{{patient.age}}" required/></label>
+                        <label>Mobile <input type="tel" name="mobile" value="{{patient.mobile}}" required/></label>
                     </div>
 
                     <div class="section"><span>2</span>Add Image</div>
                     <div class="inner-wrap">
-                        <label>Add image<input type="file" name="image" /></label>
+                        <label>Add image<input type="file" name="image"  /></label>
                     </div>
 
                     <div class="section"><span>3</span>Admin Password</div>
@@ -55,7 +55,7 @@
                     </div>
                 </form>
             </div>
-            {{!-- admin panel add doctors section  --}}
+            {{!-- admin panel add patient section  --}}
         </div>
     </div>
 </div>

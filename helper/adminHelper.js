@@ -7,6 +7,7 @@ var collectionNames = {
   doctors: "doctors",
   patients:'patients',
   trashDoctors: 'trash-doctors',
+  trashPatients: 'trash-patients',
 };
 
 module.exports = {
@@ -179,5 +180,42 @@ module.exports = {
 
   },
 
+  deletePatient: (patientId) => {
+    return new Promise(async (resolve, reject) => {
+      var trashPatient = await dbo.get().collection(collectionNames.patients).find({ _id: ObjectId(patientId) }).toArray();
+      await dbo.get().collection(collectionNames.trashPatients).insertOne(trashPatient[0]);
+      await dbo.get().collection(collectionNames.patients).deleteOne({ _id: ObjectId(patientId) }, (err, obj) => {
+        if (err) console.log(err);
+        else {
+          console.log('deleted');
+          resolve()
+        }
+      });
+    })
+  },
 
+  
+  getOnePatientDetails: (patientId) => {
+    return new Promise((resolve, reject) => {
+      dbo.get().collection(collectionNames.patients).findOne({ _id: ObjectId(patientId) }, (err, match) => {
+        resolve(match);
+      })
+    })
+  },
+  
+  updatePatient: (patientDetails, callback) => {
+
+    dbo.get().collection(collectionNames.patients).updateOne({ _id: ObjectId(patientDetails.patientId) }, {
+      $set: {
+        name: patientDetails.name,
+        specialised: patientDetails.age,
+        field: patientDetails.mobile,
+      }
+    }, (err, resp) => {
+      console.log('updated');
+    }
+
+    )
+    callback()
+  },
 };

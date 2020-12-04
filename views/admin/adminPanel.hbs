@@ -177,13 +177,13 @@
                                 </thead>
                                 <tbody>
                                     {{#each allPatients}}
-                                    <tr>
+                                    <tr id="{{this._id}}">
                                         <th scope="row">{{this.name}}</th>
                                         <td>{{this.age}}</td>
                                         <td>{{this.mobile}}</td>
                                         <td>
-                                            <a href=""><i class='fa fa-edit' style='font-size:24px'></i></a> <a
-                                                href=""><i class='fa fa-trash' style='font-size:24px'></i></a>
+                                            <a href="/admin/editPatient/{{this._id}}"><i class='fa fa-edit' style='font-size:24px'></i></a> 
+                                            <a href="#" onclick="deletePatient('{{this._id}}')"><i class='fa fa-trash' style='font-size:24px'></i></a>
                                         </td>
                                     </tr>
                                     {{/each}}
@@ -234,6 +234,9 @@
         {{!-- admin pane right section  --}}
     </div>
 </div>
+
+
+
 
 
 <style>
@@ -302,7 +305,19 @@
         }
         
     }
+    function deletePatient(id){
+        var r=confirm("Doy you want to delete");
+        if(r){
 
+            document.getElementById(id).style.display='none';
+
+            $.ajax({
+            url:'/admin/deletePatient/'+id,
+            method:'get',
+            })
+
+        }
+    }
 
 
     {{!-- /admin/delete/{{this._id}} --}}

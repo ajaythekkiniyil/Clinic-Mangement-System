@@ -70,8 +70,10 @@ router.get("/adddoctors", (req, res) => {
   if (req.session.alert) {
     let alert = req.session.alert;
     res.render("admin/addDoctorsForm", { alert });
+    req.session.alert='';
   } else {
     res.render("admin/addDoctorsForm");
+    
   }
 });
 
@@ -98,6 +100,7 @@ router.get('/edit/:id', (req, res) => {
     var doctorId = req.params.id;
     adminHelper.getOneDoctorDetails(req.params.id).then((doctor) => {
       res.render('admin/editDoctorForm', { doctor, doctorId, alert });
+      req.session.alert="";
     })
   } else {
     var doctorId = req.params.id;
@@ -133,6 +136,7 @@ router.get('/addpatientsForm', (req, res) => {
   if (req.session.alert) {
     let alert = req.session.alert;
     res.render("admin/addPatientsForm", { alert });
+    req.session.alert='';
   } else {
     res.render("admin/addPatientsForm");
   }
@@ -155,6 +159,52 @@ router.post('/addpatients', (req, res) => {
   })
 })
 
+// delete patient
+router.get('/deletePatient/:id', (req, res) => {
+  console.log(req.params.id);
+  adminHelper.deletePatient(req.params.id).then(() => {
+    res.send(true);
+  })
+});
+
+// edit doctor
+router.get('/editPatient/:id', (req, res) => {
+
+  if (req.session.alert) {
+    let alert = req.session.alert;
+    var patientId = req.params.id;
+    adminHelper.getOnePatientDetails(req.params.id).then((patient) => {
+      res.render('admin/editPatientForm', { patient, patientId, alert });
+      req.session.alert="";
+    })
+  } else {
+    var patientId = req.params.id;
+    adminHelper.getOnePatientDetails(req.params.id).then((patient) => {
+      res.render('admin/editPatientForm', { patient, patientId });
+    })
+  }
+
+});
+
+router.post('/editPatient/:id', (req, res) => {
+
+  adminHelper.checkAdminPassword(req.body.password).then((resp) => {
+    if (resp) {
+      adminHelper.updatePatient(req.body, function () {
+        if (req.files) {
+          let patientId = req.body.patientId;
+          let image = req.files.image;
+          image.mv("public/images/patients/" + patientId + ".jpg");
+        }
+        res.redirect('/admin');
+      })
+    }
+    else {
+      req.session.alert = "Enter Correct Password";
+      res.redirect("/admin/editPatient/" + req.body.patientId);
+    }
+  })
+})
 
 
 
