@@ -23,6 +23,9 @@ router.get("/", function (req, res, next) {
 // Admin panel page
 router.get("/adminPanel", async (req, res) => {
   // fetch all details of patients and doctor from databse
+  if(!req.session.adminLogedin){
+    res.redirect('/admin')
+  }
   let allPatientsDetails = await adminHelper.getAllPatients();
   let allDoctorDetails = await adminHelper.getAllDoctors();
 
@@ -206,6 +209,11 @@ router.post('/editPatient/:id', (req, res) => {
   })
 })
 
+
+// add Appointment
+router.get('/addAppointment',(req,res)=>{
+  res.send('hi')
+})
 
 
 module.exports = router;

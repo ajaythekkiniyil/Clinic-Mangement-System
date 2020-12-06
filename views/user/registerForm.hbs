@@ -1,0 +1,68 @@
+<div class="section">
+    <div class="container">
+        <div>
+            <h1 class="text-white">User Register Form</h1>
+
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <form action="/registerForm" method="POST" class="row text-white">
+                    <div class="col-12 mt-3">
+                        <label class="col-12" for="">Full Name</label>
+                        <input class="col-12" type="text" name="name" placeholder="Full Name*" required>
+                    </div>
+                    <div class="col-12 mt-3">
+                        <label class="col-12" for="">Mobile Number</label>
+
+                        <input class="col-12" type="tel" maxlength="10" name="mobile" placeholder="Mobile Number*" required>
+                    </div>
+                    <div class="col-12 mt-3">
+                        <label class="col-12" for="">Age</label>
+
+                        <input class="col-12" type="number" name="age" placeholder="Age*" required>
+                    </div>
+                    <div class="col-12 mt-3">
+                        <label class="col-12" for="">Email</label>
+
+                        <input class="col-12" type="email" name="email" placeholder="Email Id*" required>
+                    </div>
+                    <div class="col-12 mt-3">
+                        <label class="col-12" for="">Password</label>
+
+                        <input class="col-12" type="password" name="password" placeholder="Password*" required>
+                    </div>
+                    <div class="col-12 mt-3 mb-4">
+                        <input type="submit" value="Register" class="col-12 btn btn-warning">
+                        <h5 class="text-dark mt-2">If you are already registered ? <a href="/loginForm" class="text-success">Login</a></h5>
+                    </div>
+                </form>
+
+            </div>
+            <div class="col-6 text-white">
+                <h1>We provide total Health care solution</h1>
+                <h4>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+                    industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type
+                    and scrambled it to make a type specimen book. </h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<style>
+    .section {
+        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8)), url('images/landing-page/progress.jpg') no-repeat;
+        background-size: cover;
+        background-position: center;
+        height: 100vh;
+    }
+
+    form {
+        background-color: whitesmoke;
+    }
+
+    label {
+        font-weight: bolder;
+        color: red;
+    }
+</style>
