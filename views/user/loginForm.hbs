@@ -1,29 +1,30 @@
 <div class="bg-info">
     <!-- Container containing all contents -->
-    <div class="container">
+    <div class="container ">
         <div class="row justify-content-center">
             <div class="col-12 col-md-9 col-lg-7 col-xl-6">
                 <!-- White Container -->
-                <div class="container bg-white rounded mt-2 mb-2 px-0">
+                <div class="container bg-white rounded mt-5 mb-2 px-0">
                     <!-- Main Heading -->
                     <div class="row justify-content-center align-items-center pt-3">
                         <h1><strong>Login</strong></h1>
                     </div>
+
                     <div class="pt-3 pb-3">
-                        <form class="form-horizontal">
+                        <form action="/verifyLoginCredentials" method="POST" class="form-horizontal">
                             <!-- User Name Input -->
                             <div class="form-group row justify-content-center px-3">
-                                <div class="col-9 px-0"> <input type="text" name="name" placeholder="User name"
-                                        class="form-control border-info placeicon"> </div>
-                            </div> <!-- Password Input -->
-                            <div class="form-group row justify-content-center px-3">
-                                <div class="col-9 px-0"> <input type="password" name="password" placeholder="password"
+                                <div class="col-9 px-0">
+                                    <label for="">username:</label>
+                                    <input type="text" name="name" placeholder="User name"
                                         class="form-control border-info placeicon"> </div>
                             </div>
-                            <!-- mobile Input -->
+                            <!-- Password Input -->
                             <div class="form-group row justify-content-center px-3">
-                                <div class="col-9 px-0"> <input type="tel" maxlength="10" placeholder="mobile number"
-                                        name="mobile" class="form-control border-info placeicon"> </div>
+                                <div class="col-9 px-0">
+                                    <label for="">password:</label>
+                                    <input type="password" name="password" placeholder="password"
+                                        class="form-control border-info placeicon"> </div>
                             </div>
                             <!-- Log in Button -->
                             <div class="form-group row justify-content-center">
@@ -43,10 +44,6 @@
                             <div class="row justify-content-center pt-4">
                                 <div class="col-10">
                                     <div class="row justify-content-center">
-                                        <!-- Twitter Connect -->
-                                        <div class="col-7 col-sm-4 px-1 pb-1"> <a href="#"
-                                                class="btn btn-block btn-social btn-twitter"> <span
-                                                    class="fa fa-twitter"></span> Twitter </a> </div>
                                         <!-- Facebook Connect -->
                                         <div class="col-7 col-sm-4 px-1 pb-1"> <a href="#"
                                                 class="btn btn-block btn-social btn-facebook"> <span
@@ -55,6 +52,8 @@
                                         <div class="col-7 col-sm-4 px-1 pb-1"> <a href="#"
                                                 class="btn btn-block btn-social btn-google"> <span
                                                     class="fa fa-google-plus"></span> Google+ </a> </div>
+
+
                                     </div>
                                 </div>
                             </div>

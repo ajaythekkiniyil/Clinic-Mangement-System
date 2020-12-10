@@ -1,68 +1,120 @@
-<div class="section">
+<div class="bg-info">
+    <!-- Container containing all contents -->
     <div class="container">
-        <div>
-            <h1 class="text-white">User Register Form</h1>
-
-        </div>
-        <div class="row">
-            <div class="col-6">
-                <form action="/registerForm" method="POST" class="row text-white">
-                    <div class="col-12 mt-3">
-                        <label class="col-12" for="">Full Name</label>
-                        <input class="col-12" type="text" name="name" placeholder="Full Name*" required>
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+                <!-- White Container -->
+                <div class="container bg-white rounded mt-2 mb-2 px-0">
+                    <!-- Main Heading -->
+                    <div class="row justify-content-center align-items-center pt-3">
+                        <h1><strong>Register Now</strong></h1>
                     </div>
-                    <div class="col-12 mt-3">
-                        <label class="col-12" for="">Mobile Number</label>
+                    <div class="pt-3 pb-3">
+                        <form class="form-horizontal" action="/registerForm" method="POST">
+                            <!-- User Name Input -->
+                            <div class="form-group row justify-content-center px-3">
+                                <div class="col-9 px-0"> <input type="text" name="name" placeholder="User name"
+                                        class="form-control border-info "> </div>
+                            </div>
+                            {{!-- Age --}}
+                            <div class="form-group row justify-content-center px-3">
+                                <div class="col-9 px-0"> <input type="number" name="age" placeholder="Age"
+                                        class="form-control border-info "> </div>
+                            </div>
 
-                        <input class="col-12" type="tel" maxlength="10" name="mobile" placeholder="Mobile Number*" required>
-                    </div>
-                    <div class="col-12 mt-3">
-                        <label class="col-12" for="">Age</label>
+                            <!-- Email Input -->
+                            <div class="form-group row justify-content-center px-3">
+                                <div class="col-9 px-0"> <input type="email" placeholder="Email" name="email"
+                                        class="form-control border-info "> </div>
+                            </div>
 
-                        <input class="col-12" type="number" name="age" placeholder="Age*" required>
-                    </div>
-                    <div class="col-12 mt-3">
-                        <label class="col-12" for="">Email</label>
+                            <!-- mobile Input -->
+                            <div class="form-group row justify-content-center px-3">
+                                <div class="col-9 px-0"> <input type="tel" placeholder="+9198XXX" name="mobile"
+                                        id="mobile" class="form-control border-info ">
+                                        <small class="text-danger">Country code and Mobile Number</small></s> </div>
+                            </div>
 
-                        <input class="col-12" type="email" name="email" placeholder="Email Id*" required>
-                    </div>
-                    <div class="col-12 mt-3">
-                        <label class="col-12" for="">Password</label>
+                            <div class="form-group row justify-content-center px-3">
+                                <div class="col-10 px-3"> <input type="button" value="Send code"
+                                        class="btn btn-block btn-info" onclick="sendCode()"> </div>
+                            </div>
+                            <div class="form-group row justify-content-center px-3">
+                                <div class="col-9 px-0"> <input type="text" id="verificationCode"
+                                        placeholder="Enter otp" name="otp" class="form-control border-info "> </div>
+                            </div>
+                            <div class="form-group row justify-content-center px-3">
+                                <div class="col-10 px-3"> <input type="button" id="code" value="Verify code"
+                                        class=" btn btn-block btn-info" onclick="verifyOtp()"> </div>
+                            </div>
 
-                        <input class="col-12" type="password" name="password" placeholder="Password*" required>
-                    </div>
-                    <div class="col-12 mt-3 mb-4">
-                        <input type="submit" value="Register" class="col-12 btn btn-warning">
-                        <h5 class="text-dark mt-2">If you are already registered ? <a href="/loginForm" class="text-success">Login</a></h5>
-                    </div>
-                </form>
+                            <!-- Password Input -->
+                            <div class="form-group row justify-content-center px-3" >
+                                <div class="col-9 px-0"> <input type="password" name="password" placeholder="password"
+                                        class="form-control border-info "> </div>
+                            </div>
 
-            </div>
-            <div class="col-6 text-white">
-                <h1>We provide total Health care solution</h1>
-                <h4>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-                    industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type
-                    and scrambled it to make a type specimen book. </h4>
+                            <input type="hidden" id="codeVerified" name="codeVerified" value="">
+
+                            <!-- Log in Button -->
+                            <div class="form-group row justify-content-center" id="register">
+                                <div class="col-4 px-3"> <input type="submit" value="Register"
+                                        class="btn btn-block btn-info"> </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- Horizontal Line -->
+                    <hr>
+
+                    <!-- Register Now -->
+                    <div class="pt-2">
+                        <div class="row justify-content-center">
+                            <h5>Already have an Account?<span><a href="/loginForm" class="text-danger"> Login
+                                        Now!</a></span></h5>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
+</div>
 
 
-<style>
-    .section {
-        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8)), url('images/landing-page/progress.jpg') no-repeat;
-        background-size: cover;
-        background-position: center;
-        height: 100vh;
+<script>
+    function sendCode() {
+        console.log(document.getElementById('mobile').value)
+        let mobile = document.getElementById('mobile').value;
+        $.ajax({
+            url: '/send-code',
+            method: 'post',
+            data: {
+                mobile: mobile
+            }
+        })
     }
 
-    form {
-        background-color: whitesmoke;
-    }
 
-    label {
-        font-weight: bolder;
-        color: red;
+    function verifyOtp() {
+        let code = document.getElementById('verificationCode').value;
+        let mobile = document.getElementById('mobile').value;
+
+        $.ajax({
+            url: '/verify-otp',
+            method: 'post',
+            data: {
+                code: code,
+                mobile: mobile,
+            },
+            success: (resp => {
+                if (resp) {
+                   {{!-- setting hidden input field value to approved if code verified --}}
+                    document.getElementById('codeVerified').value = resp.status;
+
+                }
+            })
+
+        })
+
     }
-</style>
+</script>
