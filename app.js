@@ -8,6 +8,9 @@ var connect=require('./config/connection');
 var session=require('express-session');
 var fileUpload=require('express-fileupload');
 
+var passport=require('passport')
+
+
 var indexRouter = require('./routes/index');
 var adminRouter = require('./routes/admin');
 
@@ -18,6 +21,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 app.engine('hbs', hbs({ layoutsDir: __dirname + '/views/layout', defaultLayout: 'layout', extname: 'hbs', partialsDir: __dirname + '/views/partials' }))
 
+app.use(passport.initialize())
 app.use(fileUpload());
 app.use(session({
    secret: 'secret-key',

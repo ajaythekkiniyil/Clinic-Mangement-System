@@ -20,6 +20,24 @@ module.exports = {
                 console.log("user Details stored in data base");
             })
         }))
-
+    },
+    verifyLoginCredentials:function(userLoginCredentials,callback){
+        dbo.get().collection(collectionName.user).findOne({name:userLoginCredentials.name}).then(resp=>{
+            console.log(resp);
+            if(resp==null){
+                callback(false)
+            }
+            bcrypt.compare(userLoginCredentials.password,resp.password,(err,match)=>{
+                if(match){
+                    console.log('Password matched');
+                    callback(resp)
+                }
+                else{
+                    console.log('Password not matched');
+                    callback(false)
+                }
+            })
+            
+        })        
     }
 }

@@ -9,14 +9,22 @@
             <li class="nav-item dropdown">
                 <a class="text-white nav-link dropdown-toggle" id="navbarDropdownMenuLink-55" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
+                    {{#if displayName}}
+                    {{displayName}}
+                    {{else}}
                     Login or Register
+                    {{/if}}
                 </a>
                 <div class="dropdown-menu dropdown-menu-lg-right dropdown-secondary"
                     aria-labelledby="navbarDropdownMenuLink-55">
+                    {{#if displayName}}
+                        <a class="dropdown-item" href="/logout">Logout</a>
+                    {{else}}
                     <a class="dropdown-item" href="registerForm">Register</a>
                     <a class="dropdown-item" href="/loginForm">User Login</a>
                     <a class="dropdown-item" href="#">Doctor Login</a>
                     <a class="dropdown-item" href="/admin">Admin Login</a>
+                    {{/if}}
                 </div>
             </li>
         </ul>
@@ -25,10 +33,11 @@
 
 
 <style>
-    .dropdown-item:hover{
+    .dropdown-item:hover {
         color: red;
     }
-    .nav-link:hover{
+
+    .nav-link:hover {
         cursor: pointer;
     }
 </style>
