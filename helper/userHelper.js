@@ -2,6 +2,7 @@ var dbo = require("../config/connection");
 var bcrypt = require("bcrypt");
 var collectionName = {
     user: 'user',
+    doctors:'doctors'
 }
 
 module.exports = {
@@ -23,7 +24,7 @@ module.exports = {
     },
     verifyLoginCredentials:function(userLoginCredentials,callback){
         dbo.get().collection(collectionName.user).findOne({name:userLoginCredentials.name}).then(resp=>{
-            console.log(resp);
+            // console.log(resp);
             if(resp==null){
                 callback(false)
             }
@@ -39,5 +40,10 @@ module.exports = {
             })
             
         })        
-    }
+    },
+    getAllDoctors:async function () {
+        let allDoctors = await dbo.get().collection(collectionName.doctors).find().toArray();
+        return(allDoctors);
+      
+    },
 }
