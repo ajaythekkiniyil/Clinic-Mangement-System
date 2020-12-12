@@ -141,10 +141,19 @@ router.get('/google/callback', passport.authenticate('google', { failureRedirect
   res.render('user/userPage', { displayName });
 })
 
-
+// logout
 router.get('/logout', (req, res) => {
   req.session.destroy();
   res.redirect('/');
 })
+
+// bookAppointment
+router.get('/bookAppointment/:id',(req,res)=>{
+  console.log(req.params.id);
+  
+  let displayName = req.session.passport.user.displayName;
+  res.render('user/bookAppointment',{displayName});
+})
+
 
 module.exports = router;

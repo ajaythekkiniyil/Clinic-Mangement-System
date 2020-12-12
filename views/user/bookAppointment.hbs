@@ -1,0 +1,25 @@
+{{>navbars}}
+<h2 class="bg-dark text-warning text-center">BOOK AN APPOINTMENT</h2>
+
+<div class="jumbotron">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-4 border">
+                <img src="images/doctor.png" class="col-12" alt="">
+                <h5 class="text-center">name</h5>
+                <h5 class="text-center">specialised</h5>
+                <h5 class="text-center">field</h5>
+            </div>
+            <div class="col-12 col-md-8 border">
+                <div class="col-12 mt-3">
+                    <h4>SELECT YOUR DATE AND TIME</h4>
+                    <form action="/bookNow" method="POST">
+                        <label for="">DATE: </label><input type="date" name="date" id="">
+                        <label for="">TIME: </label><input type="time" name="time" id="">
+                        <button type="submit" class="btn btn-success">Book</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

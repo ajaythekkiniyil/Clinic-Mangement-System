@@ -42,14 +42,14 @@
                     <div class="col-12 col-md-4 mt-3">
                         <div class="card">
                             <div class="col-12">
-                                <img class="card-img-top col-12" src="images/doctors/{{this._id}}.jpg" style="height: 150px;"
-                                    alt="Card image cap" />
+                                <img class="card-img-top col-12" src="images/doctors/{{this._id}}.jpg"
+                                    style="height: 150px;" alt="Card image cap" />
                             </div>
                             <div class="card-body">
                                 <h2 class="">{{this.name}}</h2>
                                 <h5 class="">{{this.specialised}}</h5>
                                 <h6 class="">{{this.field}}</h6>
-                                <a class="btn btn-success" href="">Book</a>
+                                <a class="btn btn-success" href="/bookAppointment/{{this._id}}">Book</a>
                             </div>
                         </div>
                     </div>
@@ -60,125 +60,73 @@
 
             {{!--List of appointments tab --}}
             <div id="appointments" class="tabcontent">
-                <h4>
-                    <b>Welcome {{adminName}} !</b>
-                </h4>
+
+                <h2 class="text-warning">Welcome {{displayName}} !</h2>
+
                 <div class="col-12 mt-5">
-                    <div class="col-12 mt-5">
-                        <h4>
-                            <b>List of doctors</b>
-                        </h4>
-                        <a href="/admin/adddoctors"><i class="fa fa-edit text-danger">Add Doctors</i></a>
-                    </div>
-
-
-                    <div class='table-responsive'>
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Doctors</th>
-                                    <th scope="col">Specialised</th>
-                                    <th scope="col">Speciality</th>
-                                    {{!-- <th scope="col">Status</th> --}}
-                                    <th scope="col">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {{#each allDoctors}}
-                                <tr id="{{this._id}}">
-                                    <th scope="row">{{this.name}}</th>
-                                    <td>{{this.specialised}}</td>
-                                    <td>{{this.field}}</td>
-                                    {{!-- <td>IN</td> --}}
-                                    <td><a href="/admin/edit/{{this._id}}"><i class='fa fa-edit'
-                                                style='font-size:24px'></i></a>
-                                        <a href="#" onclick="deleteDoctor('{{this._id}}')"><i class='fa fa-trash'
-                                                style='font-size:24px'></i></a>
-                                    </td>
-                                </tr>
-                                {{/each}}
-
-                            </tbody>
-                        </table>
+                    <h4>Appointments</h4>
+                    <div class="col-12 col-md-4 mt-3">
+                        <div class="card">
+                            <div class="col-12">
+                                <img class="card-img-top col-12" src="/images/doctors.jpg"
+                                    style="height: 50px;" alt="Card image cap" />
+                            </div>
+                            <div class="card-body">
+                                <h6 class="">Date:02-01-2020</h6>
+                                <h6 class="">Session:AM</h6>
+                                <h6 class="">Time:9:30</h6>
+                                <hr>
+                                <h6>Confirmed</h6>
+                                <a class="btn btn-link" href="">cancel</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
             {{!-- List of consulted tab --}}
             <div id="consulted" class="tabcontent">
-                <h4>
-                    <b>Welcome {{adminName}} !</b>
-                </h4>
+
+                <h2 class="text-warning">Welcome {{displayName}} !</h2>
+
                 <div class="col-12 mt-5">
-                    <div className="col-12 mt-5">
-                        <h4>
-                            <b>List of patients</b>
-                        </h4>
-                        <a href="/admin/addpatientsForm"><i class="fa fa-edit text-danger" style="">Add Patients</i></a>
-                    </div>
-
-                    <div class="row table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Age</th>
-                                    <th scope="col">Mobile</th>
-                                    <th scope="col">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {{#each allPatients}}
-                                <tr id="{{this._id}}">
-                                    <th scope="row">{{this.name}}</th>
-                                    <td>{{this.age}}</td>
-                                    <td>{{this.mobile}}</td>
-                                    <td>
-                                        <a href="/admin/editPatient/{{this._id}}"><i class='fa fa-edit'
-                                                style='font-size:24px'></i></a>
-                                        <a href="#" onclick="deletePatient('{{this._id}}')"><i class='fa fa-trash'
-                                                style='font-size:24px'></i></a>
-                                    </td>
-                                </tr>
-                                {{/each}}
-
-                            </tbody>
-                        </table>
+                    <h4>Consulted Appointments</h4>
+                    <div class="col-12 col-md-4 mt-3">
+                        <div class="card">
+                            <div class="col-12">
+                                <img class="card-img-top col-12" src="/images/doctors.jpg"
+                                    style="height: 50px;" alt="Card image cap" />
+                            </div>
+                            <div class="card-body">
+                                <h6 class="">Date:02-01-2020</h6>
+                                <h6 class="">Session:AM</h6>
+                                <h6 class="">Time:9:30</h6>
+                                <hr>
+                                <h6 class="text-success"><i class="fa fa-check"></i>Consulted</h6>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
             {{!-- List of cancelled tab --}}
             <div id="cancelled" class="tabcontent">
-                <h4>
-                    <b>Welcome {{adminName}} !</b>
-                </h4>
+                <h2 class="text-warning">Welcome {{displayName}} !</h2>
+
                 <div class="col-12 mt-5">
-                    <div class="col-12 mt-5">
-                        <h4>
-                            <b>List of Appointment</b>
-                        </h4>
-                        <a href="/admin/addAppointment"><i class="fa fa-edit text-danger" style="">Add
-                                Appointment</i></a>
-                    </div>
-                    <div class="row">
-                        <div class="col-12 col-md-6 mt-2">
-                            <div class="card ">
-                                <div class="col-12">
-                                    <img class="card-img-top col-12" src="/images/doctor.png" style="height: 140px;"
-                                        alt="Card image cap" />
-                                    <h5 class="text-center">Dr.Catherin</h5>
-                                    <h6 class="text-center">Orthodontist</h6>
-                                </div>
-                                <div class="card-body">
-
-                                    <p class="col text-primary">Appointment Date: 23-04-2020</p>
-                                    <p class="col text-primary">Session: Evening</p>
-                                    <p class="col text-primary">Time : 04:15-04:30 pm</p>
-                                    <p class="col text-primary">Booking for: Dr.Fais</p>
-                                    <p class="col text-primary">Appointment Date: 23-04-2020</p>
-
-                                </div>
+                    <h4>Consulted Appointments</h4>
+                    <div class="col-12 col-md-4 mt-3">
+                        <div class="card">
+                            <div class="col-12">
+                                <img class="card-img-top col-12" src="/images/doctors.jpg"
+                                    style="height: 50px;" alt="Card image cap" />
+                            </div>
+                            <div class="card-body">
+                                <h6 class="">Date:02-01-2020</h6>
+                                <h6 class="">Session:AM</h6>
+                                <h6 class="">Time:9:30</h6>
+                                <hr>
+                                <h6 class="text-success"><i class="fa fa-close"></i>Cancelled</h6>
                             </div>
                         </div>
                     </div>
