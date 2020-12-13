@@ -65,22 +65,25 @@
 
                 <div class="col-12 mt-5">
                     <h4>Appointments</h4>
-                    <div class="col-12 col-md-4 mt-3">
-                        <div class="card">
-                            <div class="col-12">
-                                <img class="card-img-top col-12" src="/images/doctors.jpg"
-                                    style="height: 50px;" alt="Card image cap" />
-                            </div>
-                            <div class="card-body">
-                                <h6 class="">Date:02-01-2020</h6>
-                                <h6 class="">Session:AM</h6>
-                                <h6 class="">Time:9:30</h6>
-                                <hr>
-                                <h6>Confirmed</h6>
-                                <a class="btn btn-link" href="">cancel</a>
+                    <div class="row">
+                        {{#each allAppointments}}
+                        <div class="col-12 col-md-4 mt-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="">Doctor Name:<b>{{this.doctor}}</b></h6>
+                                    <h6 class="">Date:<b>{{this.date}}</b></h6>
+                                    <h6 class="">Time:<b>{{this.time}}</b></h6>
+                                    <h6 class="">Booking for:<b>{{this.bookingFor}}</b></h6>
+                                    <hr>
+                                    <h6 class="text-warning"><b>{{this.status}}</b></h6>
+                                    <a class="btn btn-link" href="#"
+                                        onclick="cancelAppointment('{{this._id}}')">cancel</a>
+                                </div>
                             </div>
                         </div>
+                        {{/each}}
                     </div>
+
                 </div>
             </div>
 
@@ -94,8 +97,8 @@
                     <div class="col-12 col-md-4 mt-3">
                         <div class="card">
                             <div class="col-12">
-                                <img class="card-img-top col-12" src="/images/doctors.jpg"
-                                    style="height: 50px;" alt="Card image cap" />
+                                <img class="card-img-top col-12" src="/images/doctors.jpg" style="height: 50px;"
+                                    alt="Card image cap" />
                             </div>
                             <div class="card-body">
                                 <h6 class="">Date:02-01-2020</h6>
@@ -112,24 +115,22 @@
             {{!-- List of cancelled tab --}}
             <div id="cancelled" class="tabcontent">
                 <h2 class="text-warning">Welcome {{displayName}} !</h2>
-
-                <div class="col-12 mt-5">
-                    <h4>Consulted Appointments</h4>
-                    <div class="col-12 col-md-4 mt-3">
-                        <div class="card">
-                            <div class="col-12">
-                                <img class="card-img-top col-12" src="/images/doctors.jpg"
-                                    style="height: 50px;" alt="Card image cap" />
-                            </div>
-                            <div class="card-body">
-                                <h6 class="">Date:02-01-2020</h6>
-                                <h6 class="">Session:AM</h6>
-                                <h6 class="">Time:9:30</h6>
-                                <hr>
-                                <h6 class="text-success"><i class="fa fa-close"></i>Cancelled</h6>
+                <h4>Consulted Appointments</h4>
+                <div class="row">
+                    {{#each allDeletedAppointments}}
+                        <div class="col-12 col-md-4 mt-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="">Doctor Name:<b>{{this.doctor}}</b></h6>
+                                    <h6 class="">Date:<b>{{this.date}}</b></h6>
+                                    <h6 class="">Time:<b>{{this.time}}</b></h6>
+                                    <h6 class="">Booking for:<b>{{this.bookingFor}}</b></h6>
+                                    <hr>
+                                    <h6 class="text-danger"><i class="fa fa-close"></i>Cancelled by user</h6>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    {{/each}}
                 </div>
             </div>
         </div>
@@ -186,7 +187,21 @@
 
 
 <script>
+    function cancelAppointment(id) {
+        let confirmation = confirm('Are you sure to cancel this appointment');
+        if (confirmation) {
+            $.ajax({
+                url: '/cancelAppointment/' + id,
+                method: 'get',
+                success: (resp => {
+                    if (resp) {
+                        location.reload()
+                    }
+                })
+            })
+        }
 
+    }
     function openTabs(evt, cityName) {
         var i, tabcontent, tablinks;
         tabcontent = document.getElementsByClassName("tabcontent");

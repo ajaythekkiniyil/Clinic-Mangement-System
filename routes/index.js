@@ -2,15 +2,12 @@ var express = require('express');
 var router = express.Router();
 var userHelper = require('../helper/userHelper');
 
-//Twilio  
-const AccountSID = "ACc11fa22fbc75351deb03d32f26951fc2"
-const AuthToken = "05535af1ba673b35a41c21df0f314516"
-const ServiceID = "VAe74d7700afcfcea14842e98dd49a05d8"
+
 
 var passport = require('passport')
 require('../config/passport-setup')
 
-const client = require('twilio')(AccountSID, AuthToken);
+const client = require('twilio')(process.env.AccountSID, process.env.AuthToken);
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -46,7 +43,7 @@ router.get('/loginForm', (req, res) => {
     res.render('user/loginForm', { userLoginError })
     req.session.userLoginError = "";
   }
-  else if(req.session.passport){
+  else if (req.session.passport) {
     res.redirect('/userPage');
   }
   else
@@ -60,7 +57,7 @@ router.post('/send-code', (req, res) => {
   // console.log(req.body.mobile);
   client
     .verify
-    .services(ServiceID)
+    .services(process.env.ServiceID)
     .verifications
     .create({
       to: req.body.mobile,
@@ -79,7 +76,7 @@ router.post('/verify-otp', (req, res) => {
   // console.log(req.body.code);
   client
     .verify
-    .services(ServiceID)
+    .services(process.env.ServiceID)
     .verificationChecks
     .create({
       to: req.body.mobile,
@@ -104,7 +101,7 @@ router.post('/verifyLoginCredentials', (req, res) => {
         }
       }
       req.session.passport = user;
-     
+
       res.redirect('/userPage');
     }
     else {
@@ -114,16 +111,20 @@ router.post('/verifyLoginCredentials', (req, res) => {
   })
 })
 // user login success render this page
-router.get('/userPage',async(req,res)=>{
+router.get('/userPage', async (req, res) => {
   // if there is no user login redirect to home page
-  if(!req.session.passport){
+  if (!req.session.passport) {
     res.redirect('/')
   }
   let displayName = req.session.passport.user.displayName;
   // fetch all doctors details from database and send to user page
-  let allDoctorDetails =await userHelper.getAllDoctors();
-  // console.log(allDoctorDetails);
-  res.render('user/userPage',{displayName,allDoctorDetails});
+  // fetch all appointments  from database and send to user page
+  // fetch all deleted appointments  from database and send to user page
+  let allDoctorDetails = await userHelper.getAllDoctors();
+  let allAppointments = await userHelper.getAllAppointments(displayName);
+  let allDeletedAppointments=await userHelper.getAllDeteltedAppointments(displayName);
+  
+  res.render('user/userPage', { displayName, allDoctorDetails, allAppointments,allDeletedAppointments });
 })
 
 // login with google
@@ -148,11 +149,42 @@ router.get('/logout', (req, res) => {
 })
 
 // bookAppointment
-router.get('/bookAppointment/:id',(req,res)=>{
-  console.log(req.params.id);
-  
-  let displayName = req.session.passport.user.displayName;
-  res.render('user/bookAppointment',{displayName});
+router.get('/bookAppointment/:id', async (req, res) => {
+  // fetch doctor from database match with id
+  userHelper.getOneDoctor(req.params.id).then(doctor => {
+
+    let displayName = req.session.passport.user.displayName;
+    res.render('user/bookAppointment', { displayName, doctor });
+  })
+
+
+})
+
+// appointment booking user fill date and time
+router.post('/bookDoctor', async (req, res) => {
+  // Bookin date time doctor name department stored in database
+  userHelper.storeBooking(req.body, req.session.passport.user.displayName, (resp) => {
+    let appointment = {
+      doctorName: resp.doctor,
+      department: resp.department,
+      date: resp.date,
+      time: resp.time,
+      bookingfor: resp.bookingFor,
+      status:resp.status,
+    }
+    res.render('user/bookingConfirmed', { appointment })
+  });
+})
+
+// appointment confirmed page
+router.get('/bookingConfirmed', (req, res) => {
+  res.render('user/bookingConfirmed');
+})
+
+// cancelAppointment
+router.get('/cancelAppointment/:id', (req, res) => {
+  userHelper.cancelAppointment(req.params.id);
+  res.json(true)
 })
 
 

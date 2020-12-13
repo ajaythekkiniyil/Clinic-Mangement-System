@@ -1,0 +1,21 @@
+<div class="container border mt-5 jumbotron">
+    <h2 class="text-success mt-5"><i class="fa fa-check-circle"></i> Your appointment for DR.{{appointment.doctor}} has been confirmed</h2>
+    <hr>
+    <div class="row mt-3">
+        <div class="col-12 col-md-3">
+            <h3>Doctor : Dr.{{appointment.doctorName}}</h3>
+        </div>
+        <div class="col-12 col-md-3">
+            <h3>Department : {{appointment.department}}</h3>
+        </div>
+        <div class="col-12 col-md-3">
+            <h3>Date : {{appointment.date}}</h3>
+        </div>
+        <div class="col-12 col-md-3">
+            <h3>Time : {{appointment.time}}</h3>
+        </div>
+    </div>
+    <hr>
+    <h5 class="mt-5">Booking For : {{appointment.bookingfor}}</h5>
+    <a href="/userPage"><h4>View appointments</h4></a>
+</div>

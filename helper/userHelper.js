@@ -1,8 +1,11 @@
 var dbo = require("../config/connection");
 var bcrypt = require("bcrypt");
+const { ObjectId } = require("mongodb");
 var collectionName = {
     user: 'user',
-    doctors:'doctors'
+    doctors: 'doctors',
+    appointments: 'appointments',
+    deletedAppointment: 'deletedAppointment',
 }
 
 module.exports = {
@@ -22,28 +25,71 @@ module.exports = {
             })
         }))
     },
-    verifyLoginCredentials:function(userLoginCredentials,callback){
-        dbo.get().collection(collectionName.user).findOne({name:userLoginCredentials.name}).then(resp=>{
+    verifyLoginCredentials: function (userLoginCredentials, callback) {
+        dbo.get().collection(collectionName.user).findOne({ name: userLoginCredentials.name }).then(resp => {
             // console.log(resp);
-            if(resp==null){
+            if (resp == null) {
                 callback(false)
             }
-            bcrypt.compare(userLoginCredentials.password,resp.password,(err,match)=>{
-                if(match){
+            bcrypt.compare(userLoginCredentials.password, resp.password, (err, match) => {
+                if (match) {
                     console.log('Password matched');
                     callback(resp)
                 }
-                else{
+                else {
                     console.log('Password not matched');
                     callback(false)
                 }
             })
-            
-        })        
+
+        })
     },
-    getAllDoctors:async function () {
+    getAllDoctors: async function () {
         let allDoctors = await dbo.get().collection(collectionName.doctors).find().toArray();
-        return(allDoctors);
-      
+        return (allDoctors);
+
     },
+    getOneDoctor: (doctorId) => {
+        return new Promise((resolve, reject) => {
+            dbo.get().collection(collectionName.doctors).findOne({ _id: ObjectId(doctorId) }).then(resp => {
+                resolve(resp);
+            })
+        })
+    },
+    getAllAppointments: async function (displayName) {
+        let allAppointments = await dbo.get().collection(collectionName.appointments).find({ bookingFor: displayName }).toArray();
+        return (allAppointments);
+
+    },
+    storeBooking: (bookingDetails, displayName, callback) => {
+        let appointment = {
+            doctor: bookingDetails.doctorName,
+            department: bookingDetails.department,
+            date: bookingDetails.date,
+            time: bookingDetails.time,
+            bookingFor: displayName,
+            status:'Pending...',
+        }
+
+        dbo.get().collection(collectionName.appointments).insertOne(appointment, (err, resp) => {
+            if (err) throw err;
+            callback(resp.ops[0]);
+        })
+    },
+    cancelAppointment: async function (id) {
+        // deleting from appointment collection and inserted to deleted appointment collection
+        await dbo.get().collection(collectionName.appointments).findOne({ _id: ObjectId(id) }).then(resp => {
+            dbo.get().collection(collectionName.deletedAppointment).insertOne(resp, (err, resp) => console.log('inserted'))
+        })
+        dbo.get().collection(collectionName.appointments).deleteOne({ _id: ObjectId(id) }, (err, resp) => {
+        
+        })
+    },
+    getAllDeteltedAppointments: async function (displayName) {
+        let getAllDeteltedAppointments = await dbo.get().collection(collectionName.deletedAppointment).find({ bookingFor: displayName }).toArray();
+        return (getAllDeteltedAppointments);
+    },
+    alreadyBookedTime:()=>{
+        console.log('call');
+    }
 }

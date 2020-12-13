@@ -1,23 +1,42 @@
 {{>navbars}}
-<h2 class="bg-dark text-warning text-center">BOOK AN APPOINTMENT</h2>
+<h2 class="text-warning text-center">BOOK AN APPOINTMENT</h2>
 
 <div class="jumbotron">
     <div class="container">
         <div class="row">
             <div class="col-12 col-md-4 border">
-                <img src="images/doctor.png" class="col-12" alt="">
-                <h5 class="text-center">name</h5>
-                <h5 class="text-center">specialised</h5>
-                <h5 class="text-center">field</h5>
+                <img src="/images/doctor.png" class="col-12" alt="">
+                <h3 class="text-center">{{doctor.name}}</h3>
+                <h5 class="text-center">{{doctor.specialised}}</h5>
+                <h5 class="text-center">{{doctor.field}}</h5>
             </div>
             <div class="col-12 col-md-8 border">
                 <div class="col-12 mt-3">
-                    <h4>SELECT YOUR DATE AND TIME</h4>
-                    <form action="/bookNow" method="POST">
-                        <label for="">DATE: </label><input type="date" name="date" id="">
-                        <label for="">TIME: </label><input type="time" name="time" id="">
+                    <form action="/bookDoctor" method="POST">
+                        <h2 class="bg-primary text-center text-white">SELECT YOUR DATE AND TIME</h2>
+                        <h4>Consultting Time 10:00 Am to 3:00 Pm</h4>
+                        <h5><label for="date">Date : </label><input type="date" name="date"></h5>
+                        <h5><label for="time">Time : </label><input type="time" name="time"></h5>
+                        <input type="hidden" value="{{doctor.name}}" name="doctorName">
+                        <input type="hidden" value="{{doctor.field}}" name="department">
+
                         <button type="submit" class="btn btn-success">Book</button>
                     </form>
+                </div>
+                <h3 class="mt-5">Already booked time</h3>
+                <div class="row">
+                    <div class="col-3 col-md-2  border border-dark rounded">
+                        <h5 class="">27/3/2020</h5>
+                        <h5 class="">10:00-10:30 Am</h5>
+                    </div>
+                    <div class="col-3 col-md-2  border border-dark rounded">
+                        <h5 class="">27/3/2020</h5>
+                        <h5 class="">10:30-11:00 Am</h5>
+                    </div>
+                    <div class="col-3 col-md-2  border border-dark rounded">
+                        <h5 class="">27/3/2020</h5>
+                        <h5 class="">11:00-11:30 Am</h5>
+                    </div>
                 </div>
             </div>
         </div>
