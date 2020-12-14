@@ -189,38 +189,7 @@ router.get('/cancelAppointment/:id', (req, res) => {
   userHelper.cancelAppointment(req.params.id);
   res.json(true)
 })
-// doctorLogin
-router.get('/doctorLogin',(req,res)=>{
-  
-  if (req.session.doctorLoginError) {
-    let doctorLoginError = req.session.doctorLoginError;
-    res.render('user/doctorLoginForm',{doctorLoginError})
-    req.session.doctorLoginError = "";
-  }
-  else if (req.session.doctor) {
-    res.redirect('/doctorPge')
-  }
-  else
-    res.render('user/doctorLoginForm')
 
-})
-// verifyDoctorLoginCredentials
-router.post('/verifyDoctorLoginCredentials', (req, res) => {
-  userHelper.verifyDoctorLoginCredentials(req.body).then(resp=>{
-    if(resp===false){
-        req.session.doctorLoginError = 'incorrect username or password';
-        res.redirect('/doctorLogin');
-    }
-    else{
-      req.session.doctor=resp;
-      res.redirect('/doctorPage')
-    }
-  })
-})
 
-// doctor page
-router.get('/doctorPage',(req,res)=>{
-  res.send('Doctor page')
-})
 
 module.exports = router;
