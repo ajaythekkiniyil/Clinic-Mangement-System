@@ -4,7 +4,8 @@ var userHelper = require('../helper/userHelper');
 
 
 
-var passport = require('passport')
+var passport = require('passport');
+const { ReplSet } = require('mongodb');
 require('../config/passport-setup')
 
 const client = require('twilio')(process.env.AccountSID, process.env.AuthToken);
@@ -110,6 +111,7 @@ router.post('/verifyLoginCredentials', (req, res) => {
     }
   })
 })
+
 // user login success render this page
 router.get('/userPage', async (req, res) => {
   // if there is no user login redirect to home page
@@ -130,16 +132,17 @@ router.get('/userPage', async (req, res) => {
 // login with google
 router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }))
 
-router.get('/google/callback', passport.authenticate('google', { failureRedirect: '/failed' }), (req, res) => {
+router.get('/google/callback', passport.authenticate('google', { failureRedirect: '/failed' }), async(req, res) => {
   // res.send('google success')
   // console.log(req.user.displayName);
   // user registration success
-
-  let allDoctorDetails = userHelper.getAllDoctors();
-  console.log(allDoctorDetails);
-
   let displayName = req.session.passport.user.displayName;
-  res.render('user/userPage', { displayName });
+  let allDoctorDetails = await userHelper.getAllDoctors();
+  console.log(allDoctorDetails);
+  let allAppointments = await userHelper.getAllAppointments(displayName);
+  let allDeletedAppointments=await userHelper.getAllDeteltedAppointments(displayName);
+  
+  res.render('user/userPage', { displayName, allDoctorDetails, allAppointments,allDeletedAppointments });
 })
 
 // logout
@@ -186,6 +189,38 @@ router.get('/cancelAppointment/:id', (req, res) => {
   userHelper.cancelAppointment(req.params.id);
   res.json(true)
 })
+// doctorLogin
+router.get('/doctorLogin',(req,res)=>{
+  
+  if (req.session.doctorLoginError) {
+    let doctorLoginError = req.session.doctorLoginError;
+    res.render('user/doctorLoginForm',{doctorLoginError})
+    req.session.doctorLoginError = "";
+  }
+  else if (req.session.doctor) {
+    res.redirect('/doctorPge')
+  }
+  else
+    res.render('user/doctorLoginForm')
 
+})
+// verifyDoctorLoginCredentials
+router.post('/verifyDoctorLoginCredentials', (req, res) => {
+  userHelper.verifyDoctorLoginCredentials(req.body).then(resp=>{
+    if(resp===false){
+        req.session.doctorLoginError = 'incorrect username or password';
+        res.redirect('/doctorLogin');
+    }
+    else{
+      req.session.doctor=resp;
+      res.redirect('/doctorPage')
+    }
+  })
+})
+
+// doctor page
+router.get('/doctorPage',(req,res)=>{
+  res.send('Doctor page')
+})
 
 module.exports = router;

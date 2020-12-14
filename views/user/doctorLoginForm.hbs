@@ -1,0 +1,46 @@
+<div class="main bg-success">
+    <!-- Container containing all contents -->
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-9 col-lg-7 col-xl-6 ">
+                <!-- White Container -->
+                <div class="container bg-white rounded mt-5 mb-2 px-0">
+                    <!-- Main Heading -->
+                    <div class="row justify-content-center align-items-center pt-3">
+                        <h1><strong>Doctor Login</strong></h1>
+                    </div>
+                    <h5 class="text-center text-danger">{{doctorLoginError}}</h5>
+                    <div class="pt-3 pb-3">
+                        <form action="/verifyDoctorLoginCredentials" method="POST" class="form-horizontal">
+                            <!-- User Name Input -->
+                            <div class="form-group row justify-content-center px-3">
+                                <div class="col-9 px-0">
+                                    <label for="">username:</label>
+                                    <input type="text" name="name" placeholder="User name"
+                                        class="form-control border-info placeicon"> </div>
+                            </div>
+                            <!-- Password Input -->
+                            <div class="form-group row justify-content-center px-3">
+                                <div class="col-9 px-0">
+                                    <label for="">password:</label>
+                                    <input type="password" name="password" placeholder="password"
+                                        class="form-control border-info placeicon"> </div>
+                            </div>
+                            <!-- Log in Button -->
+                            <div class="form-group row justify-content-center">
+                                <div class="col-3 px-3"> <input type="submit" value="Log in"
+                                        class="btn btn-block btn-info"> </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .main{
+        height: 100vh;
+    }
+</style>
