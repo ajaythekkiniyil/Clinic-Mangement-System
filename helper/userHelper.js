@@ -1,13 +1,7 @@
 var dbo = require("../config/connection");
 var bcrypt = require("bcrypt");
 const { ObjectId } = require("mongodb");
-var collectionName = {
-    user: 'user',
-    doctors: 'doctors',
-    appointments: 'appointments',
-    deletedAppointment: 'deletedAppointment',
-    doctorCredentials: 'doctorCredentials',
-}
+const collectionName=require('../config/collectionNames');
 
 module.exports = {
 

@@ -26,7 +26,7 @@ router.get('/doctorLogin',(req,res)=>{
   // verifyDoctorLoginCredentials
   router.post('/verifyDoctorLoginCredentials', (req, res) => {
     doctorHelper.verifyDoctorLoginCredentials(req.body).then(resp=>{
-        console.log(resp);
+        
       if(resp===false){
           req.session.doctorLoginError = 'incorrect username or password';
           res.redirect('/doctor/doctorLogin');

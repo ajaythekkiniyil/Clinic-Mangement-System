@@ -133,16 +133,9 @@ router.get('/userPage', async (req, res) => {
 router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }))
 
 router.get('/google/callback', passport.authenticate('google', { failureRedirect: '/failed' }), async(req, res) => {
-  // res.send('google success')
   // console.log(req.user.displayName);
   // user registration success
-  let displayName = req.session.passport.user.displayName;
-  let allDoctorDetails = await userHelper.getAllDoctors();
-  console.log(allDoctorDetails);
-  let allAppointments = await userHelper.getAllAppointments(displayName);
-  let allDeletedAppointments=await userHelper.getAllDeteltedAppointments(displayName);
-  
-  res.render('user/userPage', { displayName, allDoctorDetails, allAppointments,allDeletedAppointments });
+  res.redirect('/userPage');
 })
 
 // logout

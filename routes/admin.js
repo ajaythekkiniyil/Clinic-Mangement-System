@@ -14,6 +14,7 @@ router.get("/", function (req, res, next) {
   else if (req.session.loggedErr) {
     let loggedErr = req.session.loggedErr;
     res.render("admin/adminLogin", { loggedErr });
+    req.session.loggedErr="";
   }
   else {
     res.render('admin/adminLogin')

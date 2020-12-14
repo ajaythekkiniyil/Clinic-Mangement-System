@@ -1,12 +1,8 @@
 var dbo = require("../config/connection");
 var bcrypt = require("bcrypt");
 const { ObjectId } = require("mongodb");
-var collectionName = {
-    user: 'user',
-    doctors: 'doctors',
-    appointments: 'appointments',
-    doctorCredentials: 'doctorCredentials',
-}
+const collectionName=require('../config/collectionNames');
+
 module.exports={
     verifyDoctorLoginCredentials: function (doctorLoginCredentials) {
         return new Promise( (resolve, reject) => {

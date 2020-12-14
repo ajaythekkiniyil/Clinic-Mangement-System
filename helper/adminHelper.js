@@ -2,13 +2,9 @@ var dbo = require("../config/connection");
 var bcrypt = require("bcrypt");
 const { response } = require("express");
 const { ObjectId } = require("mongodb");
-var collectionNames = {
-  adminDefaultCredentials: "admin",
-  doctors: "doctors",
-  patients:'patients',
-  trashDoctors: 'trash-doctors',
-  trashPatients: 'trash-patients',
-};
+
+const collectionNames=require('../config/collectionNames');
+
 
 module.exports = {
 
@@ -208,8 +204,8 @@ module.exports = {
     dbo.get().collection(collectionNames.patients).updateOne({ _id: ObjectId(patientDetails.patientId) }, {
       $set: {
         name: patientDetails.name,
-        specialised: patientDetails.age,
-        field: patientDetails.mobile,
+        age: patientDetails.age,
+        mobile: patientDetails.mobile,
       }
     }, (err, resp) => {
       console.log('updated');
