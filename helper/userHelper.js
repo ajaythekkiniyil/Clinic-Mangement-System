@@ -75,7 +75,9 @@ module.exports = {
     cancelAppointment: async function (id) {
         // deleting from appointment collection and inserted to deleted appointment collection
         await dbo.get().collection(collectionName.appointments).findOne({ _id: ObjectId(id) }).then(resp => {
-            dbo.get().collection(collectionName.deletedAppointment).insertOne(resp, (err, resp) => console.log('inserted'))
+            console.log(resp);
+            resp.status='cancelled by user';
+             dbo.get().collection(collectionName.deletedAppointment).insertOne(resp, (err, resp) => console.log('inserted'))
         })
         dbo.get().collection(collectionName.appointments).deleteOne({ _id: ObjectId(id) }, (err, resp) => {
 

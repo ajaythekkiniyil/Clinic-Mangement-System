@@ -2,8 +2,6 @@ var express = require('express');
 var router = express.Router();
 var userHelper = require('../helper/userHelper');
 
-
-
 var passport = require('passport');
 const { ReplSet } = require('mongodb');
 require('../config/passport-setup')
@@ -11,13 +9,15 @@ require('../config/passport-setup')
 const client = require('twilio')(process.env.AccountSID, process.env.AuthToken);
 
 /* GET home page. */
-router.get('/', function (req, res, next) {
+router.get('/',async function (req, res, next) {
+  let allDoctorDetails = await userHelper.getAllDoctors();
+  
   if (req.session.passport) {
     // when user login through gmail a session created and details stored
     let displayName = req.session.passport.user.displayName;
-    res.render('user/index', { displayName })
+    res.render('user/index', { displayName ,allDoctorDetails})
   }
-  res.render('user/index')
+  res.render('user/index',{allDoctorDetails})
 });
 
 // registerForm
@@ -144,6 +144,13 @@ router.get('/logout', (req, res) => {
   res.redirect('/');
 })
 
+// directBookAppointment
+router.get('/directBookAppointment/:id',(req,res)=>{
+  userHelper.getOneDoctor(req.params.id).then(doctor => {
+    res.render('user/bookAppointment', {  doctor });
+  })
+})
+
 // bookAppointment
 router.get('/bookAppointment/:id', async (req, res) => {
   // fetch doctor from database match with id
@@ -153,11 +160,13 @@ router.get('/bookAppointment/:id', async (req, res) => {
     res.render('user/bookAppointment', { displayName, doctor });
   })
 
-
 })
 
 // appointment booking user fill date and time
 router.post('/bookDoctor', async (req, res) => {
+  if(!req.session.passport){
+    res.redirect('/loginForm')
+  }
   // Bookin date time doctor name department stored in database
   userHelper.storeBooking(req.body, req.session.passport.user.displayName, (resp) => {
     let appointment = {

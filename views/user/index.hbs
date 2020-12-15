@@ -33,42 +33,19 @@
   </div>
 
   <div class="row">
-
+    {{#each allDoctorDetails}}
     <div class="col-12 col-md-4 mt-5">
       <div class="col-12">
-        <img class="col" src="images/doctors/5fcb1276b23fac24f19cd1ef.jpg" alt="" style="height: 250px;">
+        <img class="col" src="/images/doctors/{{this._id}}.jpg" alt="" style="height: 250px;">
         <div class="col-12">
-          <h2 class="">DR.Carolin</h2>
-          <h5 class="">BDS</h5>
-          <h6 class="">Oral and Maxillofacial Surgeon</h6>
-          <a class="btn btn-success" href="">Book</a>
+          <h2 class="">{{this.name}}</h2>
+          <h5 class="">{{this.specialised}}</h5>
+          <h6 class="">{{this.field}}</h6>
+          <a class="btn btn-success" href="/directBookAppointment/{{this._id}}">Book</a>
         </div>
       </div>
     </div>
-
-    <div class="col-12 col-md-4 mt-5">
-      <div class="col-12">
-        <img class="col" src="/images/doctors/5fc8ab68d88eed39dde3434c.jpg" alt="" style="height: 250px;">
-        <div class="col-12">
-          <h2 class="">DR.Carolin</h2>
-          <h5 class="">BDS</h5>
-          <h6 class="">Oral and Maxillofacial Surgeon</h6>
-          <a class="btn btn-success" href="">Book</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-12 col-md-4 mt-5">
-      <div class="col-12">
-        <img class="col" src="/images/doctors/5fc8ab68d88eed39dde3434c.jpg" alt="" style="height: 250px;">
-        <div class="col-12">
-          <h2 class="">DR.Carolin</h2>
-          <h5 class="">BDS</h5>
-          <h6 class="">Oral and Maxillofacial Surgeon</h6>
-          <a class="btn btn-success" href="">Book</a>
-        </div>
-      </div>
-    </div>
+    {{/each}}
 
   </div>
 </div>
