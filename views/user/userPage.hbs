@@ -94,20 +94,22 @@
 
                 <div class="col-12 mt-5">
                     <h4>Consulted Appointments</h4>
+                    <div class="row">
+                    {{#each allConsultedAppointments}}
                     <div class="col-12 col-md-4 mt-3">
                         <div class="card">
-                            <div class="col-12">
-                                <img class="card-img-top col-12" src="/images/doctors.jpg" style="height: 50px;"
-                                    alt="Card image cap" />
-                            </div>
+                            
                             <div class="card-body">
-                                <h6 class="">Date:02-01-2020</h6>
-                                <h6 class="">Session:AM</h6>
-                                <h6 class="">Time:9:30</h6>
+                                <h6 class=""><b>Date:</b> {{this.date}}</h6>
+                                <h6 class=""><b>Time:</b> {{this.time}}</h6>
+                                <h6 class=""><b>Doctor:</b> {{this.doctor}}</h6>
+                                <h6 class=""><b>Perscription:</b> {{this.perscription}}</h6>
                                 <hr>
                                 <h6 class="text-success"><i class="fa fa-check"></i>Consulted</h6>
                             </div>
                         </div>
+                    </div>
+                    {{/each}}
                     </div>
                 </div>
             </div>
@@ -115,7 +117,7 @@
             {{!-- List of cancelled tab --}}
             <div id="cancelled" class="tabcontent">
                 <h2 class="text-warning">Welcome {{displayName}} !</h2>
-                <h4>Consulted Appointments</h4>
+                <h4>Cancelled Appointments</h4>
                 <div class="row">
                     {{#each allDeletedAppointments}}
                         <div class="col-12 col-md-4 mt-3">

@@ -124,9 +124,10 @@ router.get('/userPage', async (req, res) => {
   // fetch all deleted appointments  from database and send to user page
   let allDoctorDetails = await userHelper.getAllDoctors();
   let allAppointments = await userHelper.getAllAppointments(displayName);
+  let allConsultedAppointments=await userHelper.getAllConsultedAppointment(displayName);
   let allDeletedAppointments=await userHelper.getAllDeteltedAppointments(displayName);
   
-  res.render('user/userPage', { displayName, allDoctorDetails, allAppointments,allDeletedAppointments });
+  res.render('user/userPage', { displayName, allDoctorDetails, allAppointments,allDeletedAppointments,allConsultedAppointments });
 })
 
 // login with google

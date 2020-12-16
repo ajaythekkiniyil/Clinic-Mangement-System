@@ -1,0 +1,14 @@
+<div class="container jumbotron">
+    <h2>Consulting patients...</h2>
+    <hr>
+    <div class="row">
+        <div>
+            <form action="/doctor/consulted/{{appointmentId}}" method="GET">
+                <h4 class="col-12">Name: {{patientName}}</h4>
+                <h4>Perscription</h4>
+                <textarea class="col-12" name="perscription"></textarea>
+                <button class="mt-3 btn btn-info">Consulted</button>
+            </form>
+        </div>
+    </div>
+</div>

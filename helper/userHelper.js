@@ -53,8 +53,14 @@ module.exports = {
         })
     },
     getAllAppointments: async function (displayName) {
-        let allAppointments = await dbo.get().collection(collectionName.appointments).find({ bookingFor: displayName }).toArray();
+        let allAppointments = await dbo.get().collection(collectionName.appointments).find({$and:[{ bookingFor: displayName },{status:{$ne:'consulted'}}]}).toArray();
         return (allAppointments);
+
+    },
+
+    getAllConsultedAppointment: async function (displayName) {
+        let allConsultedAppointments = await dbo.get().collection(collectionName.appointments).find({$and:[{ bookingFor: displayName },{status:'consulted'}]}).toArray();
+        return (allConsultedAppointments);
 
     },
     storeBooking: (bookingDetails, displayName, callback) => {

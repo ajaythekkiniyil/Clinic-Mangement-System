@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark secondary-color lighten-1 bg-success">
     <h2 class="text-white" href="/">DENTACARE</h2>
-    
+
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-555"
         aria-controls="navbarSupportedContent-555" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -22,332 +22,330 @@
 </nav>
 
 <div class="container">
-<div class="jumbotron">
-    <div class="row">
+    <div class="jumbotron">
+        <div class="row">
 
-        {{!-- admin pane left section --}}
-        <div class="col-4 ">
-            <div class="d-flex justify-content-center">
-                <div class="row">
-                    <div class="col-12">
-                        <img src="images/doctors/5fd795b8aa35285dc6c0d4b8.jpg" class="rounded-circle col-12 mt-2" />
-                        <h4 class="text-center "><b>{{doctordetails.name}}</b></h4>
-                        <h6 class="text-center ">{{doctordetails.specialised}}</h6>
-                        <h6 class="text-center ">{{doctordetails.field}}</h6>
+            {{!-- admin pane left section --}}
+            <div class="col-4 ">
+                <div class="d-flex justify-content-center">
+                    <div class="row">
+                        <div class="col-12">
+                            <img src="images/doctors/5fd795b8aa35285dc6c0d4b8.jpg" class="rounded-circle col-12 mt-2" />
+                            <h4 class="text-center "><b>{{doctordetails.name}}</b></h4>
+                            <h6 class="text-center ">{{doctordetails.specialised}}</h6>
+                            <h6 class="text-center ">{{doctordetails.field}}</h6>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="row tab">
-                <button class="col-12 tablinks" onclick="openTabs(event, 'appointments')" id="defaultOpen"><i
-                        class="fa fa-home ">Appointments</i></button>
-                <button class="col-12 tablinks" onclick="openTabs(event, 'bookings')"><i
-                        class="fa fa-user-md ">Bookings</i></button>
-                <button class="col-12 tablinks" onclick="openTabs(event, 'myPatients')"><i class="fa fa-wheelchair ">My
-                        Patients</i></button>
-                <button class="col-12 tablinks" onclick="openTabs(event, 'result')"><i
-                        class="fa fa-calendar">Result</i></button>
-            </div>
-
-
-        </div>
-        {{!-- admin pane left section --}}
-
-        {{!-- admin pane right section --}}
-        <div class="col-8 mt-5">
-
-            {{!-- Appointments tab --}}
-            <div class="tabcontent" id="appointments">
-
-                <h4>Patient Appointment</h4>
-
-                {{!-- inside tab view --}}
-                <div class="tab-1">
-                    <button class="tablinks" onclick="openCity(event, 'today')" id="defaultOpen-1">Today</button>
-                    <button class="tablinks" onclick="openCity(event, 'upcoming')">Upcoming</button>
-                    <button class="tablinks" onclick="openCity(event, 'consulted')">Consulted</button>
+                <div class="row tab">
+                    <button class="col-12 tablinks" onclick="openTabs(event, 'appointments')" id="defaultOpen"><i
+                            class="fa fa-home ">Appointments</i></button>
+                    <button class="col-12 tablinks" onclick="openTabs(event, 'bookings')"><i
+                            class="fa fa-user-md ">Bookings</i></button>
+                    <button class="col-12 tablinks" onclick="openTabs(event, 'myPatients')"><i
+                            class="fa fa-wheelchair ">My
+                            Patients</i></button>
+                    <button class="col-12 tablinks" onclick="openTabs(event, 'result')"><i
+                            class="fa fa-calendar">Result</i></button>
                 </div>
 
-                <div id="today" class="tabcontent-1 table-responsive">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">Patient Name</th>
-                                <th scope="col">Appointment date</th>
-                                <th scope="col">Time</th>
-                                <th scope="col">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {{#each todayAppointments}}
-                            <tr>
-                                <th scope="row">{{this.bookingFor}}</th>
-                                <td>{{this.date}} : {{this.time}}</td>
-                                <td>{{this.time}}</td>
-                                <td class="text-danger">Consult</td>
-                            </tr>
-                            {{/each}}
-                        </tbody>
-                    </table>
-                </div>
-
-                <div id="upcoming" class="tabcontent-1 table-responsive">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">Patient Name</th>
-                                <th scope="col">Appointment date</th>
-                                <th scope="col">Mobile</th>
-                                <th scope="col">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">Ajay T</th>
-                                <td>20/1/2020 : 10:30</td>
-                                <td>+9162825897775</td>
-                                <td class="text-danger">Consult</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Ajay T</th>
-                                <td>20/1/2020 : 10:30</td>
-                                <td>+9162825897775</td>
-                                <td class="text-danger">Consult</td>
-                            </tr>
-
-                        </tbody>
-                    </table>
-                </div>
-
-                <div id="consulted" class="tabcontent-1 table-responsive">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">Patient Name</th>
-                                <th scope="col">Appointment date</th>
-                                <th scope="col">Mobile</th>
-                                <th scope="col">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">Ajay T</th>
-                                <td>20/1/2020 : 10:30</td>
-                                <td>+9162825897775</td>
-                                <td class="text-success">Consulted</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Ajay T</th>
-                                <td>20/1/2020 : 10:30</td>
-                                <td>+9162825897775</td>
-                                <td class="text-success">Consulted</td>
-                            </tr>
-
-                        </tbody>
-                    </table>
-                </div>
-
-                {{!-- inside tab view --}}
 
             </div>
+            {{!-- admin pane left section --}}
 
-            {{!--List of Bookings tab --}}
-            <div id="bookings" class="tabcontent">
+            {{!-- admin pane right section --}}
+            <div class="col-8 mt-5">
 
-                <h4>Your Bookings</h4>
-                <div class="col-12 mt-5 table-responsive">
+                {{!-- Appointments tab --}}
+                <div class="tabcontent" id="appointments">
 
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">Patient Name</th>
-                                <th scope="col">Appointment date</th>
-                                <th scope="col">Time</th>
-                                <th scope="col">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {{#each allAppointments}}
-                            <tr>
-                                <th scope="row">{{this.bookingFor}}</th>
-                                <td>{{this.date}}</td>
-                                <td>{{this.time}}</td>
-                                <td class="text-danger"><a class="text-success" href="/doctor/accepted/{{this._id}}">Accept</a> 
-                                    <a class="text-danger" href="/doctor/rejected/{{this._id}}">Reject</a>
-                                </td>
-                            </tr>
-                            {{/each}}
-                        </tbody>
-                    </table>
+                    <h4>Patient Appointment</h4>
+
+                    {{!-- inside tab view --}}
+                    <div class="tab-1">
+                        <button class="tablinks" onclick="openCity(event, 'today')" id="defaultOpen-1">Today</button>
+                        <button class="tablinks" onclick="openCity(event, 'upcoming')">Upcoming</button>
+                        <button class="tablinks" onclick="openCity(event, 'consulted')">Consulted</button>
+                    </div>
+
+                    <div id="today" class="tabcontent-1 table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Patient Name</th>
+                                    <th scope="col">Appointment date</th>
+                                    <th scope="col">Time</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each todayAppointments}}
+                                <tr>
+                                    <th scope="row">{{this.bookingFor}}</th>
+                                    <td>{{this.date}} : {{this.time}}</td>
+                                    <td>{{this.time}}</td>
+                                    <td><a href="/doctor/consult?id={{this._id}}&name={{this.bookingFor}}">Consult</a>
+                                    </td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div id="upcoming" class="tabcontent-1 table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Patient Name</th>
+                                    <th scope="col">Appointment date</th>
+                                    <th scope="col">Time</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                               {{#each upcomingAppointments}}
+                                <tr>
+                                    <th scope="row">{{this.bookingFor}}</th>
+                                    <td>{{this.date}}</td>
+                                    <td>{{this.time}}</td>
+                                    <td><a href="/doctor/consult?id={{this._id}}&name={{this.bookingFor}}">Consult</a>
+                                    </td>
+                                </tr>
+                                {{/each}}
+                            
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div id="consulted" class="tabcontent-1 table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Patient Name</th>
+                                    <th scope="col">Appointment date</th>
+                                    <th scope="col">Mobile</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each allConsultedAppointments}}
+                                <tr>
+                                    <th scope="row">{{this.bookingFor}}</th>
+                                    <td>{{this.date}} : {{this.time}}</td>
+                                    {{!-- external value --}}
+                                    <td>{{../patientMobile}}</td>
+                                    <td class="text-success">Consulted</td>
+                                </tr>
+                                {{/each}}
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                    {{!-- inside tab view --}}
 
                 </div>
-            </div>
 
-            {{!-- List of myPatients tab --}}
-            <div id="myPatients" class="tabcontent">
+                {{!--List of Bookings tab --}}
+                <div id="bookings" class="tabcontent">
+
+                    <h4>Your Bookings</h4>
+                    <div class="col-12 mt-5 table-responsive">
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Patient Name</th>
+                                    <th scope="col">Appointment date</th>
+                                    <th scope="col">Time</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each allAppointments}}
+                                <tr>
+                                    <th scope="row">{{this.bookingFor}}</th>
+                                    <td>{{this.date}}</td>
+                                    <td>{{this.time}}</td>
+                                    <td class="text-danger"><a class="text-success"
+                                            href="/doctor/accepted/{{this._id}}">Accept</a>
+                                        <a class="text-danger" href="/doctor/rejected/{{this._id}}">Reject</a>
+                                    </td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+
+                {{!-- List of myPatients tab --}}
+                <div id="myPatients" class="tabcontent">
                     <h4>My Patients</h4>
 
-                <div class="col-12 mt-5">
-                    <div class="col-12 col-md-4 mt-3">
-                        <div class="card">
-                            
-                            <div class="card-body">
-                                <h5 class="">Patient Name</h5>
-                                <h6 class="">Date:02-01-2020</h6>
-                                <h6 class="">Time:9:30</h6>
-                                <h6 class="">Booking for:Dr.vijay</h6>
-                                <hr>
+                    <div class="col-12 mt-5">
+                        <div class="row">
+                        {{#each allPatients}}
+                        <div class="col-12 col-md-4 mt-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="">{{this.bookingFor}}</h5>
+                                    <h6 class=""><b>Date: </b>{{this.date}}</h6>
+                                    <h6 class=""><b>Time: </b>{{this.time}}</h6>
+                                    <h6 class=""><b>Booking for: </b>Dr.{{this.doctor}}</h6>
+                                    <hr>
+                                </div>
                             </div>
+                        </div>
+                        {{/each}}
                         </div>
                     </div>
                 </div>
-            </div>
 
-            {{!-- List of result tab --}}
-            <div id="result" class="tabcontent">
-                <h4>Results</h4>
-                <div class="row">
-                    {{!-- {{#each allDeletedAppointments}} --}}
-                    <div class="col-12 col-md-4 mt-3">
-                        <div class="card">
-                            <div class="card-body">
-                                <h6 class="">Patient Name</b></h6>
-                                <h6 class="">1.ibuprofen</b></h6>
-                                <h6 class="">2.acetaminophen</h6>
-                                <h6 class="">3.aspirin</h6>
-                                <hr>
-                                <h6 class="text-success"><i class="fa fa-check-circle"></i>Consulted</h6>
+                {{!-- List of result tab --}}
+                <div id="result" class="tabcontent">
+                    <h4>Results</h4>
+                    <div class="row">
+                        {{#each allConsultedAppointments}}
+                        <div class="col-12 col-md-4 mt-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class=""><b>Patient Name:</b> {{this.bookingFor}}</b></h6>
+                                    <h6 class=""><b>Perscription:</b> {{this.perscription}}</b></h6>
+                                    <hr>
+                                    <h6 class="text-success"><i class="fa fa-check-circle"></i>Consulted</h6>
+                                </div>
                             </div>
                         </div>
+                        {{/each}}
                     </div>
-                    {{!-- {{/each}} --}}
                 </div>
             </div>
         </div>
+        {{!-- admin pane right section --}}
     </div>
-    {{!-- admin pane right section --}}
-</div>
 
 
-<style>
-    .tab-1 {
-        overflow: hidden;
-        border: 1px solid #ccc;
-        background-color: #f1f1f1;
-    }
-
-    /* Style the buttons inside the tab */
-    .tab-1 button {
-        background-color: inherit;
-        float: left;
-        border: none;
-        outline: none;
-        cursor: pointer;
-        padding: 14px 16px;
-        transition: 0.3s;
-        font-size: 17px;
-    }
-
-    /* Change background color of buttons on hover */
-    .tab-1 button:hover {
-        background-color: #ddd;
-    }
-
-    /* Create an active/current tablink class */
-    .tab-1 button.active {
-        background-color: #ccc;
-    }
-
-    /* Style the tab content */
-    .tabcontent-1 {
-        display: none;
-        padding: 6px 12px;
-        border: 1px solid #ccc;
-        border-top: none;
-    }
-
-
-
-
-    .dropdown-item:hover {
-        color: blue;
-    }
-
-    .card:hover {
-        color: rgb(0, 128, 111);
-        box-shadow: 1px 8px 20px grey;
-        -webkit-transition: box-shadow .6s ease-in;
-    }
-
-    /* Style the tab */
-    .tab {
-        float: left;
-        border: 1px solid #ccc;
-        background-color: #f1f1f1;
-
-        height: 300px;
-    }
-
-    /* Style the buttons that are used to open the tab content */
-    .tab button {
-        display: block;
-        background-color: inherit;
-        color: black;
-        padding: 22px 16px;
-        border: none;
-        outline: none;
-        text-align: left;
-        cursor: pointer;
-        transition: 0.3s;
-    }
-
-    /* Change background color of buttons on hover */
-    .tab button:hover {
-        background-color: #ddd;
-    }
-
-    /* Create an active/current "tab button" class */
-    .tab button.active {
-        background-color: #ccc;
-    }
-
-    /* Style the tab content */
-</style>
-
-
-<script>
-
-    function openCity(evt, cityName) {
-        var i, tabcontent, tablinks;
-        tabcontent = document.getElementsByClassName("tabcontent-1");
-        for (i = 0; i < tabcontent.length; i++) {
-            tabcontent[i].style.display = "none";
+    <style>
+        .tab-1 {
+            overflow: hidden;
+            border: 1px solid #ccc;
+            background-color: #f1f1f1;
         }
-        tablinks = document.getElementsByClassName("tablinks");
-        for (i = 0; i < tablinks.length; i++) {
-            tablinks[i].className = tablinks[i].className.replace(" active", "");
+
+        /* Style the buttons inside the tab */
+        .tab-1 button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            font-size: 17px;
         }
-        document.getElementById(cityName).style.display = "block";
-        evt.currentTarget.className += " active";
-    }
-    document.getElementById("defaultOpen-1").click();
 
-
-
-
-    function openTabs(evt, cityName) {
-        var i, tabcontent, tablinks;
-        tabcontent = document.getElementsByClassName("tabcontent");
-        for (i = 0; i < tabcontent.length; i++) {
-            tabcontent[i].style.display = "none";
+        /* Change background color of buttons on hover */
+        .tab-1 button:hover {
+            background-color: #ddd;
         }
-        tablinks = document.getElementsByClassName("tablinks");
-        for (i = 0; i < tablinks.length; i++) {
-            tablinks[i].className = tablinks[i].className.replace(" active", "");
-        }
-        document.getElementById(cityName).style.display = "block";
-        evt.currentTarget.className += " active";
-    }
 
-    // Get the element with id="defaultOpen" and click on it
-    document.getElementById("defaultOpen").click();
-</script>
+        /* Create an active/current tablink class */
+        .tab-1 button.active {
+            background-color: #ccc;
+        }
+
+        /* Style the tab content */
+        .tabcontent-1 {
+            display: none;
+            padding: 6px 12px;
+            border: 1px solid #ccc;
+            border-top: none;
+        }
+
+
+
+
+        .dropdown-item:hover {
+            color: blue;
+        }
+
+        .card:hover {
+            color: rgb(0, 128, 111);
+            box-shadow: 1px 8px 20px grey;
+            -webkit-transition: box-shadow .6s ease-in;
+        }
+
+        /* Style the tab */
+        .tab {
+            float: left;
+            border: 1px solid #ccc;
+            background-color: #f1f1f1;
+
+            height: 300px;
+        }
+
+        /* Style the buttons that are used to open the tab content */
+        .tab button {
+            display: block;
+            background-color: inherit;
+            color: black;
+            padding: 22px 16px;
+            border: none;
+            outline: none;
+            text-align: left;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        /* Change background color of buttons on hover */
+        .tab button:hover {
+            background-color: #ddd;
+        }
+
+        /* Create an active/current "tab button" class */
+        .tab button.active {
+            background-color: #ccc;
+        }
+
+        /* Style the tab content */
+    </style>
+
+
+    <script>
+
+        function openCity(evt, cityName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent-1");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(cityName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+        document.getElementById("defaultOpen-1").click();
+
+
+
+
+        function openTabs(evt, cityName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(cityName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+
+        // Get the element with id="defaultOpen" and click on it
+        document.getElementById("defaultOpen").click();
+    </script>

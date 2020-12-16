@@ -8,15 +8,21 @@ const { doctors } = require('../config/collectionNames');
 // doctor page
 router.get('/', async(req, res) => {
   //get all appointments of particular doctor
-  let doctorName=req.session.doctor.doctorName;
   // get today appointments
-  let todayAppointments=await doctorHelper.getTodayAppointments();
-   doctorHelper.getOneDoctor(doctorName).then((doctordetails)=>{
+  let doctorName=req.session.doctor.doctorName;
+  let todayAppointments=await doctorHelper.getTodayAppointments(doctorName);
+
+  let resp=await doctorHelper.getAllConsultedAppointments(doctorName);
+  allConsultedAppointments=resp.allConsultedAppointments;
+  patientMobile=resp.patientMobile;
+  
+  let upcomingAppointments=await doctorHelper.getUpcomingAppointments(doctorName);
+  let allPatients=await doctorHelper.getAllPatients(doctorName);
+  doctorHelper.getOneDoctor(doctorName).then((doctordetails)=>{
     //  all appointments where status is pending
     doctorHelper.getAllAppointments(doctorName,(allAppointments=>{
-      res.render('doctor/doctorPage',{allAppointments,doctordetails,todayAppointments})
+      res.render('doctor/doctorPage',{allAppointments,doctordetails,todayAppointments,upcomingAppointments,allConsultedAppointments,patientMobile,allPatients})
     }))
-
 
   })
   
@@ -71,6 +77,17 @@ router.get('/doctorLogin',(req,res)=>{
       res.redirect('/doctor')
     })
  }) 
-
+// doctor consulted
+ router.get('/consult',(req,res)=>{
+    let patientName=(req.query.name);
+    let appointmentId=req.query.id;
+    res.render('doctor/consultingPage',{patientName,appointmentId})
+ })
+router.get('/consulted/:id',async(req,res)=>{
+  console.log(req.params.id);
+  console.log(req.query);
+  await doctorHelper.consultingAppointment(req.params.id,req.query.perscription)
+  res.redirect('/doctor')
+})
 
 module.exports = router;
