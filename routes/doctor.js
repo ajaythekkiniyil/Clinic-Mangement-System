@@ -7,21 +7,23 @@ const { doctors } = require('../config/collectionNames');
 
 // doctor page
 router.get('/', async(req, res) => {
+  if (!req.session.doctor) {
+    res.redirect('/')
+  }
   //get all appointments of particular doctor
   // get today appointments
   let doctorName=req.session.doctor.doctorName;
   let todayAppointments=await doctorHelper.getTodayAppointments(doctorName);
-
-  let resp=await doctorHelper.getAllConsultedAppointments(doctorName);
-  allConsultedAppointments=resp.allConsultedAppointments;
-  patientMobile=resp.patientMobile;
-  
   let upcomingAppointments=await doctorHelper.getUpcomingAppointments(doctorName);
+
+  let allConsultedAppointments=await doctorHelper.getAllConsultedAppointments(doctorName);
+  
   let allPatients=await doctorHelper.getAllPatients(doctorName);
   doctorHelper.getOneDoctor(doctorName).then((doctordetails)=>{
+    
     //  all appointments where status is pending
     doctorHelper.getAllAppointments(doctorName,(allAppointments=>{
-      res.render('doctor/doctorPage',{allAppointments,doctordetails,todayAppointments,upcomingAppointments,allConsultedAppointments,patientMobile,allPatients})
+      res.render('doctor/doctorPage',{allAppointments,doctordetails,todayAppointments,upcomingAppointments,allConsultedAppointments,allPatients})
     }))
 
   })
@@ -90,4 +92,21 @@ router.get('/consulted/:id',async(req,res)=>{
   res.redirect('/doctor')
 })
 
+
+
+
+// router.get('/updateDoctorProfie/:id',function(req,res){
+//   let id=req.params.id;
+//   res.render('doctor/updateDoctorProfie',{id})
+// })
+
+// router.post('/updateDoctorProfie/:id',async function(req,res){
+//   if(req.files.image){
+//     let image=req.files.image;
+//     image.mv("public/images/doctors/" + req.params.id + ".jpg");
+//   }
+//   await doctorHelper.updateProfile(req.body,req.params.id);
+//   res.redirect('/doctor');
+
+// })
 module.exports = router;

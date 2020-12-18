@@ -5,10 +5,10 @@
     <div class="container">
         <div class="row">
             <div class="col-12 col-md-4 border">
-                <img src="/images/doctors/{{doctor._id}}.jpg" class="col-12" alt="">
-                <h3 class="text-center">{{doctor.name}}</h3>
-                <h5 class="text-center">{{doctor.specialised}}</h5>
-                <h5 class="text-center">{{doctor.field}}</h5>
+                <img src="/images/doctors/{{doctorDetails._id}}.jpg" class="col-12" alt="">
+                <h3 class="text-center">{{doctorDetails.name}}</h3>
+                <h5 class="text-center">{{doctorDetails.specialised}}</h5>
+                <h5 class="text-center">{{doctorDetails.field}}</h5>
             </div>
             <div class="col-12 col-md-8 border">
                 <div class="col-12 mt-3">
@@ -17,26 +17,20 @@
                         <h4>Consultting Time 10:00 Am to 3:00 Pm</h4>
                         <h5><label for="date">Date : </label><input type="date" name="date"></h5>
                         <h5><label for="time">Time : </label><input type="time" name="time"></h5>
-                        <input type="hidden" value="{{doctor.name}}" name="doctorName">
-                        <input type="hidden" value="{{doctor.field}}" name="department">
+                        <input type="hidden" value="{{doctorDetails.name}}" name="doctorName">
+                        <input type="hidden" value="{{doctorDetails.field}}" name="department">
 
                         <button type="submit" class="btn btn-success">Book</button>
                     </form>
                 </div>
                 <h3 class="mt-5">Already booked time</h3>
                 <div class="row">
+                    {{#each allReadyBookedTime}}
                     <div class="col-3 col-md-2  border border-dark rounded">
-                        <h5 class="">27/3/2020</h5>
-                        <h5 class="">10:00-10:30 Am</h5>
+                        <h5 class="">{{this.date}}</h5>
+                        <h5 class="">{{this.time}}</h5>
                     </div>
-                    <div class="col-3 col-md-2  border border-dark rounded">
-                        <h5 class="">27/3/2020</h5>
-                        <h5 class="">10:30-11:00 Am</h5>
-                    </div>
-                    <div class="col-3 col-md-2  border border-dark rounded">
-                        <h5 class="">27/3/2020</h5>
-                        <h5 class="">11:00-11:30 Am</h5>
-                    </div>
+                    {{/each}}
                 </div>
             </div>
         </div>

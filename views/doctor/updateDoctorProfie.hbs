@@ -1,0 +1,30 @@
+<div class="main">
+
+<div class="container text-white">
+
+    <div class="row">
+                <h1 class="mt-4">Edit Doctor Details</h1>
+        <form action="" method="post" enctype="multipart/form-data" >
+            <div class="col-4 col-md-2 mt-5">
+                <img src="/images/doctors/{{id}}.jpg" alt="" class="col-12 img-thumbnail">
+                <input type="file" class="mt-3" name="image">
+            </div>
+            <div class="col-12 mt-3">
+                <label class="col-12" for="">Name : </label><input type="text" value="" name="name" class="col-4"><br>
+                <label class="col-12" for="">Specialised : </label><input type="text" value="" name="specialised"
+                    class="col-4"><br>
+                <label class="col-12" for="">Field : </label><input type="text" value="" name="field" class="col-4">
+            </div>
+            <button type="submit" class="col-2 btn btn-warning mt-4">Save Changes</button>
+        </form>
+    </div>
+</div>
+</div>
+<style>
+    .main{
+        background: url('/images/20593.jpeg');
+        background-position: center;
+        background-size: cover;
+        height: 100vh;
+    }
+</style>

@@ -4,6 +4,7 @@ var userHelper = require('../helper/userHelper');
 
 var passport = require('passport');
 const { ReplSet } = require('mongodb');
+const { response } = require('express');
 require('../config/passport-setup')
 
 const client = require('twilio')(process.env.AccountSID, process.env.AuthToken);
@@ -147,18 +148,22 @@ router.get('/logout', (req, res) => {
 
 // directBookAppointment
 router.get('/directBookAppointment/:id',(req,res)=>{
-  userHelper.getOneDoctor(req.params.id).then(doctor => {
-    res.render('user/bookAppointment', {  doctor });
+  userHelper.getOneDoctor(req.params.id).then(response => {
+    let doctorDetails=response.resp;
+    let allReadyBookedTime=response.time;
+    res.render('user/bookAppointment', {  doctorDetails,allReadyBookedTime });
   })
 })
 
 // bookAppointment
 router.get('/bookAppointment/:id', async (req, res) => {
   // fetch doctor from database match with id
-  userHelper.getOneDoctor(req.params.id).then(doctor => {
-
-    let displayName = req.session.passport.user.displayName;
-    res.render('user/bookAppointment', { displayName, doctor });
+  userHelper.getOneDoctor(req.params.id).then(response => {
+    
+    let doctorDetails=response.resp;
+    let allReadyBookedTime=response.time;
+     let displayName = req.session.passport.user.displayName;
+     res.render('user/bookAppointment', { displayName, doctorDetails,allReadyBookedTime });
   })
 
 })

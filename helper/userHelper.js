@@ -2,6 +2,8 @@ var dbo = require("../config/connection");
 var bcrypt = require("bcrypt");
 const { ObjectId } = require("mongodb");
 const collectionName=require('../config/collectionNames');
+const collectionNames = require("../config/collectionNames");
+const { response } = require("express");
 
 module.exports = {
 
@@ -47,10 +49,15 @@ module.exports = {
     },
     getOneDoctor: (doctorId) => {
         return new Promise((resolve, reject) => {
-            dbo.get().collection(collectionName.doctors).findOne({ _id: ObjectId(doctorId) }).then(resp => {
-                resolve(resp);
+            dbo.get().collection(collectionName.doctors).findOne({ _id: ObjectId(doctorId) }).then(async(resp) => {
+                
+                let doctorName=resp.name;
+                let time=await dbo.get().collection(collectionNames.appointments).find({$and:[{doctor:doctorName},{status:'confirmed'}]}).toArray();
+                resolve({resp,time})
+
+                })
             })
-        })
+        
     },
     getAllAppointments: async function (displayName) {
         let allAppointments = await dbo.get().collection(collectionName.appointments).find({$and:[{ bookingFor: displayName },{status:{$ne:'consulted'}}]}).toArray();

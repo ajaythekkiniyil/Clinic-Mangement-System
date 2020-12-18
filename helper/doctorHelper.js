@@ -2,6 +2,7 @@ var dbo = require("../config/connection");
 var bcrypt = require("bcrypt");
 const { ObjectId } = require("mongodb");
 const collectionName = require('../config/collectionNames');
+const collectionNames = require("../config/collectionNames");
 
 module.exports = {
     verifyDoctorLoginCredentials: function (doctorLoginCredentials) {
@@ -76,40 +77,25 @@ module.exports = {
         dbo.get().collection(collectionName.appointments)
             .updateOne({ _id: ObjectId(id) }, { $set: { status: 'consulted', perscription: perscription } });
     },
-    getAllConsultedAppointments:  (doctorName) => {
-        return new Promise(async(reslove, reject) => {
-            let allConsultedAppointments = await dbo.get().collection(collectionName.appointments)
-                .aggregate([
-                    {
-                        $match: {
-                            $and: [{ doctor: doctorName }, { status: 'consulted' }]
-                        }
-                    },
-                    {
-                        $lookup: {
-                            from: 'user',
-                            localField: 'bookingFor',
-                            foreignField: 'name',
-                            as: 'result'
-                        }
-                    }
-                ]).toArray()
-            let patientMobile = allConsultedAppointments[0].result[0].mobile;
-            reslove({ allConsultedAppointments, patientMobile });
-        })
+    getAllConsultedAppointments: async (doctorName) => {
+        let allConsultedAppointments = await dbo.get().collection(collectionName.appointments).find({$and:[{doctor:doctorName},{status:'consulted'}]}).toArray();
+        return allConsultedAppointments;
 
     },
-    getUpcomingAppointments:async(doctorName)=>{
+    getUpcomingAppointments: async (doctorName) => {
         var dateObj = new Date();
         var month = dateObj.getUTCMonth() + 1; //months from 1-12
         var day = dateObj.getUTCDate();
         var year = dateObj.getUTCFullYear();
         newdate = year + "-" + month + "-" + day;
-        let upcomingAppointments = await dbo.get().collection(collectionName.appointments).find({ $and: [{ date: {$ne:newdate} }, { doctor: doctorName },{status:'confirmed'}] }).toArray();
-        return(upcomingAppointments);
+        let upcomingAppointments = await dbo.get().collection(collectionName.appointments).find({ $and: [{ date: { $ne: newdate } }, { doctor: doctorName }, { status: 'confirmed' }] }).toArray();
+        return (upcomingAppointments);
     },
-    getAllPatients:async(doctorName)=>{
-        let allPatients = await dbo.get().collection(collectionName.appointments).find({}).toArray();
-        return(allPatients);
-    }
+    getAllPatients: async (doctorName) => {
+        let allPatients = await dbo.get().collection(collectionName.appointments).find({doctor:doctorName}).toArray();
+        return (allPatients);
+    },
+    // updateProfile:async(data,id)=>{
+    //    await dbo.get().collection(collectionNames.doctors).updateOne({_id:ObjectId(id)},{$set:{name:data.name,specialised:data.specialised,field:data.field}},(err,resp)=>console.log(updated))
+    // }
 }
