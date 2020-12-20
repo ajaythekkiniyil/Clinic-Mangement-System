@@ -198,6 +198,32 @@ router.get('/cancelAppointment/:id', (req, res) => {
   res.json(true)
 })
 
+router.get('/profile',async (req,res)=>{
+  
+  userHelper.getUser(req.session.passport.user.displayName,function(userData){
+    res.render('user/userProfile',{userData})
+  })
+  
+})
 
+router.get('/editUser',(req,res)=>{
+  userHelper.getUser(req.session.passport.user.displayName,function(userData){
+    console.log(userData);
+    res.render('user/userEdit',{userData})
+  })
+  
+})
+router.post('/editUser',async(req,res)=>{
+  req.session.passport.user.displayName=req.body.name;
+  console.log(req.files);
+  if(req.files){
+    let image=req.files.image;
+   await image.mv("public/images/user/" + req.body.id + ".jpg");
+  }
+
+  await userHelper.updateUser(req.body);
+  res.redirect('/userPage')
+  
+})
 
 module.exports = router;

@@ -100,5 +100,26 @@ module.exports = {
         let getAllDeteltedAppointments = await dbo.get().collection(collectionName.deletedAppointment).find({ bookingFor: displayName }).toArray();
         return (getAllDeteltedAppointments);
     },
+    getUser:async(name,callback)=>{
+        await dbo.get().collection(collectionNames.user).findOne({name:name}).then(resp=>{
+            callback(resp);
+        })
+    },
+    updateUser:async(userData)=>{
+        await dbo.get().collection(collectionNames.user).updateOne(
+            {_id:ObjectId(userData.id)},
+            {
+                $set:{
+                    name:userData.name,
+                    age:userData.age,
+                    mobile:userData.mobile,
+                    email:userData.email
+                }
+            },
+            function(err,res){
+                console.log('updated');
+            }
+            )
+    }
 
 }

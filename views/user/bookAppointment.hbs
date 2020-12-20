@@ -23,7 +23,9 @@
                         <button type="submit" class="btn btn-success">Book</button>
                     </form>
                 </div>
+                {{#if allReadyBookedTime}}
                 <h3 class="mt-5">Already booked time</h3>
+                {{/if}}
                 <div class="row">
                     {{#each allReadyBookedTime}}
                     <div class="col-3 col-md-2  border border-dark rounded">
