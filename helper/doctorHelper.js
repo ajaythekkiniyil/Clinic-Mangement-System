@@ -77,6 +77,12 @@ module.exports = {
         dbo.get().collection(collectionName.appointments)
             .updateOne({ _id: ObjectId(id) }, { $set: { status: 'consulted', perscription: perscription } });
     },
+    getCancelledAppointments: async (doctorName) => {
+        let allCancelledAppointments = await dbo.get().collection(collectionName.deletedAppointment).find({$and:[{doctor:doctorName},{status:'cancelled by doctor'}]}).toArray();
+        return allCancelledAppointments;
+
+    },
+    
     getAllConsultedAppointments: async (doctorName) => {
         let allConsultedAppointments = await dbo.get().collection(collectionName.appointments).find({$and:[{doctor:doctorName},{status:'consulted'}]}).toArray();
         return allConsultedAppointments;
@@ -88,9 +94,27 @@ module.exports = {
         var day = dateObj.getUTCDate();
         var year = dateObj.getUTCFullYear();
         newdate = year + "-" + month + "-" + day;
-        let upcomingAppointments = await dbo.get().collection(collectionName.appointments).find({ $and: [{ date: { $ne: newdate } }, { doctor: doctorName }, { status: 'confirmed' }] }).toArray();
+        let upcomingAppointments = await dbo.get().collection(collectionName.appointments).find({ $and: [{ date: { $ne: newdate } },{ date: { $gt: newdate } }, { doctor: doctorName }, { status: 'confirmed' }] }).toArray();
         return (upcomingAppointments);
     },
+    getExpiredAppointments: async (doctorName) => {
+        var dateObj = new Date();
+        var month = dateObj.getUTCMonth() + 1; //months from 1-12
+        var day = dateObj.getUTCDate();
+        var year = dateObj.getUTCFullYear();
+        newdate = year + "-" + month + "-" + day;
+        let expiredAppointments = await dbo.get().collection(collectionName.appointments).find({ $and: [{ date: { $ne: newdate } },{ date: { $lt: newdate } }, { doctor: doctorName }, { status: 'confirmed' }] }).toArray();
+        await dbo.get().collection(collectionNames.appointments).updateMany({ $and: [{ date: { $ne: newdate } },{ date: { $lt: newdate } }, { doctor: doctorName }, { status: 'confirmed' }] },
+            {$set:{
+                status:'expired',
+            }},
+            function(err,res){
+                console.log('updated');
+            }
+        )
+        return (expiredAppointments);
+    },
+    
     getAllPatients: async (doctorName) => {
         let allPatients = await dbo.get().collection(collectionName.appointments).find({doctor:doctorName}).toArray();
         return (allPatients);

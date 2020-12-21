@@ -15,6 +15,8 @@ router.get('/', async (req, res) => {
   let doctorName = req.session.doctor.doctorName;
   let todayAppointments = await doctorHelper.getTodayAppointments(doctorName);
   let upcomingAppointments = await doctorHelper.getUpcomingAppointments(doctorName);
+  let expiredAppointments=await doctorHelper.getExpiredAppointments(doctorName);
+  let allCancelledAppointments=await doctorHelper.getCancelledAppointments(doctorName);
 
   let allConsultedAppointments = await doctorHelper.getAllConsultedAppointments(doctorName);
 
@@ -23,7 +25,7 @@ router.get('/', async (req, res) => {
 
     //  all appointments where status is pending
     doctorHelper.getAllAppointments(doctorName, (allAppointments => {
-      res.render('doctor/doctorPage', { allAppointments, doctordetails, todayAppointments, upcomingAppointments, allConsultedAppointments, allPatients })
+      res.render('doctor/doctorPage', { allAppointments, doctordetails, todayAppointments, upcomingAppointments, allConsultedAppointments,expiredAppointments, allPatients,allCancelledAppointments })
     }))
 
   })

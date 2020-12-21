@@ -32,7 +32,7 @@
                     <div class="row">
                         <div class="col-12">
                             <img src="images/doctors/{{doctordetails._id}}.jpg" class="rounded-circle col-12 mt-2" />
-                            
+
                             <h4 class="text-center "><b>{{doctordetails.name}}</b></h4>
                             <h6 class="text-center ">{{doctordetails.specialised}}</h6>
                             <h6 class="text-center ">{{doctordetails.field}}</h6>
@@ -48,7 +48,9 @@
                             class="fa fa-wheelchair ">My
                             Patients</i></button>
                     <button class="col-12 tablinks" onclick="openTabs(event, 'result')"><i
-                            class="fa fa-calendar">Result</i></button>
+                            class="fa fa-trash">Cancelled Appointments</i></button>
+                    <button class="col-12 tablinks" onclick="openTabs(event, 'expired')"><i
+                            class="fa fa-history">Expired Appointments</i></button>
                 </div>
 
 
@@ -206,16 +208,37 @@
 
                 {{!-- List of result tab --}}
                 <div id="result" class="tabcontent">
-                    <h4>Results</h4>
+                    <h4>Cancelled Appointments</h4>
                     <div class="row">
-                        {{#each allConsultedAppointments}}
+                        {{#each allCancelledAppointments}}
                         <div class="col-12 col-md-4 mt-3">
                             <div class="card">
                                 <div class="card-body">
                                     <h6 class=""><b>Patient Name:</b> {{this.bookingFor}}</b></h6>
-                                    <h6 class=""><b>Perscription:</b> {{this.perscription}}</b></h6>
+                                    <h6 class=""><b>Date:</b> {{this.date}}</b></h6>
+                                    <h6 class=""><b>Time:</b> {{this.time}}</b></h6>
+
                                     <hr>
-                                    <h6 class="text-success"><i class="fa fa-check-circle"></i>Consulted</h6>
+                                    <h6 class="text-success"><i class="fa fa-check-circle"></i>{{this.status}}</h6>
+                                </div>
+                            </div>
+                        </div>
+                        {{/each}}
+                    </div>
+                </div>
+                <div id="expired" class="tabcontent">
+                    <h4>Expired Appointments</h4>
+                    <div class="row">
+                        {{#each expiredAppointments}}
+                        <div class="col-12 col-md-4 mt-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class=""><b>Patient Name:</b> {{this.bookingFor}}</b></h6>
+                                    <h6 class=""><b>Date:</b> {{this.date}}</b></h6>
+                                    <h6 class=""><b>Time:</b> {{this.time}}</b></h6>
+
+                                    <hr>
+                                    <h6 class="text-success"><i class="fa fa-history"></i>Expired</h6>
                                 </div>
                             </div>
                         </div>
