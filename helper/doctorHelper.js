@@ -95,7 +95,37 @@ module.exports = {
         let allPatients = await dbo.get().collection(collectionName.appointments).find({doctor:doctorName}).toArray();
         return (allPatients);
     },
-    // updateProfile:async(data,id)=>{
-    //    await dbo.get().collection(collectionNames.doctors).updateOne({_id:ObjectId(id)},{$set:{name:data.name,specialised:data.specialised,field:data.field}},(err,resp)=>console.log(updated))
-    // }
+    getDoctorProfile:(id)=>{
+        return new Promise(async(resolve, reject) => {
+            await dbo.get().collection(collectionName.doctors).findOne({ _id: ObjectId(id) }).then(resp => {
+                resolve(resp);
+            })
+        })
+    },
+    updateDoctor:async(doctorData,id)=>{
+        await dbo.get().collection(collectionNames.doctors).updateOne(
+            {_id:ObjectId(doctorData.id)},
+            {
+                $set:{
+                    name:doctorData.name,
+                    specialised:doctorData.specialised,
+                    field:doctorData.field,
+                }
+            },
+            function(err,res){
+                console.log('updated1');
+            }
+            )
+            await dbo.get().collection(collectionNames.doctorCredentials).updateOne(
+                {_id:ObjectId(id)},
+                {
+                    $set:{
+                        username:doctorData.name,
+                    }
+                },
+                function(err,res){
+                    console.log('updated2');
+                }
+                )
+    }
 }
