@@ -73,7 +73,7 @@
                     </div>
 
                     <div id="today" class="tabcontent-1 table-responsive">
-                        <table class="table">
+                        <table class="table myTable">
                             <thead>
                                 <tr>
                                     <th scope="col">Patient Name</th>
@@ -97,7 +97,7 @@
                     </div>
 
                     <div id="upcoming" class="tabcontent-1 table-responsive">
-                        <table class="table">
+                        <table class="table myTable">
                             <thead>
                                 <tr>
                                     <th scope="col">Patient Name</th>
@@ -122,7 +122,7 @@
                     </div>
 
                     <div id="consulted" class="tabcontent-1 table-responsive">
-                        <table class="table">
+                        <table class="table myTable">
                             <thead>
                                 <tr>
                                     <th scope="col">Patient Name</th>
@@ -156,7 +156,7 @@
                     <h4>Your Bookings</h4>
                     <div class="col-12 mt-5 table-responsive">
 
-                        <table class="table">
+                        <table class="table myTable">
                             <thead>
                                 <tr>
                                     <th scope="col">Patient Name</th>
@@ -186,195 +186,222 @@
                 {{!-- List of myPatients tab --}}
                 <div id="myPatients" class="tabcontent">
                     <h4>My Patients</h4>
+                    <div class="col-12 mt-5 table-responsive">
 
-                    <div class="col-12 mt-5">
-                        <div class="row">
-                            {{#each allPatients}}
-                            <div class="col-12 col-md-4 mt-3">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h5 class="">{{this.bookingFor}}</h5>
-                                        <h6 class=""><b>Date: </b>{{this.date}}</h6>
-                                        <h6 class=""><b>Time: </b>{{this.time}}</h6>
-                                        <h6 class=""><b>Booking for: </b>Dr.{{this.doctor}}</h6>
-                                        <hr>
-                                    </div>
-                                </div>
-                            </div>
-                            {{/each}}
-                        </div>
+                        <table class="table myTable">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Patient Name</th>
+                                    <th scope="col">Appointment date</th>
+                                    <th scope="col">Time</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each allPatients}}
+                                <tr>
+                                    <th scope="row">{{this.bookingFor}}</th>
+                                    <td>{{this.date}}</td>
+                                    <td>{{this.time}}</td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+
                     </div>
                 </div>
 
                 {{!-- List of result tab --}}
                 <div id="result" class="tabcontent">
                     <h4>Cancelled Appointments</h4>
-                    <div class="row">
-                        {{#each allCancelledAppointments}}
-                        <div class="col-12 col-md-4 mt-3">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h6 class=""><b>Patient Name:</b> {{this.bookingFor}}</b></h6>
-                                    <h6 class=""><b>Date:</b> {{this.date}}</b></h6>
-                                    <h6 class=""><b>Time:</b> {{this.time}}</b></h6>
 
-                                    <hr>
-                                    <h6 class="text-success"><i class="fa fa-trash"></i>{{this.status}}</h6>
-                                </div>
-                            </div>
-                        </div>
-                        {{/each}}
+                    <div class="col-12 mt-5 table-responsive">
+
+                        <table class="table myTable">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Patient Name</th>
+                                    <th scope="col">Appointment date</th>
+                                    <th scope="col">Time</th>
+                                    <th scope="col">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each allCancelledAppointments}}
+                                <tr>
+                                    <th scope="row">{{this.bookingFor}}</th>
+                                    <td>{{this.date}}</td>
+                                    <td>{{this.time}}</td>
+                                    <td>{{this.status}}</td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+
                     </div>
                 </div>
                 <div id="expired" class="tabcontent">
                     <h4>Expired Appointments</h4>
-                    <div class="row">
-                        {{#each expiredAppointments}}
-                        <div class="col-12 col-md-4 mt-3">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h6 class=""><b>Patient Name:</b> {{this.bookingFor}}</b></h6>
-                                    <h6 class=""><b>Date:</b> {{this.date}}</b></h6>
-                                    <h6 class=""><b>Time:</b> {{this.time}}</b></h6>
 
-                                    <hr>
-                                    <h6 class="text-success"><i class="fa fa-history"></i>Expired</h6>
-                                </div>
-                            </div>
-                        </div>
-                        {{/each}}
+                    <div class="col-12 mt-5 table-responsive">
+
+                        <table class="table myTable">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Patient Name</th>
+                                    <th scope="col">Appointment date</th>
+                                    <th scope="col">Time</th>
+                                    <th scope="col">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each expiredAppointments}}
+                                <tr>
+                                    <th scope="row">{{this.bookingFor}}</th>
+                                    <td>{{this.date}}</td>
+                                    <td>{{this.time}}</td>
+                                    <td>{{this.status}}</td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
+
         </div>
-        {{!-- admin pane right section --}}
     </div>
+    {{!-- admin pane right section --}}
+</div>
 
 
-    <style>
-        body {
-            background: linear-gradient(to right, #373b44, #4286f4);
+<style>
+    body {
+        background: linear-gradient(to right, #373b44, #4286f4);
+    }
+
+    .tab-1 {
+        overflow: hidden;
+        border: 1px solid #ccc;
+        background-color: #f1f1f1;
+    }
+
+    /* Style the buttons inside the tab */
+    .tab-1 button {
+        background-color: inherit;
+        float: left;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 14px 16px;
+        transition: 0.3s;
+        font-size: 17px;
+    }
+
+    /* Change background color of buttons on hover */
+    .tab-1 button:hover {
+        background-color: #ddd;
+    }
+
+    /* Create an active/current tablink class */
+    .tab-1 button.active {
+        background-color: #ccc;
+    }
+
+    /* Style the tab content */
+    .tabcontent-1 {
+        display: none;
+        padding: 6px 12px;
+        border: 1px solid #ccc;
+        border-top: none;
+    }
+
+
+
+
+    .dropdown-item:hover {
+        color: blue;
+    }
+
+    .card:hover {
+        color: rgb(0, 128, 111);
+        box-shadow: 1px 8px 20px grey;
+        -webkit-transition: box-shadow .6s ease-in;
+    }
+
+    /* Style the tab */
+    .tab {
+        float: left;
+        border: 1px solid #ccc;
+        background-color: #f1f1f1;
+
+        height: 300px;
+    }
+
+    /* Style the buttons that are used to open the tab content */
+    .tab button {
+        display: block;
+        background-color: inherit;
+        color: black;
+        padding: 22px 16px;
+        border: none;
+        outline: none;
+        text-align: left;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    /* Change background color of buttons on hover */
+    .tab button:hover {
+        background-color: #ddd;
+    }
+
+    /* Create an active/current "tab button" class */
+    .tab button.active {
+        background-color: #ccc;
+    }
+
+    /* Style the tab content */
+</style>
+
+<script type="text/javascript" charset="utf8"
+    src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
+
+<script>
+    $(function () {
+        $(".myTable").dataTable();
+    })
+    function openCity(evt, cityName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent-1");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
         }
-
-        .tab-1 {
-            overflow: hidden;
-            border: 1px solid #ccc;
-            background-color: #f1f1f1;
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
         }
+        document.getElementById(cityName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+    document.getElementById("defaultOpen-1").click();
 
-        /* Style the buttons inside the tab */
-        .tab-1 button {
-            background-color: inherit;
-            float: left;
-            border: none;
-            outline: none;
-            cursor: pointer;
-            padding: 14px 16px;
-            transition: 0.3s;
-            font-size: 17px;
+
+
+
+    function openTabs(evt, cityName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
         }
-
-        /* Change background color of buttons on hover */
-        .tab-1 button:hover {
-            background-color: #ddd;
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
         }
+        document.getElementById(cityName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
 
-        /* Create an active/current tablink class */
-        .tab-1 button.active {
-            background-color: #ccc;
-        }
-
-        /* Style the tab content */
-        .tabcontent-1 {
-            display: none;
-            padding: 6px 12px;
-            border: 1px solid #ccc;
-            border-top: none;
-        }
-
-
-
-
-        .dropdown-item:hover {
-            color: blue;
-        }
-
-        .card:hover {
-            color: rgb(0, 128, 111);
-            box-shadow: 1px 8px 20px grey;
-            -webkit-transition: box-shadow .6s ease-in;
-        }
-
-        /* Style the tab */
-        .tab {
-            float: left;
-            border: 1px solid #ccc;
-            background-color: #f1f1f1;
-
-            height: 300px;
-        }
-
-        /* Style the buttons that are used to open the tab content */
-        .tab button {
-            display: block;
-            background-color: inherit;
-            color: black;
-            padding: 22px 16px;
-            border: none;
-            outline: none;
-            text-align: left;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        /* Change background color of buttons on hover */
-        .tab button:hover {
-            background-color: #ddd;
-        }
-
-        /* Create an active/current "tab button" class */
-        .tab button.active {
-            background-color: #ccc;
-        }
-
-        /* Style the tab content */
-    </style>
-
-
-    <script>
-
-        function openCity(evt, cityName) {
-            var i, tabcontent, tablinks;
-            tabcontent = document.getElementsByClassName("tabcontent-1");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].style.display = "none";
-            }
-            tablinks = document.getElementsByClassName("tablinks");
-            for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].className = tablinks[i].className.replace(" active", "");
-            }
-            document.getElementById(cityName).style.display = "block";
-            evt.currentTarget.className += " active";
-        }
-        document.getElementById("defaultOpen-1").click();
-
-
-
-
-        function openTabs(evt, cityName) {
-            var i, tabcontent, tablinks;
-            tabcontent = document.getElementsByClassName("tabcontent");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].style.display = "none";
-            }
-            tablinks = document.getElementsByClassName("tablinks");
-            for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].className = tablinks[i].className.replace(" active", "");
-            }
-            document.getElementById(cityName).style.display = "block";
-            evt.currentTarget.className += " active";
-        }
-
-        // Get the element with id="defaultOpen" and click on it
-        document.getElementById("defaultOpen").click();
-    </script>
+    // Get the element with id="defaultOpen" and click on it
+    document.getElementById("defaultOpen").click();
+</script>

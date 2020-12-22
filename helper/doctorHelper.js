@@ -102,9 +102,8 @@ module.exports = {
         var month = dateObj.getUTCMonth() + 1; //months from 1-12
         var day = dateObj.getUTCDate();
         var year = dateObj.getUTCFullYear();
-        newdate = year + "-" + month + "-" + day;
-        let expiredAppointments = await dbo.get().collection(collectionName.appointments).find({ $and: [{ date: { $ne: newdate } },{ date: { $lt: newdate } }, { doctor: doctorName }, { status: 'confirmed' }] }).toArray();
-        await dbo.get().collection(collectionNames.appointments).updateMany({ $and: [{ date: { $ne: newdate } },{ date: { $lt: newdate } }, { doctor: doctorName }, { status: 'confirmed' }] },
+        todaydate = year + "-" + month + "-" + day;
+        await dbo.get().collection(collectionNames.appointments).updateMany({ $and: [{ date: { $ne: todaydate } },{ date: { $lt: todaydate } }, { doctor: doctorName }, { status: 'confirmed' }] },
             {$set:{
                 status:'expired',
             }},
@@ -112,7 +111,9 @@ module.exports = {
                 console.log('updated');
             }
         )
-        return (expiredAppointments);
+        let expiredAppointments = await dbo.get().collection(collectionName.appointments).find({$and:[{ status: 'expired' },{ doctor: doctorName }]}).toArray();
+        
+        return(expiredAppointments);
     },
     
     getAllPatients: async (doctorName) => {

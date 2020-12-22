@@ -16,6 +16,7 @@ router.get('/', async (req, res) => {
   let todayAppointments = await doctorHelper.getTodayAppointments(doctorName);
   let upcomingAppointments = await doctorHelper.getUpcomingAppointments(doctorName);
   let expiredAppointments=await doctorHelper.getExpiredAppointments(doctorName);
+
   let allCancelledAppointments=await doctorHelper.getCancelledAppointments(doctorName);
 
   let allConsultedAppointments = await doctorHelper.getAllConsultedAppointments(doctorName);
