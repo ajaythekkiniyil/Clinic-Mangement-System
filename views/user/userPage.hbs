@@ -1,4 +1,5 @@
 {{>navbars}}
+
 <div class="container">
     <div class="row">
 
@@ -7,13 +8,12 @@
             <div class="d-flex justify-content-center">
                 <div class="row">
                     <div class="col-12">
-                        {{!-- <img src="images/user/{{}}.jpeg" class="rounded-circle col-12 mt-2" /> --}}
-                        {{!-- <i class="fa fa-camera upload-button"></i> --}}
-                        {{!-- <h4 class="text-center ">{{displayName}}</h4> --}}
+                        <img src="images/user/{{userId}}.jpg" class="rounded-circle col-12 mt-2" />
+                        <h4 class="text-center text-white">{{displayName}}</h4>
                     </div>
                 </div>
             </div>
-            <div class="row tab mt-5">
+            <div class="row tab ">
                 <button class="col-12 tablinks" onclick="openTabs(event, 'allDoctors')" id="defaultOpen"><i
                         class="fa fa-home ">All Doctors</i></button>
                 <button class="col-12 tablinks" onclick="openTabs(event, 'appointments')"><i
@@ -66,22 +66,36 @@
                 <div class="col-12 mt-5">
                     <h4>Appointments</h4>
                     <div class="row">
-                        {{#each allAppointments}}
-                        <div class="col-12 col-md-4 mt-3">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h6 class="">Doctor Name:<b>{{this.doctor}}</b></h6>
-                                    <h6 class="">Date:<b>{{this.date}}</b></h6>
-                                    <h6 class="">Time:<b>{{this.time}}</b></h6>
-                                    <h6 class="">Booking for:<b>{{this.bookingFor}}</b></h6>
-                                    <hr>
-                                    <h6 class="text-warning"><b>{{this.status}}</b></h6>
-                                    <a class="btn btn-link" href="#"
-                                        onclick="cancelAppointment('{{this._id}}')">cancel</a>
-                                </div>
-                            </div>
+                        <div class="col-12 mt-3 table-responsive">
+
+                            <table class="table table-secondary myTable" id="myTable">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Doctor Name</th>
+                                        <th scope="col">Date</th>
+                                        <th scope="col">Time</th>
+                                        <th scope="col">Booking for</th>
+                                        <th scope="col">Status</th>
+                                        <th scope="col">Action</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each allAppointments}}
+                                    <tr>
+                                        <th scope="row">{{this.doctor}}</th>
+                                        <td>{{this.date}}</td>
+                                        <td>{{this.time}}</td>
+                                        <td>{{this.bookingFor}}</td>
+                                        <td>{{this.status}}</td>
+                                        <td><a class="btn btn-link" href="#"
+                                                onclick="cancelAppointment('{{this._id}}')">cancel</a></td>
+                                    </tr>
+                                    {{/each}}
+
+                                </tbody>
+                            </table>
                         </div>
-                        {{/each}}
                     </div>
 
                 </div>
@@ -95,21 +109,33 @@
                 <div class="col-12 mt-5">
                     <h4>Consulted Appointments</h4>
                     <div class="row">
-                    {{#each allConsultedAppointments}}
-                    <div class="col-12 col-md-4 mt-3">
-                        <div class="card">
-                            
-                            <div class="card-body">
-                                <h6 class=""><b>Date:</b> {{this.date}}</h6>
-                                <h6 class=""><b>Time:</b> {{this.time}}</h6>
-                                <h6 class=""><b>Doctor:</b> {{this.doctor}}</h6>
-                                <h6 class=""><b>Perscription:</b> {{this.perscription}}</h6>
-                                <hr>
-                                <h6 class="text-success"><i class="fa fa-check"></i>Consulted</h6>
-                            </div>
+                        <div class="col-12 mt-3 table-responsive">
+
+                            <table class="table table-secondary myTable" >
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Doctor Name</th>
+                                        <th scope="col">Date</th>
+                                        <th scope="col">Time</th>
+                                        <th scope="col">Percription</th>
+                                        <th scope="col">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each allConsultedAppointments}}
+                                    <tr>
+                                        <th scope="row">{{this.doctor}}</th>
+                                        <td>{{this.date}}</td>
+                                        <td>{{this.time}}</td>
+                                        <td>{{this.perscription}}</td>
+                                        <td><i class="fa fa-check"></i>Consulted</td>
+                                    </tr>
+                                    {{/each}}
+
+                                </tbody>
+                            </table>
                         </div>
-                    </div>
-                    {{/each}}
+
                     </div>
                 </div>
             </div>
@@ -119,20 +145,34 @@
                 <h2 class="text-warning">Welcome {{displayName}} !</h2>
                 <h4>Cancelled Appointments</h4>
                 <div class="row">
-                    {{#each allDeletedAppointments}}
-                        <div class="col-12 col-md-4 mt-3">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h6 class="">Doctor Name:<b>{{this.doctor}}</b></h6>
-                                    <h6 class="">Date:<b>{{this.date}}</b></h6>
-                                    <h6 class="">Time:<b>{{this.time}}</b></h6>
-                                    <h6 class="">Booking for:<b>{{this.bookingFor}}</b></h6>
-                                    <hr>
-                                    <h6 class="text-danger"><i class="fa fa-close"></i>{{this.status}}</h6>
-                                </div>
-                            </div>
-                        </div>
-                    {{/each}}
+
+                    <div class="col-12 mt-3 table-responsive">
+
+                            <table class="table table-secondary myTable" id="myTable">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Doctor Name</th>
+                                        <th scope="col">Date</th>
+                                        <th scope="col">Time</th>
+                                        <th scope="col">Booking for</th>
+                                        <th scope="col">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each allDeletedAppointments}}
+                                    <tr>
+                                        <th scope="row">{{this.doctor}}</th>
+                                        <td>{{this.date}}</td>
+                                        <td>{{this.time}}</td>
+                                        <td>{{this.bookingFor}}</td>
+                                        <td><i class="fa fa-close"></i>{{this.status}}</td>
+                                    </tr>
+                                    {{/each}}
+
+                                </tbody>
+                            </table>
+                        </div>    
+
                 </div>
             </div>
         </div>
@@ -140,8 +180,11 @@
     {{!-- admin pane right section --}}
 </div>
 
-
 <style>
+    body {
+        background: linear-gradient(to right, #373b44, #4286f4);
+    }
+
     .dropdown-item:hover {
         color: blue;
     }
@@ -186,9 +229,12 @@
 
     /* Style the tab content */
 </style>
-
-
+<script type="text/javascript" charset="utf8"
+    src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
 <script>
+    $(function () {
+        $(".myTable").dataTable();
+    })
     function cancelAppointment(id) {
         let confirmation = confirm('Are you sure to cancel this appointment');
         if (confirmation) {

@@ -1,3 +1,4 @@
+var alert =require('alert-node')
 var express = require('express');
 var router = express.Router();
 var userHelper = require('../helper/userHelper');
@@ -97,9 +98,11 @@ router.post('/verifyLoginCredentials', (req, res) => {
   // this displayName check in landing page and show displayName 
   userHelper.verifyLoginCredentials(req.body, function (resp) {
     if (resp) {
+
       let user = {
         user: {
           displayName: resp.name,
+          id:resp._id,
         }
       }
       req.session.passport = user;
@@ -120,6 +123,7 @@ router.get('/userPage', async (req, res) => {
     res.redirect('/')
   }
   let displayName = req.session.passport.user.displayName;
+  let userId=req.session.passport.user.id;
   // fetch all doctors details from database and send to user page
   // fetch all appointments  from database and send to user page
   // fetch all deleted appointments  from database and send to user page
@@ -128,7 +132,7 @@ router.get('/userPage', async (req, res) => {
   let allConsultedAppointments=await userHelper.getAllConsultedAppointment(displayName);
   let allDeletedAppointments=await userHelper.getAllDeteltedAppointments(displayName);
   
-  res.render('user/userPage', { displayName, allDoctorDetails, allAppointments,allDeletedAppointments,allConsultedAppointments });
+  res.render('user/userPage', { userId,displayName, allDoctorDetails, allAppointments,allDeletedAppointments,allConsultedAppointments });
 })
 
 // login with google
@@ -173,18 +177,28 @@ router.post('/bookDoctor', async (req, res) => {
   if(!req.session.passport){
     res.redirect('/loginForm')
   }
-  // Bookin date time doctor name department stored in database
-  userHelper.storeBooking(req.body, req.session.passport.user.displayName, (resp) => {
-    let appointment = {
-      doctorName: resp.doctor,
-      department: resp.department,
-      date: resp.date,
-      time: resp.time,
-      bookingfor: resp.bookingFor,
-      status:resp.status,
+  await userHelper.checkTheAppointment(req.body,(resp)=>{
+    if(resp){
+      alert('already user booked slot');
+      location.reload();
     }
-    res.render('user/bookingConfirmed', { appointment })
-  });
+    else{
+      //Booking date , time doctor name department stored in database
+      userHelper.storeBooking(req.body, req.session.passport.user.displayName, (resp) => {
+        let appointment = {
+          doctorName: resp.doctor,
+          department: resp.department,
+          date: resp.date,
+          time: resp.time,
+          bookingfor: resp.bookingFor,
+          status:resp.status,
+        }
+        res.render('user/bookingConfirmed', { appointment })
+      });
+    }
+  })
+  
+   
 })
 
 // appointment confirmed page

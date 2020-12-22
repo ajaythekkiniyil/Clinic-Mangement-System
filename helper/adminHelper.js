@@ -214,4 +214,9 @@ module.exports = {
     )
     callback()
   },
+  getAllAppointments: async function (displayName) {
+    let allAppointments = await dbo.get().collection(collectionNames.appointments).find({}).toArray();
+    return (allAppointments);
+
+},
 };

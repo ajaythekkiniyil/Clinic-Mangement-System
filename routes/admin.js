@@ -29,14 +29,15 @@ router.get("/adminPanel", async (req, res) => {
   }
   let allPatientsDetails = await adminHelper.getAllPatients();
   let allDoctorDetails = await adminHelper.getAllDoctors();
+  let allAppointments=await adminHelper.getAllAppointments();
+
 
   let patientscount = allPatientsDetails.patientscount;
   let allPatients = allPatientsDetails.allPatients;
   let doctorsCount = allDoctorDetails.count;
   let allDoctors = allDoctorDetails.allDoctors;
-
   let adminName = req.session.adminName;
-  res.render("admin/adminPanel", { adminName, doctorsCount, allDoctors,patientscount, allPatients});
+  res.render("admin/adminPanel", { adminName, doctorsCount, allDoctors,patientscount, allPatients,allAppointments});
 
 });
 

@@ -41,6 +41,16 @@ module.exports = {
 
         })
     },
+    checkTheAppointment:async(data,callback)=>{
+        await dbo.get().collection(collectionNames.appointments).findOne({$and:[{date:data.date},{time:data.time},{doctor:data.doctorName}]}).then(resp=>{
+            if(resp){
+                callback (true);
+            }
+            else
+                callback (false);
+                
+        })
+    },
     
     getAllDoctors: async function () {
         let allDoctors = await dbo.get().collection(collectionName.doctors).find().toArray();

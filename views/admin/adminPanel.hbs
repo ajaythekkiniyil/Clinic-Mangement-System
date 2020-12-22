@@ -3,7 +3,7 @@
 
     <!--Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark secondary-color lighten-1 bg-dark">
-    <h2><a href="/" class="text-white" style="text-decoration:none">DENTACARE</a></h2>
+        <h2><a href="/" class="text-white" style="text-decoration:none">DENTACARE</a></h2>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-555"
             aria-controls="navbarSupportedContent-555" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -26,13 +26,13 @@
         </div>
     </nav>
     <!--/.Navbar -->
-    {{!-- admin panel nav section  --}}
+    {{!-- admin panel nav section --}}
 
 
     <div class="container">
         <div class="row">
 
-            {{!-- admin pane left section  --}}
+            {{!-- admin pane left section --}}
             <div class="col-4 ">
                 <div class="d-flex justify-content-center">
                     <div class="row">
@@ -56,11 +56,11 @@
 
 
             </div>
-            {{!-- admin pane left section  --}}
+            {{!-- admin pane left section --}}
 
-            {{!-- admin pane right section  --}}
+            {{!-- admin pane right section --}}
             <div class="col-8 mt-5">
-                
+
                 {{!-- Dashboard tab --}}
                 <div class="tabcontent" id="Dashboard">
                     <h4>
@@ -118,19 +118,18 @@
                             <h4>
                                 <b>List of doctors</b>
                             </h4>
-                            <a href="/admin/adddoctors"><i class="fa fa-edit text-danger">Add Doctors</i></a>
+                            <a href="/admin/adddoctors"><i class="fa fa-edit text-white">Add Doctors</i></a>
                         </div>
 
+                        <div class="col-12 mt-3 table-responsive">
 
-                        <div class='table-responsive'>
-                            <table class="table">
+                            <table class="table table-secondary myTable" id="myTable">
                                 <thead>
                                     <tr>
                                         <th scope="col">Doctors</th>
                                         <th scope="col">Specialised</th>
                                         <th scope="col">Speciality</th>
-                                        {{!-- <th scope="col">Status</th> --}}
-                                        <th scope="col">Actions</th>
+                                        <th scope="col">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -139,9 +138,10 @@
                                         <th scope="row">{{this.name}}</th>
                                         <td>{{this.specialised}}</td>
                                         <td>{{this.field}}</td>
-                                        {{!-- <td>IN</td> --}}
-                                        <td><a href="/admin/edit/{{this._id}}" ><i class='fa fa-edit' style='font-size:24px'></i></a>
-                                            <a href="#" onclick="deleteDoctor('{{this._id}}')"><i class='fa fa-trash'style='font-size:24px'></i></a>
+                                        <td><a href="/admin/edit/{{this._id}}"><i class='fa fa-edit'
+                                                    style='font-size:24px'></i></a>
+                                            <a href="#" onclick="deleteDoctor('{{this._id}}')"><i class='fa fa-trash'
+                                                    style='font-size:24px'></i></a>
                                         </td>
                                     </tr>
                                     {{/each}}
@@ -149,6 +149,7 @@
                                 </tbody>
                             </table>
                         </div>
+
                     </div>
                 </div>
 
@@ -162,17 +163,19 @@
                             <h4>
                                 <b>List of patients</b>
                             </h4>
-                            <a href="/admin/addpatientsForm"><i class="fa fa-edit text-danger" style="">Add Patients</i></a>
+                            <a href="/admin/addpatientsForm"><i class="fa fa-edit text-white" style="">Add
+                                    Patients</i></a>
                         </div>
 
-                        <div class="row table-responsive">
-                            <table class="table">
+                        <div class="col-12 mt-3 table-responsive">
+
+                            <table class="table table-secondary myTable" id="myTable">
                                 <thead>
                                     <tr>
                                         <th scope="col">Name</th>
                                         <th scope="col">Age</th>
                                         <th scope="col">Mobile</th>
-                                        <th scope="col">Actions</th>
+                                        <th scope="col">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -182,8 +185,10 @@
                                         <td>{{this.age}}</td>
                                         <td>{{this.mobile}}</td>
                                         <td>
-                                            <a href="/admin/editPatient/{{this._id}}"><i class='fa fa-edit' style='font-size:24px'></i></a> 
-                                            <a href="#" onclick="deletePatient('{{this._id}}')"><i class='fa fa-trash' style='font-size:24px'></i></a>
+                                            <a href="/admin/editPatient/{{this._id}}"><i class='fa fa-edit'
+                                                    style='font-size:24px'></i></a>
+                                            <a href="#" onclick="deletePatient('{{this._id}}')"><i class='fa fa-trash'
+                                                    style='font-size:24px'></i></a>
                                         </td>
                                     </tr>
                                     {{/each}}
@@ -191,6 +196,8 @@
                                 </tbody>
                             </table>
                         </div>
+
+
                     </div>
                 </div>
 
@@ -204,34 +211,44 @@
                             <h4>
                                 <b>List of Appointment</b>
                             </h4>
-                            <a href="/admin/addAppointment"><i class="fa fa-edit text-danger" style="">Add Appointment</i></a>
+                            {{!-- <a href="/admin/addAppointment"><i class="fa fa-edit text-white" style="">Add
+                                    Appointment</i></a> --}}
                         </div>
-                        <div class="row">
-                            <div class="col-12 col-md-6 mt-2">
-                                <div class="card ">
-                                    <div class="col-12">
-                                        <img class="card-img-top col-12" src="/images/doctor.png" style="height: 140px;"
-                                            alt="Card image cap" />
-                                        <h5 class="text-center">Dr.Catherin</h5>
-                                        <h6 class="text-center">Orthodontist</h6>
-                                    </div>
-                                    <div class="card-body">
 
-                                        <p class="col text-primary">Appointment Date: 23-04-2020</p>
-                                        <p class="col text-primary">Session: Evening</p>
-                                        <p class="col text-primary">Time : 04:15-04:30 pm</p>
-                                        <p class="col text-primary">Booking for: Dr.Fais</p>
-                                        <p class="col text-primary">Appointment Date: 23-04-2020</p>
+                        <div class="col-12 mt-3 table-responsive">
 
-                                    </div>
-                                </div>
-                            </div>
+                            <table class="table table-secondary myTable" id="myTable">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Doctor Name</th>
+                                        <th scope="col">Patient Name</th>
+                                        <th scope="col">Department</th>
+                                        <th scope="col">Date</th>
+                                        <th scope="col">Time</th>
+                                        <th scope="col">Status</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each allAppointments}}
+                                    <tr id="{{this._id}}">
+                                        <td>{{this.doctor}}</td>
+                                        <td>{{this.bookingFor}}</td>
+                                        <td>{{this.department}}</td>
+                                        <td>{{this.date}}</td>
+                                        <td>{{this.time}}</td>
+                                        <td>{{this.status}}</td>
+                                    </tr>
+                                    {{/each}}
+
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        {{!-- admin pane right section  --}}
+        {{!-- admin pane right section --}}
     </div>
 </div>
 
@@ -240,7 +257,9 @@
 
 
 <style>
-    
+    body {
+        background: linear-gradient(to right, #373b44, #4286f4);
+    }
 
     .dropdown-item:hover {
         color: blue;
@@ -287,40 +306,43 @@
     /* Style the tab content */
 </style>
 
+<script type="text/javascript" charset="utf8"
+    src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
 
 <script>
+    $(function () {
+        $(".myTable").dataTable();
+    })
+    function deleteDoctor(id) {
 
-    function deleteDoctor(id){
+        var r = confirm("Doy you want to delete");
+        if (r) {
 
-        var r=confirm("Doy you want to delete");
-        if(r){
-
-            document.getElementById(id).style.display='none';
+            document.getElementById(id).style.display = 'none';
 
             $.ajax({
-            url:'/admin/delete/'+id,
-            method:'get',
+                url: '/admin/delete/' + id,
+                method: 'get',
             })
 
         }
-        
-    }
-    function deletePatient(id){
-        var r=confirm("Doy you want to delete");
-        if(r){
 
-            document.getElementById(id).style.display='none';
+    }
+    function deletePatient(id) {
+        var r = confirm("Doy you want to delete");
+        if (r) {
+
+            document.getElementById(id).style.display = 'none';
 
             $.ajax({
-            url:'/admin/deletePatient/'+id,
-            method:'get',
+                url: '/admin/deletePatient/' + id,
+                method: 'get',
             })
 
         }
     }
 
 
-    {{!-- /admin/delete/{{this._id}} --}}
 
     function openTabs(evt, cityName) {
         var i, tabcontent, tablinks;
