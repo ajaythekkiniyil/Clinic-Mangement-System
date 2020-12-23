@@ -194,6 +194,8 @@
                                     <th scope="col">Patient Name</th>
                                     <th scope="col">Appointment date</th>
                                     <th scope="col">Time</th>
+                                    <th scope="col">Action</th>
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -202,6 +204,9 @@
                                     <th scope="row">{{this.bookingFor}}</th>
                                     <td>{{this.date}}</td>
                                     <td>{{this.time}}</td>
+                                    <td><a href="doctor/block/?user={{this.bookingFor}}&doctor={{../doctordetails.name}}" class="text-danger">Block</a>
+                                        <a href="doctor/unblock/?user={{this.bookingFor}}&doctor={{../doctordetails.name}}">Unblock</a>
+                                    </td>
                                 </tr>
                                 {{/each}}
                             </tbody>

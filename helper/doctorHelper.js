@@ -2,7 +2,6 @@ var dbo = require("../config/connection");
 var bcrypt = require("bcrypt");
 const { ObjectId } = require("mongodb");
 const collectionName = require('../config/collectionNames');
-const collectionNames = require("../config/collectionNames");
 
 module.exports = {
     verifyDoctorLoginCredentials: function (doctorLoginCredentials) {
@@ -78,13 +77,13 @@ module.exports = {
             .updateOne({ _id: ObjectId(id) }, { $set: { status: 'consulted', perscription: perscription } });
     },
     getCancelledAppointments: async (doctorName) => {
-        let allCancelledAppointments = await dbo.get().collection(collectionName.deletedAppointment).find({$and:[{doctor:doctorName},{status:'cancelled by doctor'}]}).toArray();
+        let allCancelledAppointments = await dbo.get().collection(collectionName.deletedAppointment).find({ $and: [{ doctor: doctorName }, { status: 'cancelled by doctor' }] }).toArray();
         return allCancelledAppointments;
 
     },
-    
+
     getAllConsultedAppointments: async (doctorName) => {
-        let allConsultedAppointments = await dbo.get().collection(collectionName.appointments).find({$and:[{doctor:doctorName},{status:'consulted'}]}).toArray();
+        let allConsultedAppointments = await dbo.get().collection(collectionName.appointments).find({ $and: [{ doctor: doctorName }, { status: 'consulted' }] }).toArray();
         return allConsultedAppointments;
 
     },
@@ -94,7 +93,7 @@ module.exports = {
         var day = dateObj.getUTCDate();
         var year = dateObj.getUTCFullYear();
         newdate = year + "-" + month + "-" + day;
-        let upcomingAppointments = await dbo.get().collection(collectionName.appointments).find({ $and: [{ date: { $ne: newdate } },{ date: { $gt: newdate } }, { doctor: doctorName }, { status: 'confirmed' }] }).toArray();
+        let upcomingAppointments = await dbo.get().collection(collectionName.appointments).find({ $and: [{ date: { $ne: newdate } }, { date: { $gt: newdate } }, { doctor: doctorName }, { status: 'confirmed' }] }).toArray();
         return (upcomingAppointments);
     },
     getExpiredAppointments: async (doctorName) => {
@@ -103,54 +102,75 @@ module.exports = {
         var day = dateObj.getUTCDate();
         var year = dateObj.getUTCFullYear();
         todaydate = year + "-" + month + "-" + day;
-        await dbo.get().collection(collectionNames.appointments).updateMany({ $and: [{ date: { $ne: todaydate } },{ date: { $lt: todaydate } }, { doctor: doctorName }, { status: 'confirmed' }] },
-            {$set:{
-                status:'expired',
-            }},
-            function(err,res){
+        await dbo.get().collection(collectionName.appointments).updateMany({ $and: [{ date: { $ne: todaydate } }, { date: { $lt: todaydate } }, { doctor: doctorName }, { status: 'confirmed' }] },
+            {
+                $set: {
+                    status: 'expired',
+                }
+            },
+            function (err, res) {
                 console.log('updated');
             }
         )
-        let expiredAppointments = await dbo.get().collection(collectionName.appointments).find({$and:[{ status: 'expired' },{ doctor: doctorName }]}).toArray();
-        
-        return(expiredAppointments);
+        let expiredAppointments = await dbo.get().collection(collectionName.appointments).find({ $and: [{ status: 'expired' }, { doctor: doctorName }] }).toArray();
+
+        return (expiredAppointments);
     },
-    
+
     getAllPatients: async (doctorName) => {
-        let allPatients = await dbo.get().collection(collectionName.appointments).find({doctor:doctorName}).toArray();
+        let allPatients = await dbo.get().collection(collectionName.appointments).find({ doctor: doctorName }).toArray();
         return (allPatients);
     },
-    getDoctorProfile:(id)=>{
-        return new Promise(async(resolve, reject) => {
+    getDoctorProfile: (id) => {
+        return new Promise(async (resolve, reject) => {
             await dbo.get().collection(collectionName.doctors).findOne({ _id: ObjectId(id) }).then(resp => {
                 resolve(resp);
             })
         })
     },
-    updateDoctor:async(doctorData,id)=>{
-        await dbo.get().collection(collectionNames.doctors).updateOne(
-            {_id:ObjectId(doctorData.id)},
+    updateDoctor: async (doctorData, id) => {
+        await dbo.get().collection(collectionName.doctors).updateOne(
+            { _id: ObjectId(doctorData.id) },
             {
-                $set:{
-                    name:doctorData.name,
-                    specialised:doctorData.specialised,
-                    field:doctorData.field,
+                $set: {
+                    name: doctorData.name,
+                    specialised: doctorData.specialised,
+                    field: doctorData.field,
                 }
             },
-            function(err,res){
+            function (err, res) {
                 console.log('updated1');
             }
-            )
-            await dbo.get().collection(collectionNames.doctorCredentials).updateOne(
-                {_id:ObjectId(id)},
-                {
-                    $set:{
-                        username:doctorData.name,
-                    }
-                },
-                function(err,res){
-                    console.log('updated2');
+        )
+        await dbo.get().collection(collectionName.doctorCredentials).updateOne(
+            { _id: ObjectId(id) },
+            {
+                $set: {
+                    username: doctorData.name,
                 }
-                )
-    }
+            },
+            function (err, res) {
+                console.log('updated2');
+            }
+        )
+    },
+    blockUser: async (user, doctor) => {
+        await dbo.get().collection(collectionName.doctors).updateOne({ name: doctor },
+            {
+                $push: {
+                blockedUser: user,
+                }
+            })
+    },
+
+    unblockUser:async(user,doctor)=>{
+        await dbo.get().collection(collectionName.doctors).updateOne({name:doctor},
+             {
+                 $pull:{
+                    blockedUser:user,
+                 }
+             },(err,resp)=>{
+             console.log('unblocked');
+         })
+     },
 }

@@ -2,7 +2,6 @@ var dbo = require("../config/connection");
 var bcrypt = require("bcrypt");
 const { ObjectId } = require("mongodb");
 const collectionName=require('../config/collectionNames');
-const collectionNames = require("../config/collectionNames");
 const { response } = require("express");
 
 module.exports = {
@@ -42,7 +41,7 @@ module.exports = {
         })
     },
     checkTheAppointment:async(data,callback)=>{
-        await dbo.get().collection(collectionNames.appointments).findOne({$and:[{date:data.date},{time:data.time},{doctor:data.doctorName}]}).then(resp=>{
+        await dbo.get().collection(collectionName.appointments).findOne({$and:[{date:data.date},{time:data.time},{doctor:data.doctorName}]}).then(resp=>{
             if(resp){
                 callback (true);
             }
@@ -51,18 +50,16 @@ module.exports = {
                 
         })
     },
-    
     getAllDoctors: async function () {
         let allDoctors = await dbo.get().collection(collectionName.doctors).find().toArray();
-        return (allDoctors);
-
+            return(allDoctors);
     },
     getOneDoctor: (doctorId) => {
         return new Promise((resolve, reject) => {
             dbo.get().collection(collectionName.doctors).findOne({ _id: ObjectId(doctorId) }).then(async(resp) => {
                 
                 let doctorName=resp.name;
-                let time=await dbo.get().collection(collectionNames.appointments).find({$and:[{doctor:doctorName},{status:'confirmed'}]}).toArray();
+                let time=await dbo.get().collection(collectionName.appointments).find({$and:[{doctor:doctorName},{status:'confirmed'}]}).toArray();
                 resolve({resp,time})
 
                 })
@@ -111,12 +108,12 @@ module.exports = {
         return (getAllDeteltedAppointments);
     },
     getUser:async(name,callback)=>{
-        await dbo.get().collection(collectionNames.user).findOne({name:name}).then(resp=>{
+        await dbo.get().collection(collectionName.user).findOne({name:name}).then(resp=>{
             callback(resp);
         })
     },
     updateUser:async(userData)=>{
-        await dbo.get().collection(collectionNames.user).updateOne(
+        await dbo.get().collection(collectionName.user).updateOne(
             {_id:ObjectId(userData.id)},
             {
                 $set:{
@@ -130,6 +127,9 @@ module.exports = {
                 console.log('updated');
             }
             )
-    }
-
+    },
+    checkIfBlocked:async(doctorId,user)=>{
+       let t=await dbo.get().collection(collectionName.doctors).findOne({$and:[{_id:ObjectId(doctorId)},{blockedUser:{$in:[user]}}]});
+       return(t);
+    },
 }

@@ -16,7 +16,6 @@ router.get('/', async (req, res) => {
   let todayAppointments = await doctorHelper.getTodayAppointments(doctorName);
   let upcomingAppointments = await doctorHelper.getUpcomingAppointments(doctorName);
   let expiredAppointments=await doctorHelper.getExpiredAppointments(doctorName);
-
   let allCancelledAppointments=await doctorHelper.getCancelledAppointments(doctorName);
 
   let allConsultedAppointments = await doctorHelper.getAllConsultedAppointments(doctorName);
@@ -118,6 +117,18 @@ router.post('/editDoctor/:id', async (req, res) => {
   res.redirect('/doctor')
 })
 
+// block user
+router.get('/block',async(req,res)=>{
+  console.log(req.query);
+  await doctorHelper.blockUser(req.query.user,req.query.doctor);
+  res.redirect('/doctor');
+})
+//unblock user
+router.get('/unblock',async(req,res)=>{
+  console.log(req.query);
+  await doctorHelper.unblockUser(req.query.user,req.query.doctor);
+  res.redirect('/doctor');
+})
 
 
 module.exports = router;

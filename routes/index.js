@@ -1,4 +1,4 @@
-var alert =require('alert-node')
+var alert = require('alert-node')
 var express = require('express');
 var router = express.Router();
 var userHelper = require('../helper/userHelper');
@@ -11,15 +11,15 @@ require('../config/passport-setup')
 const client = require('twilio')(process.env.AccountSID, process.env.AuthToken);
 
 /* GET home page. */
-router.get('/',async function (req, res, next) {
+router.get('/', async function (req, res, next) {
   let allDoctorDetails = await userHelper.getAllDoctors();
-  
+
   if (req.session.passport) {
     // when user login through gmail a session created and details stored
     let displayName = req.session.passport.user.displayName;
-    res.render('user/index', { displayName ,allDoctorDetails})
+    res.render('user/index', { displayName, allDoctorDetails })
   }
-  res.render('user/index',{allDoctorDetails})
+  res.render('user/index', { allDoctorDetails })
 });
 
 // registerForm
@@ -102,7 +102,7 @@ router.post('/verifyLoginCredentials', (req, res) => {
       let user = {
         user: {
           displayName: resp.name,
-          id:resp._id,
+          id: resp._id,
         }
       }
       req.session.passport = user;
@@ -123,22 +123,22 @@ router.get('/userPage', async (req, res) => {
     res.redirect('/')
   }
   let displayName = req.session.passport.user.displayName;
-  let userId=req.session.passport.user.id;
+  let userId = req.session.passport.user.id;
   // fetch all doctors details from database and send to user page
   // fetch all appointments  from database and send to user page
   // fetch all deleted appointments  from database and send to user page
   let allDoctorDetails = await userHelper.getAllDoctors();
   let allAppointments = await userHelper.getAllAppointments(displayName);
-  let allConsultedAppointments=await userHelper.getAllConsultedAppointment(displayName);
-  let allDeletedAppointments=await userHelper.getAllDeteltedAppointments(displayName);
-  
-  res.render('user/userPage', { userId,displayName, allDoctorDetails, allAppointments,allDeletedAppointments,allConsultedAppointments });
+  let allConsultedAppointments = await userHelper.getAllConsultedAppointment(displayName);
+  let allDeletedAppointments = await userHelper.getAllDeteltedAppointments(displayName);
+
+  res.render('user/userPage', { userId, displayName, allDoctorDetails, allAppointments, allDeletedAppointments, allConsultedAppointments });
 })
 
 // login with google
 router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }))
 
-router.get('/google/callback', passport.authenticate('google', { failureRedirect: '/failed' }), async(req, res) => {
+router.get('/google/callback', passport.authenticate('google', { failureRedirect: '/failed' }), async (req, res) => {
   // console.log(req.user.displayName);
   // user registration success
   res.redirect('/userPage');
@@ -151,38 +151,46 @@ router.get('/logout', (req, res) => {
 })
 
 // directBookAppointment
-router.get('/directBookAppointment/:id',(req,res)=>{
+router.get('/directBookAppointment/:id', (req, res) => {
   userHelper.getOneDoctor(req.params.id).then(response => {
-    let doctorDetails=response.resp;
-    let allReadyBookedTime=response.time;
-    res.render('user/bookAppointment', {  doctorDetails,allReadyBookedTime });
+    let doctorDetails = response.resp;
+    let allReadyBookedTime = response.time;
+    res.render('user/bookAppointment', { doctorDetails, allReadyBookedTime });
   })
 })
 
 // bookAppointment
 router.get('/bookAppointment/:id', async (req, res) => {
-  // fetch doctor from database match with id
-  userHelper.getOneDoctor(req.params.id).then(response => {
-    
-    let doctorDetails=response.resp;
-    let allReadyBookedTime=response.time;
-     let displayName = req.session.passport.user.displayName;
-     res.render('user/bookAppointment', { displayName, doctorDetails,allReadyBookedTime });
-  })
+  let displayName = req.session.passport.user.displayName;
+
+  let blocked = await userHelper.checkIfBlocked(req.params.id, displayName);
+  if (blocked) {
+    alert('You can not book appointment doctor blocked you.');
+    res.redirect('/userPage')
+  }
+  else {
+    // fetch doctor from database match with id
+    userHelper.getOneDoctor(req.params.id).then(response => {
+      let doctorDetails = response.resp;
+      let allReadyBookedTime = response.time;
+      res.render('user/bookAppointment', { displayName, doctorDetails, allReadyBookedTime });
+    })
+  }
+
 
 })
 
 // appointment booking user fill date and time
 router.post('/bookDoctor', async (req, res) => {
-  if(!req.session.passport){
+  if (!req.session.passport) {
     res.redirect('/loginForm')
   }
-  await userHelper.checkTheAppointment(req.body,(resp)=>{
-    if(resp){
+  await userHelper.checkTheAppointment(req.body, (resp) => {
+    if (resp) {
       alert('already user booked slot');
       location.reload();
     }
-    else{
+    else {
       //Booking date , time doctor name department stored in database
       userHelper.storeBooking(req.body, req.session.passport.user.displayName, (resp) => {
         let appointment = {
@@ -191,14 +199,14 @@ router.post('/bookDoctor', async (req, res) => {
           date: resp.date,
           time: resp.time,
           bookingfor: resp.bookingFor,
-          status:resp.status,
+          status: resp.status,
         }
         res.render('user/bookingConfirmed', { appointment })
       });
     }
   })
-  
-   
+
+
 })
 
 // appointment confirmed page
@@ -212,32 +220,32 @@ router.get('/cancelAppointment/:id', (req, res) => {
   res.json(true)
 })
 
-router.get('/profile',async (req,res)=>{
-  
-  userHelper.getUser(req.session.passport.user.displayName,function(userData){
-    res.render('user/userProfile',{userData})
+router.get('/profile', async (req, res) => {
+
+  userHelper.getUser(req.session.passport.user.displayName, function (userData) {
+    res.render('user/userProfile', { userData })
   })
-  
+
 })
 
-router.get('/editUser',(req,res)=>{
-  userHelper.getUser(req.session.passport.user.displayName,function(userData){
+router.get('/editUser', (req, res) => {
+  userHelper.getUser(req.session.passport.user.displayName, function (userData) {
     console.log(userData);
-    res.render('user/userEdit',{userData})
+    res.render('user/userEdit', { userData })
   })
-  
+
 })
-router.post('/editUser',async(req,res)=>{
-  req.session.passport.user.displayName=req.body.name;
+router.post('/editUser', async (req, res) => {
+  req.session.passport.user.displayName = req.body.name;
   console.log(req.files);
-  if(req.files){
-    let image=req.files.image;
-   await image.mv("public/images/user/" + req.body.id + ".jpg");
+  if (req.files) {
+    let image = req.files.image;
+    await image.mv("public/images/user/" + req.body.id + ".jpg");
   }
 
   await userHelper.updateUser(req.body);
   res.redirect('/userPage')
-  
+
 })
 
 module.exports = router;
