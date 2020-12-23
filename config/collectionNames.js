@@ -2,7 +2,7 @@ var collectionNames = {
     
     user: 'user',
     doctors: 'doctors',
-    patients:'patients',
+    patients:'user',
     appointments: 'appointments',
     deletedAppointment: 'deletedAppointment',
     doctorCredentials: 'doctorCredentials',

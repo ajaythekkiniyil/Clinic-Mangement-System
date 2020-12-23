@@ -147,8 +147,8 @@ module.exports = {
   },
 
   getAllPatients:async()=>{
-      let patientscount = await dbo.get().collection(collectionNames.patients).find().count();
-      let allPatients = await dbo.get().collection(collectionNames.patients).find().toArray();
+      let patientscount = await dbo.get().collection(collectionNames.user).find().count();
+      let allPatients = await dbo.get().collection(collectionNames.user).find().toArray();
       return({ patientscount, allPatients });
     
   },
@@ -218,5 +218,41 @@ module.exports = {
     let allAppointments = await dbo.get().collection(collectionNames.appointments).find({}).toArray();
     return (allAppointments);
 
-},
+  },
+  blockDoctor:function(doctorName){
+    dbo.get().collection(collectionNames.doctorCredentials).updateOne({username:doctorName},
+      {
+        $set:{
+          blocked:true,
+        }
+      }
+      )
+  },
+  unblockDoctor:function(doctorName){
+    dbo.get().collection(collectionNames.doctorCredentials).updateOne({username:doctorName},
+      {
+        $set:{
+          blocked:false,
+        }
+      }
+      )
+  },
+  blockPatient:function(patientName){
+    dbo.get().collection(collectionNames.user).updateOne({name:patientName},
+      {
+        $set:{
+          blocked:true,
+        }
+      }
+      )
+  },
+  unblockPatient:function(patientName){
+    dbo.get().collection(collectionNames.user).updateOne({name:patientName},
+      {
+        $set:{
+          blocked:false,
+        }
+      }
+      )
+  },
 };

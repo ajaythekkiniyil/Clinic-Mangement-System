@@ -22,7 +22,7 @@ module.exports = {
         }))
     },
     verifyLoginCredentials: function (userLoginCredentials, callback) {
-        dbo.get().collection(collectionName.user).findOne({ name: userLoginCredentials.name }).then(resp => {
+        dbo.get().collection(collectionName.user).findOne({$and:[{ name: userLoginCredentials.name },{blocked:{$ne:true}}]}).then(resp => {
             // console.log(resp);
             if (resp == null) {
                 callback(false)

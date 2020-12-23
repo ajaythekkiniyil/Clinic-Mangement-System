@@ -9,7 +9,7 @@ module.exports = {
             // bcrypt.hash(doctorLoginCredentials.password,10,(err,hash)=>{
             //     dbo.get().collection(collectionName.doctorCredentials).insertOne({username:doctorLoginCredentials.name,password:hash}).then((resp)=>console.log(resp))
             // })
-            dbo.get().collection(collectionName.doctorCredentials).findOne({ username: doctorLoginCredentials.name }).then(resp => {
+            dbo.get().collection(collectionName.doctorCredentials).findOne({$and:[{ username: doctorLoginCredentials.name },{blocked:{$ne:true}}]}).then(resp => {
                 if (resp == null) {
                     resolve(false)
                 }

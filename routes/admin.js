@@ -217,5 +217,27 @@ router.get('/addAppointment',(req,res)=>{
   res.send('hi')
 })
 
+// block doctor
+router.get('/blockDoctor/:id',async(req,res)=>{
+  await adminHelper.blockDoctor(req.params.id);
+  res.redirect('/admin/adminPanel')
+})
+// unblock doctor
+router.get('/unblockDoctor/:id',async(req,res)=>{
+  await adminHelper.unblockDoctor(req.params.id);
+  res.redirect('/admin/adminPanel')
+})
+// block patient
+router.get('/blockPatient/:id',async(req,res)=>{
+  await adminHelper.blockPatient(req.params.id);
+  res.redirect('/admin/adminPanel')
+})
+// unblock patient
+router.get('/unblockPatient/:id',async(req,res)=>{
+  await adminHelper.unblockPatient(req.params.id);
+  res.redirect('/admin/adminPanel')
+})
+
+
 
 module.exports = router;

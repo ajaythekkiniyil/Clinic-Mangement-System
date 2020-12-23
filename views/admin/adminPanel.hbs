@@ -139,9 +139,13 @@
                                         <td>{{this.specialised}}</td>
                                         <td>{{this.field}}</td>
                                         <td><a href="/admin/edit/{{this._id}}"><i class='fa fa-edit'
-                                                    style='font-size:24px'></i></a>
+                                                    style='font-size:20px'></i></a>
                                             <a href="#" onclick="deleteDoctor('{{this._id}}')"><i class='fa fa-trash'
-                                                    style='font-size:24px'></i></a>
+                                                    style='font-size:20px'></i></a>
+                                            <a href="/admin/blockDoctor/{{this.name}}"><i
+                                                    class="fa fa-ban" style='font-size:20px'></i></a>
+                                            <a href="/admin/unblockDoctor/{{this.name}}"><i class="fa fa-unlock" style='font-size:20px'></i></a>
+
                                         </td>
                                     </tr>
                                     {{/each}}
@@ -186,9 +190,12 @@
                                         <td>{{this.mobile}}</td>
                                         <td>
                                             <a href="/admin/editPatient/{{this._id}}"><i class='fa fa-edit'
-                                                    style='font-size:24px'></i></a>
+                                                    style='font-size:20px'></i></a>
                                             <a href="#" onclick="deletePatient('{{this._id}}')"><i class='fa fa-trash'
-                                                    style='font-size:24px'></i></a>
+                                                    style='font-size:20px'></i></a>
+                                            <a href="/admin/blockPatient/{{this.name}}"><i
+                                                    class="fa fa-ban" style='font-size:20px'></i></a>
+                                            <a href="/admin/unblockPatient/{{this.name}}"><i class="fa fa-unlock" style='font-size:20px'></i></a>
                                         </td>
                                     </tr>
                                     {{/each}}
@@ -257,6 +264,31 @@
 
 
 <style>
+    .tooltip {
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted black;
+    }
+
+    .tooltip .tooltiptext {
+        visibility: hidden;
+        width: 120px;
+        background-color: black;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 0;
+
+        /* Position the tooltip */
+        position: absolute;
+        z-index: 1;
+    }
+
+    .tooltip:hover .tooltiptext {
+        visibility: visible;
+    }
+
+
     body {
         background: linear-gradient(to right, #373b44, #4286f4);
     }
