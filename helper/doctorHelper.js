@@ -173,4 +173,9 @@ module.exports = {
              console.log('unblocked');
          })
      },
+     excel: async (id) => {
+        let data = await dbo.get().collection(collectionName.appointments).find({_id:ObjectId(id)}).toArray();
+        return( data);
+
+    },
 }

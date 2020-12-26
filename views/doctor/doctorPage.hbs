@@ -136,9 +136,8 @@
                                 <tr>
                                     <th scope="row">{{this.bookingFor}}</th>
                                     <td>{{this.date}}</td>
-                                    {{!-- external value --}}
                                     <td>{{this.time}}</td>
-                                    <td class="text-success">Consulted</td>
+                                    <td><a href="/doctor/excel/{{this._id}}">Download data</a></td>
                                 </tr>
                                 {{/each}}
 

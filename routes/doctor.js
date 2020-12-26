@@ -15,8 +15,8 @@ router.get('/', async (req, res) => {
   let doctorName = req.session.doctor.doctorName;
   let todayAppointments = await doctorHelper.getTodayAppointments(doctorName);
   let upcomingAppointments = await doctorHelper.getUpcomingAppointments(doctorName);
-  let expiredAppointments=await doctorHelper.getExpiredAppointments(doctorName);
-  let allCancelledAppointments=await doctorHelper.getCancelledAppointments(doctorName);
+  let expiredAppointments = await doctorHelper.getExpiredAppointments(doctorName);
+  let allCancelledAppointments = await doctorHelper.getCancelledAppointments(doctorName);
 
   let allConsultedAppointments = await doctorHelper.getAllConsultedAppointments(doctorName);
 
@@ -25,7 +25,7 @@ router.get('/', async (req, res) => {
 
     //  all appointments where status is pending
     doctorHelper.getAllAppointments(doctorName, (allAppointments => {
-      res.render('doctor/doctorPage', { allAppointments, doctordetails, todayAppointments, upcomingAppointments, allConsultedAppointments,expiredAppointments, allPatients,allCancelledAppointments })
+      res.render('doctor/doctorPage', { allAppointments, doctordetails, todayAppointments, upcomingAppointments, allConsultedAppointments, expiredAppointments, allPatients, allCancelledAppointments })
     }))
 
   })
@@ -113,21 +113,52 @@ router.post('/editDoctor/:id', async (req, res) => {
     let image = req.files.image;
     await image.mv("public/images/doctors/" + req.body.id + ".jpg");
   }
-  await doctorHelper.updateDoctor(req.body,req.session.doctor.id);
+  await doctorHelper.updateDoctor(req.body, req.session.doctor.id);
   res.redirect('/doctor')
 })
 
 // block user
-router.get('/block',async(req,res)=>{
+router.get('/block', async (req, res) => {
   console.log(req.query);
-  await doctorHelper.blockUser(req.query.user,req.query.doctor);
+  await doctorHelper.blockUser(req.query.user, req.query.doctor);
   res.redirect('/doctor');
 })
 //unblock user
-router.get('/unblock',async(req,res)=>{
+router.get('/unblock', async (req, res) => {
   console.log(req.query);
-  await doctorHelper.unblockUser(req.query.user,req.query.doctor);
+  await doctorHelper.unblockUser(req.query.user, req.query.doctor);
   res.redirect('/doctor');
+})
+
+router.get('/excel/:id', async(req, res) => {
+  let data = await doctorHelper.excel(req.params.id);
+  const excel = require("exceljs");
+
+  let workbook = new excel.Workbook();
+  let worksheet = workbook.addWorksheet("Tutorials");
+
+  worksheet.columns = [
+    { header: 'Doctor Name', key: 'doctorname', width: 20 },
+    { header: 'Patients Name', key: 'patientname', width: 20 },
+    { header: 'date', key: 'date', width: 10 },
+    { header: 'time', key: 'time', width: 10 },
+    { header: 'perscription', key: 'perscription', width: 30 },
+  ];
+
+  worksheet.addRow({ doctorname: data[0].doctor,patientname:data[0].bookingFor, date: data[0].date, time: data[0].time, perscription: data[0].perscription });
+
+  res.setHeader(
+    "Content-Type",
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+  );
+  res.setHeader(
+    "Content-Disposition",
+    "attachment; filename=" + "Data.xlsx"
+  );
+
+  return workbook.xlsx.write(res).then(function () {
+    res.status(200).end();
+  });
 })
 
 
