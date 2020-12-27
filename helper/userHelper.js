@@ -132,4 +132,9 @@ module.exports = {
        let t=await dbo.get().collection(collectionName.doctors).findOne({$and:[{_id:ObjectId(doctorId)},{blockedUser:{$in:[user]}}]});
        return(t);
     },
+    excel: async (id) => {
+        let data = await dbo.get().collection(collectionName.appointments).find({_id:ObjectId(id)}).toArray();
+        return( data);
+
+    },
 }

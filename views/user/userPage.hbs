@@ -119,6 +119,7 @@
                                         <th scope="col">Time</th>
                                         <th scope="col">Percription</th>
                                         <th scope="col">Status</th>
+                                        <th scope="col">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -129,6 +130,7 @@
                                         <td>{{this.time}}</td>
                                         <td>{{this.perscription}}</td>
                                         <td><i class="fa fa-check"></i>Consulted</td>
+                                        <td><a href="/excelData/{{this._id}}">Download data</a></td>
                                     </tr>
                                     {{/each}}
 

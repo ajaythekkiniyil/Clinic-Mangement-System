@@ -248,4 +248,35 @@ router.post('/editUser', async (req, res) => {
 
 })
 
+router.get('/excelData/:id',async(req,res)=>{
+  let data = await userHelper.excel(req.params.id);
+  const excel = require("exceljs");
+
+  let workbook = new excel.Workbook();
+  let worksheet = workbook.addWorksheet("Tutorials");
+
+  worksheet.columns = [
+    { header: 'Doctor Name', key: 'doctorname', width: 20 },
+    { header: 'Patients Name', key: 'patientname', width: 20 },
+    { header: 'date', key: 'date', width: 10 },
+    { header: 'time', key: 'time', width: 10 },
+    { header: 'perscription', key: 'perscription', width: 30 },
+  ];
+
+  worksheet.addRow({ doctorname: data[0].doctor,patientname:data[0].bookingFor, date: data[0].date, time: data[0].time, perscription: data[0].perscription });
+
+  res.setHeader(
+    "Content-Type",
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+  );
+  res.setHeader(
+    "Content-Disposition",
+    "attachment; filename=" + "Data.xlsx"
+  );
+
+  return workbook.xlsx.write(res).then(function () {
+    res.status(200).end();
+  });
+})
+
 module.exports = router;
