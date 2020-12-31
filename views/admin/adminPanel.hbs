@@ -101,7 +101,7 @@
                                 </div>
                                 <div class="card-body">
                                     <h5 class="card-title">Appoinments</h5>
-                                    <h3 class="card-text">8</h3>
+                                    <h3 class="card-text">{{allAppointmentsCount}}</h3>
                                 </div>
                             </div>
                         </div>
@@ -130,6 +130,7 @@
                                         <th scope="col">Specialised</th>
                                         <th scope="col">Speciality</th>
                                         <th scope="col">Action</th>
+                                        <th scope="col">View</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -145,11 +146,10 @@
                                             <a href="/admin/blockDoctor/{{this.name}}"><i
                                                     class="fa fa-ban" style='font-size:20px'></i></a>
                                             <a href="/admin/unblockDoctor/{{this.name}}"><i class="fa fa-unlock" style='font-size:20px'></i></a>
-
                                         </td>
+                                        <td><a href="/admin/graphView/{{this.name}}">Appointment Graph</a></td>
                                     </tr>
                                     {{/each}}
-
                                 </tbody>
                             </table>
                         </div>
@@ -237,7 +237,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {{#each allAppointments}}
+                                    {{#each AllAppointments}}
                                     <tr id="{{this._id}}">
                                         <td>{{this.doctor}}</td>
                                         <td>{{this.bookingFor}}</td>

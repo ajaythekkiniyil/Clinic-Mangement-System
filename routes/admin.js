@@ -30,14 +30,15 @@ router.get("/adminPanel", async (req, res) => {
   let allPatientsDetails = await adminHelper.getAllPatients();
   let allDoctorDetails = await adminHelper.getAllDoctors();
   let allAppointments=await adminHelper.getAllAppointments();
-
-
+  
+  let AllAppointments=allAppointments.allAppointments;
+  let allAppointmentsCount=allAppointments.count;
   let patientscount = allPatientsDetails.patientscount;
   let allPatients = allPatientsDetails.allPatients;
   let doctorsCount = allDoctorDetails.count;
   let allDoctors = allDoctorDetails.allDoctors;
   let adminName = req.session.adminName;
-  res.render("admin/adminPanel", { adminName, doctorsCount, allDoctors,patientscount, allPatients,allAppointments});
+  res.render("admin/adminPanel", { adminName, doctorsCount, allDoctors,patientscount, allPatients,AllAppointments,allAppointmentsCount});
 
 });
 
@@ -236,6 +237,13 @@ router.get('/blockPatient/:id',async(req,res)=>{
 router.get('/unblockPatient/:id',async(req,res)=>{
   await adminHelper.unblockPatient(req.params.id);
   res.redirect('/admin/adminPanel')
+})
+// graph view
+router.get('/graphView/:name',async(req,res)=>{
+  let graphData=await adminHelper.getAllAppointmentsDoctor(req.params.name);
+  let doctorName=req.params.name;
+  res.render('admin/graphView',{graphData,doctorName});
+
 })
 
 

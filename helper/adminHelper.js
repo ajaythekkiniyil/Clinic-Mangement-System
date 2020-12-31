@@ -215,8 +215,9 @@ module.exports = {
     callback()
   },
   getAllAppointments: async function (displayName) {
+    let count = await dbo.get().collection(collectionNames.appointments).find().count();
     let allAppointments = await dbo.get().collection(collectionNames.appointments).find({}).toArray();
-    return (allAppointments);
+    return ({allAppointments,count});
 
   },
   blockDoctor:function(doctorName){
@@ -254,5 +255,13 @@ module.exports = {
         }
       }
       )
+  },
+  getAllAppointmentsDoctor: (doctorName) => {
+    return new Promise(async(resolve, reject) => {
+     let expiredCount=await dbo.get().collection(collectionNames.appointments).find({$and:[{doctor:doctorName},{status:'expired'}]}).count();
+     let consultedCount=await dbo.get().collection(collectionNames.appointments).find({$and:[{doctor:doctorName},{status:'consulted'}]}).count();
+    let totalAppointmentCount=await dbo.get().collection(collectionNames.appointments).find({doctor:doctorName}).count();
+     resolve({totalAppointmentCount,expiredCount,consultedCount});
+    })
   },
 };
