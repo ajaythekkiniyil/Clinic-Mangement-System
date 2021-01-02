@@ -144,6 +144,12 @@ router.get('/google/callback', passport.authenticate('google', { failureRedirect
   res.redirect('/userPage');
 })
 
+// login with facebook
+router.get('/facebook',(req,res)=>{
+  res.send('hi')
+})
+
+
 // logout
 router.get('/logout', (req, res) => {
   req.session.destroy();

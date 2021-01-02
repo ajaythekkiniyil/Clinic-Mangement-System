@@ -65,11 +65,13 @@ module.exports = {
     },
     getTodayAppointments: async (doctorName) => {
         var dateObj = new Date();
-        var month = dateObj.getUTCMonth() + 1; //months from 1-12
+        var month = dateObj.getUTCMonth() + 1;  //months from 1-12
         var day = dateObj.getUTCDate();
         var year = dateObj.getUTCFullYear();
-        newdate = year + "-" + month + "-" + day;
-        let todayAppointments = await dbo.get().collection(collectionName.appointments).find({ $and: [{ date: newdate }, { status: 'confirmed' }, { doctor: doctorName }] }).toArray();
+        newdate = year + "-" +'0'+ month + "-" +'0'+ day;
+        console.log(newdate);
+        let todayAppointments = await dbo.get().collection(collectionName.appointments).
+            find({ $and: [{ date: newdate }, { status: 'confirmed' }, { doctor: doctorName }] }).toArray();
         return (todayAppointments);
     },
     consultingAppointment: (id, perscription) => {
@@ -92,7 +94,7 @@ module.exports = {
         var month = dateObj.getUTCMonth() + 1; //months from 1-12
         var day = dateObj.getUTCDate();
         var year = dateObj.getUTCFullYear();
-        newdate = year + "-" + month + "-" + day;
+        newdate = year + "-" +'0'+ month + "-" +'0'+ day;
         let upcomingAppointments = await dbo.get().collection(collectionName.appointments).find({ $and: [{ date: { $ne: newdate } }, { date: { $gt: newdate } }, { doctor: doctorName }, { status: 'confirmed' }] }).toArray();
         return (upcomingAppointments);
     },
@@ -101,7 +103,7 @@ module.exports = {
         var month = dateObj.getUTCMonth() + 1; //months from 1-12
         var day = dateObj.getUTCDate();
         var year = dateObj.getUTCFullYear();
-        todaydate = year + "-" + month + "-" + day;
+        todaydate = year + "-" +'0'+ month + "-" +'0'+ day;
         await dbo.get().collection(collectionName.appointments).updateMany({ $and: [{ date: { $ne: todaydate } }, { date: { $lt: todaydate } }, { doctor: doctorName }, { status: 'confirmed' }] },
             {
                 $set: {

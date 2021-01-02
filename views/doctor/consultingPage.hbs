@@ -6,9 +6,33 @@
             <form action="/doctor/consulted/{{appointmentId}}" method="GET">
                 <h4 class="col-12">Name: {{patientName}}</h4>
                 <h4>Perscription</h4>
-                <textarea class="col-12" name="perscription"></textarea>
-                <button class="mt-3 btn btn-info">Consulted</button>
+                <div id="inputFormRow">
+                    <div class="input-group mb-3">
+                        <input type="text" name="perscription[]" class="form-control m-input" placeholder="Enter Prescription"
+                            autocomplete="off">
+                    </div>
+                </div>
+
+                <div id="newRow"></div>
+                <button id="addRow" type="button" class="btn btn-info">Add</button>
+                <textarea class="col-12" name="notes" placeholder="Notes"></textarea>
+                 <button class="mt-3 btn btn-info">Consult</button>
             </form>
         </div>
     </div>
 </div>
+
+<script>
+    // add row
+    $("#addRow").click(function () {
+        var html = '';
+        html += '<div id="inputFormRow">';
+        html += '<div class="input-group mb-3">';
+        html += '<input type="text" name="perscription[]" class="form-control m-input" placeholder="Enter percription" autocomplete="off">';
+        html += '<div class="input-group-append">';
+        html += '</div>';
+        html += '</div>';
+
+        $('#newRow').append(html);
+    });
+</script>

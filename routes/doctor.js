@@ -3,8 +3,6 @@ var router = express.Router();
 var doctorHelper = require('../helper/doctorHelper');
 const { doctors } = require('../config/collectionNames');
 
-
-
 // doctor page
 router.get('/', async (req, res) => {
   if (!req.session.doctor) {
@@ -90,7 +88,7 @@ router.get('/consult', (req, res) => {
 router.get('/consulted/:id', async (req, res) => {
   console.log(req.params.id);
   console.log(req.query);
-  await doctorHelper.consultingAppointment(req.params.id, req.query.perscription)
+  await doctorHelper.consultingAppointment(req.params.id, req.query)
   res.redirect('/doctor')
 })
 router.get('/doctorProfile/:id', async (req, res) => {

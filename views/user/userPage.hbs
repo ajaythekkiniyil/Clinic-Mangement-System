@@ -8,7 +8,7 @@
             <div class="d-flex justify-content-center">
                 <div class="row">
                     <div class="col-12">
-                        <img src="images/user/{{userId}}.jpg" class="rounded-circle col-12 mt-2" alt="Profile Picture"/>
+                        <img src="/images/user/{{userId}}.jpg" class="rounded-circle col-12 mt-2" alt="Profile Picture"/>
                         <h4 class="text-center text-white">{{displayName}}</h4>
                     </div>
                 </div>
@@ -117,7 +117,7 @@
                                         <th scope="col">Doctor Name</th>
                                         <th scope="col">Date</th>
                                         <th scope="col">Time</th>
-                                        <th scope="col">Percription</th>
+                                        {{!-- <th scope="col">Percription</th> --}}
                                         <th scope="col">Status</th>
                                         <th scope="col">Action</th>
                                     </tr>
@@ -128,7 +128,7 @@
                                         <th scope="row">{{this.doctor}}</th>
                                         <td>{{this.date}}</td>
                                         <td>{{this.time}}</td>
-                                        <td>{{this.perscription}}</td>
+                                        {{!-- <td>{{this.perscription}}</td> --}}
                                         <td><i class="fa fa-check"></i>Consulted</td>
                                         <td><a href="/excelData/{{this._id}}">Download data</a></td>
                                     </tr>
